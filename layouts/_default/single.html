@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article class="py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    {{/* Page header */}}
+    <header class="mb-10">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 font-heading">{{ .Title }}</h1>
+      {{ with .Description }}
+      <p class="mt-3 text-lg text-gray-500">{{ . }}</p>
+      {{ end }}
+    </header>
+
+    {{/* Content */}}
+    <div class="prose prose-lg max-w-none prose-headings:font-heading prose-a:text-primary hover:prose-a:text-primary/80 prose-img:rounded-xl">
+      {{ .Content }}
+    </div>
+  </div>
+</article>
+{{ end }}

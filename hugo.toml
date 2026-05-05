@@ -1,0 +1,58 @@
+baseURL = "https://example.com"
+languageCode = "it"
+defaultContentLanguage = "it"
+title = "Nome Attività"
+
+[params]
+  site_name = "Nome Attività"
+  description = "Descrizione dell'attività"
+  slogan = ""
+  business_type = "ristorante"
+  contact_email = "info@example.com"
+  contact_phone = "+39 000 000 0000"
+  whatsapp = ""
+  address = "Via Example 1"
+  city = "Roma"
+  province = "RM"
+  cap = "00100"
+  instagram = ""
+  facebook = ""
+  tripadvisor = ""
+  google_business = ""
+  tiktok = ""
+  youtube = ""
+  linkedin = ""
+  opening_hours = ""
+  style = "minimal"
+  font = "inter"
+  primary_color = "#2563eb"
+  accent_color = "#f59e0b"
+  package = "starter"
+
+[languages]
+  [languages.it]
+    languageName = "Italiano"
+    languageCode = "it"
+    weight = 1
+    title = "Nome Attività"
+  [languages.en]
+    languageName = "English"
+    languageCode = "en"
+    weight = 2
+    title = "Business Name"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 1
+
+[build]
+  [build.buildStats]
+    enable = true

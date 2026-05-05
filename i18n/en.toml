@@ -1,0 +1,53 @@
+[home]
+other = "Home"
+
+[about]
+other = "About Us"
+
+[services]
+other = "Services"
+
+[contact]
+other = "Contact"
+
+[gallery]
+other = "Gallery"
+
+[menu_page]
+other = "Menu"
+
+[reviews]
+other = "Reviews"
+
+[faq]
+other = "FAQ"
+
+[blog]
+other = "News"
+
+[privacy]
+other = "Privacy"
+
+[read_more]
+other = "Read more"
+
+[where_we_are]
+other = "How to Reach Us"
+
+[phone]
+other = "Phone"
+
+[email]
+other = "Email"
+
+[hours]
+other = "Opening Hours"
+
+[address]
+other = "Address"
+
+[all_rights]
+other = "All rights reserved"
+
+[made_by]
+other = "Made by"

@@ -1,0 +1,62 @@
+<header class="bg-white shadow-sm sticky top-0 z-50" x-data="{ open: false }">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      {{/* Logo / Site name */}}
+      <a href="{{ .Site.Home.RelPermalink }}" class="text-xl font-bold text-primary hover:text-primary/80 transition font-heading">
+        {{ .Site.Params.site_name | default .Site.Title }}
+      </a>
+
+      {{/* Desktop navigation */}}
+      <div class="hidden md:flex items-center gap-6">
+        {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}" class="text-gray-600 hover:text-primary transition text-sm font-medium {{ if $.IsMenuCurrent "main" . }}text-primary font-semibold{{ end }}">
+          {{ .Name }}
+        </a>
+        {{ end }}
+
+        {{/* Language switcher */}}
+        {{ if gt (len .Site.Languages) 1 }}
+        <div class="flex items-center gap-1 ml-4 border-l pl-4">
+          {{ range .Site.Languages }}
+          {{ if eq $.Site.Language.Lang .Lang }}
+          <span class="text-xs font-bold text-primary uppercase px-2 py-1 bg-primary/10 rounded">{{ .Lang }}</span>
+          {{ else }}
+          <a href="{{ .Lang | absLangURL }}/" class="text-xs uppercase text-gray-400 hover:text-primary px-2 py-1 rounded hover:bg-gray-50 transition">{{ .Lang }}</a>
+          {{ end }}
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+
+      {{/* Mobile menu button */}}
+      <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    {{/* Mobile navigation */}}
+    <div id="mobile-menu" class="hidden md:hidden pb-4 border-t">
+      <div class="flex flex-col gap-2 pt-4">
+        {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}" class="px-3 py-2 rounded-lg text-gray-600 hover:bg-primary/5 hover:text-primary transition text-sm font-medium">
+          {{ .Name }}
+        </a>
+        {{ end }}
+        {{/* Mobile language switcher */}}
+        {{ if gt (len .Site.Languages) 1 }}
+        <div class="flex items-center gap-2 px-3 pt-2 border-t mt-2">
+          {{ range .Site.Languages }}
+          {{ if eq $.Site.Language.Lang .Lang }}
+          <span class="text-xs font-bold text-primary uppercase px-2 py-1 bg-primary/10 rounded">{{ .Lang }}</span>
+          {{ else }}
+          <a href="{{ .Lang | absLangURL }}/" class="text-xs uppercase text-gray-400 hover:text-primary px-2 py-1">{{ .Lang }}</a>
+          {{ end }}
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </nav>
+</header>

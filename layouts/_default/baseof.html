@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+
+    {{/* Fonts */}}
+    {{ $font := .Site.Params.font | default "inter" }}
+    {{ if eq $font "inter" }}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{ else if eq $font "playfair" }}
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    {{ else if eq $font "poppins" }}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{ else if eq $font "lora" }}
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    {{ else if eq $font "montserrat" }}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{ end }}
+
+    {{/* TailwindCSS via CDN */}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '{{ .Site.Params.primary_color | default "#2563eb" }}',
+              accent: '{{ .Site.Params.accent_color | default "#f59e0b" }}',
+            },
+            fontFamily: {
+              {{ if eq $font "playfair" }}
+              heading: ['Playfair Display', 'serif'],
+              body: ['Inter', 'sans-serif'],
+              {{ else if eq $font "lora" }}
+              heading: ['Lora', 'serif'],
+              body: ['Inter', 'sans-serif'],
+              {{ else if eq $font "poppins" }}
+              heading: ['Poppins', 'sans-serif'],
+              body: ['Poppins', 'sans-serif'],
+              {{ else if eq $font "montserrat" }}
+              heading: ['Montserrat', 'sans-serif'],
+              body: ['Montserrat', 'sans-serif'],
+              {{ else }}
+              heading: ['Inter', 'sans-serif'],
+              body: ['Inter', 'sans-serif'],
+              {{ end }}
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      body { @apply font-body text-gray-800 bg-white; }
+      h1, h2, h3, h4 { @apply font-heading; }
+    </style>
+
+    {{/* Schema.org */}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "{{ .Site.Params.site_name }}",
+      "description": "{{ .Site.Params.description }}",
+      "email": "{{ .Site.Params.contact_email }}",
+      "telephone": "{{ .Site.Params.contact_phone }}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "{{ .Site.Params.address }}",
+        "addressLocality": "{{ .Site.Params.city }}",
+        "addressRegion": "{{ .Site.Params.province }}",
+        "postalCode": "{{ .Site.Params.cap }}"
+      }
+    }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+    {{ partial "header.html" . }}
+    <main class="flex-1">
+        {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+    {{ partial "whatsapp-button.html" . }}
+
+    {{/* Smooth scroll for anchor links */}}
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    </script>
+</body>
+</html>

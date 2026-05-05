@@ -1,0 +1,53 @@
+[home]
+other = "Accueil"
+
+[about]
+other = "À Propos"
+
+[services]
+other = "Services"
+
+[contact]
+other = "Contact"
+
+[gallery]
+other = "Galerie"
+
+[menu_page]
+other = "Menu"
+
+[reviews]
+other = "Avis"
+
+[faq]
+other = "FAQ"
+
+[blog]
+other = "Actualités"
+
+[privacy]
+other = "Confidentialité"
+
+[read_more]
+other = "En savoir plus"
+
+[where_we_are]
+other = "Comment nous trouver"
+
+[phone]
+other = "Téléphone"
+
+[email]
+other = "E-mail"
+
+[hours]
+other = "Horaires"
+
+[address]
+other = "Adresse"
+
+[all_rights]
+other = "Tous droits réservés"
+
+[made_by]
+other = "Réalisé par"

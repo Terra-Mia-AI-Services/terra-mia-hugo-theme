@@ -1,0 +1,53 @@
+[home]
+other = "Startseite"
+
+[about]
+other = "Über Uns"
+
+[services]
+other = "Leistungen"
+
+[contact]
+other = "Kontakt"
+
+[gallery]
+other = "Galerie"
+
+[menu_page]
+other = "Speisekarte"
+
+[reviews]
+other = "Bewertungen"
+
+[faq]
+other = "FAQ"
+
+[blog]
+other = "Neuigkeiten"
+
+[privacy]
+other = "Datenschutz"
+
+[read_more]
+other = "Mehr lesen"
+
+[where_we_are]
+other = "So erreichen Sie uns"
+
+[phone]
+other = "Telefon"
+
+[email]
+other = "E-Mail"
+
+[hours]
+other = "Öffnungszeiten"
+
+[address]
+other = "Adresse"
+
+[all_rights]
+other = "Alle Rechte vorbehalten"
+
+[made_by]
+other = "Erstellt von"
