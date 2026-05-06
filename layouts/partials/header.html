@@ -110,10 +110,10 @@
             {{- $translations := .AllTranslations -}}
             {{- range sort hugo.Sites "Language.Weight" "asc" -}}
               {{- $targetLang := .Language.Lang -}}
-              {{- $href := .Home.RelPermalink -}}
+              {{- $href := .Home.Permalink -}}
               {{- range $translations -}}
                 {{- if eq .Language.Lang $targetLang -}}
-                  {{- $href = .RelPermalink -}}
+                  {{- $href = .Permalink -}}
                 {{- end -}}
               {{- end -}}
               {{- if eq $targetLang $lang -}}
@@ -165,10 +165,10 @@
           {{- $translations := .AllTranslations -}}
           {{- range sort hugo.Sites "Language.Weight" "asc" -}}
             {{- $targetLang := .Language.Lang -}}
-            {{- $href := .Home.RelPermalink -}}
+            {{- $href := .Home.Permalink -}}
             {{- range $translations -}}
               {{- if eq .Language.Lang $targetLang -}}
-                {{- $href = .RelPermalink -}}
+                {{- $href = .Permalink -}}
               {{- end -}}
             {{- end -}}
             {{- if eq $targetLang $lang -}}
