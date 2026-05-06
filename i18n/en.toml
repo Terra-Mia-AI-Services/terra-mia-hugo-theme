@@ -1,53 +1,149 @@
-[home]
-other = "Home"
-
-[about]
-other = "About Us"
-
-[services]
-other = "Services"
+[nav_more]
+other = "More"
 
 [contact]
 other = "Contact"
 
-[gallery]
-other = "Gallery"
+[home_kicker]
+other = "Welcome"
 
-[menu_page]
-other = "Menu"
+[home_hero_title]
+other = "A beautiful place, made simple"
 
-[reviews]
-other = "Reviews"
+[home_hero_subtitle]
+other = "Discover services, pricing, and how to contact us — in your language."
 
-[faq]
-other = "FAQ"
+[home_primary_cta]
+other = "Explore services"
 
-[blog]
-other = "News"
+[home_secondary_cta]
+other = "Contact"
 
-[privacy]
+[home_highlights_title]
+other = "Highlights"
+
+[home_highlight_1_title]
+other = "Clear information"
+
+[home_highlight_1_body]
+other = "Well-structured pages and fast navigation."
+
+[home_highlight_2_title]
+other = "Two languages"
+
+[home_highlight_2_body]
+other = "Italian and English — always in sync."
+
+[home_highlight_3_title]
+other = "Get in touch"
+
+[home_highlight_3_body]
+other = "Find contacts and reach us quickly."
+
+[home_sections_title]
+other = "Everything you need"
+
+[home_sections_subtitle]
+other = "Quick links to the most important pages."
+
+[home_card_about_title]
+other = "About"
+
+[home_card_about_body]
+other = "Who we are and what we value."
+
+[home_card_services_title]
+other = "Services"
+
+[home_card_services_body]
+other = "What we offer and how it works."
+
+[home_card_privacy_title]
 other = "Privacy"
 
-[read_more]
-other = "Read more"
+[home_card_privacy_body]
+other = "How we handle personal data."
 
-[where_we_are]
-other = "How to Reach Us"
+[home_card_contact_title]
+other = "Contact"
 
-[phone]
-other = "Phone"
+[home_card_contact_body]
+other = "Reach us for questions or bookings."
 
-[email]
+[home_card_cta]
+other = "Learn more"
+
+[home_final_title]
+other = "Ready to start?"
+
+[home_final_body]
+other = "Send us a message and we'll get back to you."
+
+[home_final_cta]
+other = "Write to us"
+
+[a11y_open_menu]
+other = "Open menu"
+
+[footer_rights]
+other = "All rights reserved."
+
+[cookie_title]
+other = "Cookies"
+
+[cookie_body]
+other = "We use essential cookies to make this site work."
+
+[cookie_learn_more]
+other = "Learn more"
+
+[cookie_accept]
+other = "OK"
+
+[contact_map_title]
+other = "Find us"
+
+[contact_map_iframe_title]
+other = "Map"
+
+[contact_map_missing]
+other = "Map not available."
+
+[contact_info_title]
+other = "Contact details"
+
+[contact_info_email]
 other = "Email"
 
-[hours]
-other = "Opening Hours"
+[contact_info_phone]
+other = "Phone"
 
-[address]
+[contact_info_address]
 other = "Address"
 
-[all_rights]
-other = "All rights reserved"
+[contact_form_title]
+other = "Send a message"
 
-[made_by]
-other = "Made by"
+[contact_form_name]
+other = "Name"
+
+[contact_form_email]
+other = "Email"
+
+[contact_form_message]
+other = "Message"
+
+[contact_form_name_placeholder]
+other = "Your name"
+
+[contact_form_email_placeholder]
+other = "name@example.com"
+
+[contact_form_message_placeholder]
+other = "How can we help?"
+
+[contact_form_submit]
+other = "Send"
+
+[contact_form_disclaimer]
+other = "We'll reply as soon as possible."

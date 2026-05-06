@@ -1,53 +1,149 @@
-[home]
-other = "Startseite"
-
-[about]
-other = "Über Uns"
-
-[services]
-other = "Leistungen"
+[nav_more]
+other = "Mehr"
 
 [contact]
 other = "Kontakt"
 
-[gallery]
-other = "Galerie"
+[home_kicker]
+other = "Willkommen"
 
-[menu_page]
-other = "Speisekarte"
+[home_hero_title]
+other = "Ein wunderbarer Ort, ganz einfach"
 
-[reviews]
-other = "Bewertungen"
+[home_hero_subtitle]
+other = "Entdecken Sie Leistungen, Preise und Kontaktmöglichkeiten — in Ihrer Sprache."
 
-[faq]
-other = "FAQ"
+[home_primary_cta]
+other = "Leistungen entdecken"
 
-[blog]
-other = "Neuigkeiten"
+[home_secondary_cta]
+other = "Kontakt"
 
-[privacy]
+[home_highlights_title]
+other = "Highlights"
+
+[home_highlight_1_title]
+other = "Klare Informationen"
+
+[home_highlight_1_body]
+other = "Übersichtliche Seiten und schnelle Navigation."
+
+[home_highlight_2_title]
+other = "Mehrere Sprachen"
+
+[home_highlight_2_body]
+other = "Immer aktuell in jeder Sprache."
+
+[home_highlight_3_title]
+other = "Kontaktieren Sie uns"
+
+[home_highlight_3_body]
+other = "Finden Sie unsere Kontaktdaten und schreiben Sie uns."
+
+[home_sections_title]
+other = "Alles auf einen Blick"
+
+[home_sections_subtitle]
+other = "Schnellzugriff auf die wichtigsten Seiten."
+
+[home_card_about_title]
+other = "Über uns"
+
+[home_card_about_body]
+other = "Unsere Geschichte und unsere Werte."
+
+[home_card_services_title]
+other = "Leistungen"
+
+[home_card_services_body]
+other = "Was wir anbieten und wie es funktioniert."
+
+[home_card_privacy_title]
 other = "Datenschutz"
 
-[read_more]
-other = "Mehr lesen"
+[home_card_privacy_body]
+other = "Wie wir personenbezogene Daten verarbeiten."
 
-[where_we_are]
-other = "So erreichen Sie uns"
+[home_card_contact_title]
+other = "Kontakt"
 
-[phone]
-other = "Telefon"
+[home_card_contact_body]
+other = "Schreiben Sie uns für Fragen oder Reservierungen."
 
-[email]
+[home_card_cta]
+other = "Mehr erfahren"
+
+[home_final_title]
+other = "Bereit loszulegen?"
+
+[home_final_body]
+other = "Senden Sie uns eine Nachricht — wir antworten schnellstmöglich."
+
+[home_final_cta]
+other = "Schreiben Sie uns"
+
+[a11y_open_menu]
+other = "Menü öffnen"
+
+[footer_rights]
+other = "Alle Rechte vorbehalten."
+
+[cookie_title]
+other = "Cookies"
+
+[cookie_body]
+other = "Wir verwenden essentielle Cookies, damit diese Website funktioniert."
+
+[cookie_learn_more]
+other = "Mehr erfahren"
+
+[cookie_accept]
+other = "OK"
+
+[contact_map_title]
+other = "So finden Sie uns"
+
+[contact_map_iframe_title]
+other = "Karte"
+
+[contact_map_missing]
+other = "Karte nicht verfügbar."
+
+[contact_info_title]
+other = "Kontakt"
+
+[contact_info_email]
 other = "E-Mail"
 
-[hours]
-other = "Öffnungszeiten"
+[contact_info_phone]
+other = "Telefon"
 
-[address]
+[contact_info_address]
 other = "Adresse"
 
-[all_rights]
-other = "Alle Rechte vorbehalten"
+[contact_form_title]
+other = "Nachricht senden"
 
-[made_by]
-other = "Erstellt von"
+[contact_form_name]
+other = "Name"
+
+[contact_form_email]
+other = "E-Mail"
+
+[contact_form_message]
+other = "Nachricht"
+
+[contact_form_name_placeholder]
+other = "Ihr Name"
+
+[contact_form_email_placeholder]
+other = "name@beispiel.de"
+
+[contact_form_message_placeholder]
+other = "Wie können wir helfen?"
+
+[contact_form_submit]
+other = "Senden"
+
+[contact_form_disclaimer]
+other = "Wir antworten so schnell wie möglich."

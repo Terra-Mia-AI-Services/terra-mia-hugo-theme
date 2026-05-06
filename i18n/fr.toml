@@ -1,53 +1,149 @@
-[home]
-other = "Accueil"
-
-[about]
-other = "À Propos"
-
-[services]
-other = "Services"
+[nav_more]
+other = "Plus"
 
 [contact]
 other = "Contact"
 
-[gallery]
-other = "Galerie"
+[home_kicker]
+other = "Bienvenue"
 
-[menu_page]
-other = "Menu"
+[home_hero_title]
+other = "Un bel endroit, en toute simplicité"
 
-[reviews]
-other = "Avis"
+[home_hero_subtitle]
+other = "Découvrez les services, les tarifs et comment nous contacter — dans votre langue."
 
-[faq]
-other = "FAQ"
+[home_primary_cta]
+other = "Découvrir les services"
 
-[blog]
-other = "Actualités"
+[home_secondary_cta]
+other = "Contact"
 
-[privacy]
+[home_highlights_title]
+other = "Points forts"
+
+[home_highlight_1_title]
+other = "Informations claires"
+
+[home_highlight_1_body]
+other = "Pages bien organisées et navigation rapide."
+
+[home_highlight_2_title]
+other = "Plusieurs langues"
+
+[home_highlight_2_body]
+other = "Toujours à jour dans chaque langue."
+
+[home_highlight_3_title]
+other = "Contactez-nous"
+
+[home_highlight_3_body]
+other = "Trouvez nos coordonnées et écrivez-nous en quelques secondes."
+
+[home_sections_title]
+other = "Tout ce qu'il faut"
+
+[home_sections_subtitle]
+other = "Liens rapides vers les pages les plus importantes."
+
+[home_card_about_title]
+other = "À propos"
+
+[home_card_about_body]
+other = "Notre histoire et nos valeurs."
+
+[home_card_services_title]
+other = "Services"
+
+[home_card_services_body]
+other = "Ce que nous proposons et comment ça marche."
+
+[home_card_privacy_title]
 other = "Confidentialité"
 
-[read_more]
+[home_card_privacy_body]
+other = "Comment nous traitons les données personnelles."
+
+[home_card_contact_title]
+other = "Contact"
+
+[home_card_contact_body]
+other = "Écrivez-nous pour toute question ou réservation."
+
+[home_card_cta]
 other = "En savoir plus"
 
-[where_we_are]
-other = "Comment nous trouver"
+[home_final_title]
+other = "Prêt à commencer ?"
 
-[phone]
-other = "Téléphone"
+[home_final_body]
+other = "Envoyez-nous un message et nous vous répondrons au plus vite."
 
-[email]
+[home_final_cta]
+other = "Écrivez-nous"
+
+[a11y_open_menu]
+other = "Ouvrir le menu"
+
+[footer_rights]
+other = "Tous droits réservés."
+
+[cookie_title]
+other = "Cookies"
+
+[cookie_body]
+other = "Nous utilisons des cookies essentiels pour faire fonctionner ce site."
+
+[cookie_learn_more]
+other = "En savoir plus"
+
+[cookie_accept]
+other = "OK"
+
+[contact_map_title]
+other = "Nous trouver"
+
+[contact_map_iframe_title]
+other = "Carte"
+
+[contact_map_missing]
+other = "Carte non disponible."
+
+[contact_info_title]
+other = "Coordonnées"
+
+[contact_info_email]
 other = "E-mail"
 
-[hours]
-other = "Horaires"
+[contact_info_phone]
+other = "Téléphone"
 
-[address]
+[contact_info_address]
 other = "Adresse"
 
-[all_rights]
-other = "Tous droits réservés"
+[contact_form_title]
+other = "Envoyer un message"
 
-[made_by]
-other = "Réalisé par"
+[contact_form_name]
+other = "Nom"
+
+[contact_form_email]
+other = "E-mail"
+
+[contact_form_message]
+other = "Message"
+
+[contact_form_name_placeholder]
+other = "Votre nom"
+
+[contact_form_email_placeholder]
+other = "nom@exemple.fr"
+
+[contact_form_message_placeholder]
+other = "Comment pouvons-nous aider ?"
+
+[contact_form_submit]
+other = "Envoyer"
+
+[contact_form_disclaimer]
+other = "Nous répondrons dès que possible."
