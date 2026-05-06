@@ -1,0 +1,10 @@
+{
+  "name": "web",
+  "active": true,
+  "events": ["push"],
+  "config": {
+    "url": "https://terramia-vps.duckdns.org/webhook/github-theme-webhook",
+    "content_type": "json",
+    "insecure_ssl": "0"
+  }
+}
