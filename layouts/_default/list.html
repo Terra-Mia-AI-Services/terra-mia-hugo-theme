@@ -7,13 +7,22 @@
     {{ end }}
     {{ if .Pages }}
     <div class="grid gap-4">
-      {{ range .Pages }}
-      <a href="{{ .Permalink }}" class="block bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition border border-gray-100 hover:border-primary/20">
-        <h2 class="text-lg font-semibold text-gray-900 font-heading group-hover:text-primary">{{ .Title }}</h2>
-        {{ with .Description }}
-        <p class="mt-1 text-sm text-gray-500">{{ . }}</p>
-        {{ end }}
-      </a>
+      {{ range .Pages.ByWeight }}
+        {{- $desc := "" -}}
+        {{- with .Description -}}
+          {{- $desc = . -}}
+        {{- else -}}
+          {{- with .Summary -}}
+            {{- $desc = . -}}
+          {{- end -}}
+        {{- end -}}
+        {{- $desc = ($desc | plainify | htmlUnescape | chomp | truncate 160) -}}
+        <a href="{{ .RelPermalink }}" class="group block bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition border border-gray-100 hover:border-primary/20">
+          <h2 class="text-lg font-semibold text-gray-900 font-heading group-hover:text-primary">{{ .Title }}</h2>
+          {{ with $desc }}
+          <p class="mt-1 text-sm text-gray-500">{{ . }}</p>
+          {{ end }}
+        </a>
       {{ end }}
     </div>
     {{ end }}

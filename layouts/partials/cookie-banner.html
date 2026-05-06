@@ -1,0 +1,21 @@
+{{- /* Inline cookie banner (no external deps). Hidden after accept via localStorage. */ -}}
+<div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-50 border-t border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-sm text-gray-800 font-medium">{{ i18n "cookie_title" }}</p>
+        <p class="text-sm text-gray-600">
+          {{ i18n "cookie_body" }}
+          {{- with .Site.Params.privacy_url -}}
+            <a class="underline underline-offset-2 hover:text-gray-900" href="{{ . | relLangURL }}">{{ i18n "cookie_learn_more" }}</a>
+          {{- end -}}
+        </p>
+      </div>
+      <div class="flex shrink-0 items-center gap-2">
+        <button id="cookie-accept" type="button" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+          {{ i18n "cookie_accept" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

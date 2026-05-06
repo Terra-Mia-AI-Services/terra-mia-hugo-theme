@@ -1,29 +1,80 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Language.Lang }}" class="scroll-smooth">
+{{- $lang := .Site.Language.Lang | default "en" -}}
+{{- $font := .Site.Params.font | default "classico" -}}
+{{- $style := .Site.Params.style | default "rustico" -}}
+<html lang="{{ $lang }}" class="scroll-smooth {{ printf "font-%s style-%s" $font $style }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
-    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    {{- $title := cond .IsHome .Site.Title (printf "%s — %s" .Title .Site.Title) -}}
+    {{- $desc := "" -}}
+    {{- with .Description -}}
+      {{- $desc = . -}}
+    {{- else -}}
+      {{- with .Summary -}}
+        {{- $desc = . -}}
+      {{- else -}}
+        {{- with .Site.Params.description -}}
+          {{- $desc = . -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $desc = ($desc | plainify | htmlUnescape | chomp | truncate 160) -}}
 
-    {{/* Fonts */}}
-    {{ $font := .Site.Params.font | default "inter" }}
-    {{ if eq $font "inter" }}
+    <title>{{ $title }}</title>
+    {{- if $desc }}<meta name="description" content="{{ $desc }}">{{ end -}}
+    <link rel="canonical" href="{{ .Permalink }}">
+
+    {{/* OpenGraph / Twitter */}}
+    <meta property="og:locale" content="{{ $lang }}">
+    <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+    <meta property="og:title" content="{{ $title }}">
+    {{- if $desc }}<meta property="og:description" content="{{ $desc }}">{{ end -}}
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:site_name" content="{{ .Site.Title }}">
+    {{- $ogImage := "" -}}
+    {{- with .Params.image -}}
+      {{- $ogImage = . -}}
+    {{- else -}}
+      {{- with .Params.images -}}
+        {{- if gt (len .) 0 -}}{{- $ogImage = index . 0 -}}{{- end -}}
+      {{- else -}}
+        {{- with .Site.Params.og_image -}}{{- $ogImage = . -}}{{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $ogImage }}<meta property="og:image" content="{{ $ogImage | absURL }}">{{ end -}}
+    <meta name="twitter:card" content="{{ if $ogImage }}summary_large_image{{ else }}summary{{ end }}">
+    <meta name="twitter:title" content="{{ $title }}">
+    {{- if $desc }}<meta name="twitter:description" content="{{ $desc }}">{{ end -}}
+    {{- if $ogImage }}<meta name="twitter:image" content="{{ $ogImage | absURL }}">{{ end -}}
+
+    {{/* Fonts — mapping form IDs to Google Fonts */}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{ else if eq $font "playfair" }}
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    {{ else if eq $font "poppins" }}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{ else if eq $font "lora" }}
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    {{ else if eq $font "montserrat" }}
+    {{- if or (eq $font "classico") (eq $font "playfair") -}}
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else if eq $font "handwritten" -}}
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else if or (eq $font "bold") (eq $font "montserrat") -}}
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{ end }}
+    {{- else if eq $font "slab" -}}
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else if eq $font "display" -}}
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else if eq $font "rounded" -}}
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else if eq $font "condensed" -}}
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else if eq $font "mono" -}}
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else if or (eq $font "luxury") (eq $font "lora") -}}
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- else -}}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- end -}}
 
     {{/* TailwindCSS via CDN */}}
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -33,18 +84,33 @@
               accent: '{{ .Site.Params.accent_color | default "#f59e0b" }}',
             },
             fontFamily: {
-              {{ if eq $font "playfair" }}
+              {{ if or (eq $font "classico") (eq $font "playfair") }}
               heading: ['Playfair Display', 'serif'],
               body: ['Inter', 'sans-serif'],
-              {{ else if eq $font "lora" }}
-              heading: ['Lora', 'serif'],
+              {{ else if eq $font "handwritten" }}
+              heading: ['Dancing Script', 'cursive'],
               body: ['Inter', 'sans-serif'],
-              {{ else if eq $font "poppins" }}
-              heading: ['Poppins', 'sans-serif'],
-              body: ['Poppins', 'sans-serif'],
-              {{ else if eq $font "montserrat" }}
+              {{ else if or (eq $font "bold") (eq $font "montserrat") }}
               heading: ['Montserrat', 'sans-serif'],
               body: ['Montserrat', 'sans-serif'],
+              {{ else if eq $font "slab" }}
+              heading: ['Roboto Slab', 'serif'],
+              body: ['Inter', 'sans-serif'],
+              {{ else if eq $font "display" }}
+              heading: ['Cinzel', 'serif'],
+              body: ['Inter', 'sans-serif'],
+              {{ else if eq $font "rounded" }}
+              heading: ['Nunito', 'sans-serif'],
+              body: ['Nunito', 'sans-serif'],
+              {{ else if eq $font "condensed" }}
+              heading: ['Barlow Condensed', 'sans-serif'],
+              body: ['Inter', 'sans-serif'],
+              {{ else if eq $font "mono" }}
+              heading: ['JetBrains Mono', 'monospace'],
+              body: ['Inter', 'sans-serif'],
+              {{ else if or (eq $font "luxury") (eq $font "lora") }}
+              heading: ['Cormorant Garamond', 'serif'],
+              body: ['Inter', 'sans-serif'],
               {{ else }}
               heading: ['Inter', 'sans-serif'],
               body: ['Inter', 'sans-serif'],
@@ -59,41 +125,87 @@
       h1, h2, h3, h4 { @apply font-heading; }
     </style>
 
-    {{/* Schema.org */}}
+    {{/* hreflang alternate links */}}
+    {{ if gt (len hugo.Sites) 1 }}
+      {{ range .AllTranslations }}
+        <link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
+      {{ end }}
+      <link rel="alternate" hreflang="x-default" href="{{ .Site.Home.Permalink }}">
+    {{ end }}
+
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "{{ .Site.Params.site_name }}",
-      "description": "{{ .Site.Params.description }}",
-      "email": "{{ .Site.Params.contact_email }}",
-      "telephone": "{{ .Site.Params.contact_phone }}",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "{{ .Site.Params.address }}",
-        "addressLocality": "{{ .Site.Params.city }}",
-        "addressRegion": "{{ .Site.Params.province }}",
-        "postalCode": "{{ .Site.Params.cap }}"
-      }
-    }
+    {{- $schema := dict
+      "@context" "https://schema.org"
+      "@type" "LocalBusiness"
+      "name" (.Site.Params.site_name | default .Site.Title)
+      "description" (.Site.Params.description | default "")
+      "email" (.Site.Params.contact_email | default "")
+      "telephone" (.Site.Params.contact_phone | default "")
+      "address" (dict
+        "@type" "PostalAddress"
+        "streetAddress" (.Site.Params.address | default "")
+        "addressLocality" (.Site.Params.city | default "")
+        "addressRegion" (.Site.Params.province | default "")
+        "postalCode" (.Site.Params.cap | default "")
+      )
+    -}}
+    {{ $schema | jsonify }}
     </script>
+
+    {{/* GA4 — only if ga4_id is set */}}
+    {{- with .Site.Params.ga4_id -}}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ . }}');</script>
+    {{- end -}}
 </head>
 <body class="min-h-screen flex flex-col">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
     {{ partial "header.html" . }}
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
         {{ block "main" . }}{{ end }}
     </main>
     {{ partial "footer.html" . }}
-    {{ partial "whatsapp-button.html" . }}
+    {{ if templates.Exists "partials/whatsapp-button.html" }}
+      {{ partial "whatsapp-button.html" . }}
+    {{ end }}
+    {{ if templates.Exists "partials/cookie-banner.html" }}
+      {{ partial "cookie-banner.html" . }}
+    {{ end }}
 
-    {{/* Smooth scroll for anchor links */}}
     <script>
-      document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-          e.preventDefault();
-          document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-        });
-      });
+      (function () {
+        var menuBtn = document.getElementById('mobile-menu-button');
+        var menu = document.getElementById('mobile-menu');
+        if (menuBtn && menu) {
+          menuBtn.addEventListener('click', function () {
+            menu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', menu.classList.contains('hidden') ? 'false' : 'true');
+          });
+        }
+
+        var moreBtn = document.getElementById('more-menu-button');
+        var moreMenu = document.getElementById('more-menu');
+        if (moreBtn && moreMenu) {
+          moreBtn.addEventListener('click', function () {
+            moreMenu.classList.toggle('hidden');
+            moreBtn.setAttribute('aria-expanded', moreMenu.classList.contains('hidden') ? 'false' : 'true');
+          });
+        }
+
+        var banner = document.getElementById('cookie-banner');
+        var accept = document.getElementById('cookie-accept');
+        if (banner && accept) {
+          var key = 'tm_cookie_consent';
+          try {
+            if (localStorage.getItem(key) === '1') banner.classList.add('hidden');
+          } catch (e) {}
+
+          accept.addEventListener('click', function () {
+            try { localStorage.setItem(key, '1'); } catch (e) {}
+            banner.classList.add('hidden');
+          });
+        }
+      })();
     </script>
 </body>
 </html>

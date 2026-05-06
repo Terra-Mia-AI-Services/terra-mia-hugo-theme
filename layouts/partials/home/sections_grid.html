@@ -1,0 +1,32 @@
+<section class="border-t border-gray-200/70 bg-white">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <h2 class="text-2xl font-heading font-semibold text-gray-900">{{ i18n "home_sections_title" }}</h2>
+        <p class="mt-3 text-gray-600 leading-relaxed">{{ i18n "home_sections_subtitle" }}</p>
+      </div>
+      <div class="lg:col-span-7 grid gap-4 sm:grid-cols-2">
+        <a href="{{ relLangURL "about/" }}" class="group rounded-3xl border border-gray-200 bg-white p-6 hover:bg-gray-50 transition">
+          <h3 class="text-base font-semibold text-gray-900 group-hover:text-primary">{{ i18n "home_card_about_title" }}</h3>
+          <p class="mt-2 text-sm text-gray-600">{{ i18n "home_card_about_body" }}</p>
+          <p class="mt-4 text-sm font-semibold text-primary">{{ i18n "home_card_cta" }}</p>
+        </a>
+        <a href="{{ relLangURL "services/" }}" class="group rounded-3xl border border-gray-200 bg-white p-6 hover:bg-gray-50 transition">
+          <h3 class="text-base font-semibold text-gray-900 group-hover:text-primary">{{ i18n "home_card_services_title" }}</h3>
+          <p class="mt-2 text-sm text-gray-600">{{ i18n "home_card_services_body" }}</p>
+          <p class="mt-4 text-sm font-semibold text-primary">{{ i18n "home_card_cta" }}</p>
+        </a>
+        <a href="{{ relLangURL "privacy/" }}" class="group rounded-3xl border border-gray-200 bg-white p-6 hover:bg-gray-50 transition">
+          <h3 class="text-base font-semibold text-gray-900 group-hover:text-primary">{{ i18n "home_card_privacy_title" }}</h3>
+          <p class="mt-2 text-sm text-gray-600">{{ i18n "home_card_privacy_body" }}</p>
+          <p class="mt-4 text-sm font-semibold text-primary">{{ i18n "home_card_cta" }}</p>
+        </a>
+        <a href="{{ relLangURL "contact/" }}" class="group rounded-3xl border border-gray-200 bg-white p-6 hover:bg-gray-50 transition">
+          <h3 class="text-base font-semibold text-gray-900 group-hover:text-primary">{{ i18n "home_card_contact_title" }}</h3>
+          <p class="mt-2 text-sm text-gray-600">{{ i18n "home_card_contact_body" }}</p>
+          <p class="mt-4 text-sm font-semibold text-primary">{{ i18n "home_card_cta" }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,81 +1,14 @@
 {{ define "main" }}
-{{/* Hero Section */}}
-<section class="relative bg-gradient-to-br from-primary/5 via-white to-accent/5 py-20 sm:py-28">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl">
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 font-heading leading-tight">
-        {{ .Site.Params.site_name }}
-      </h1>
-      {{ with .Site.Params.slogan }}
-      <p class="mt-4 text-xl sm:text-2xl text-primary/80 font-light italic">"{{ . }}"</p>
-      {{ end }}
-      <p class="mt-6 text-lg text-gray-600 leading-relaxed">
-        {{ .Site.Params.description }}
-      </p>
-      <div class="mt-8 flex flex-wrap gap-4">
-        {{ with .Site.Params.contact_phone }}
-        <a href="tel:{{ . }}" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition shadow-lg shadow-primary/25">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-          {{ . }}
-        </a>
-        {{ end }}
-        {{ with .Site.Params.contact_email }}
-        <a href="mailto:{{ . }}" class="inline-flex items-center gap-2 bg-white text-primary border-2 border-primary px-6 py-3 rounded-lg font-medium hover:bg-primary/5 transition">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          Scrivici
-        </a>
-        {{ end }}
-      </div>
-    </div>
-  </div>
-</section>
-
-{{/* Page content (from _index.md) */}}
-{{ with .Content }}
-<section class="py-16">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg">
-    {{ . }}
-  </div>
-</section>
-{{ end }}
-
-{{/* Quick Info Cards */}}
-<section class="py-16 bg-gray-50">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {{/* Address card */}}
-      {{ with .Site.Params.address }}
-      <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
-        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        </div>
-        <h3 class="font-heading font-semibold text-gray-900 mb-1">Dove siamo</h3>
-        <p class="text-sm text-gray-600">{{ . }}, {{ $.Site.Params.city }} ({{ $.Site.Params.province }})</p>
-      </div>
-      {{ end }}
-
-      {{/* Phone card */}}
-      {{ with .Site.Params.contact_phone }}
-      <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
-        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-        </div>
-        <h3 class="font-heading font-semibold text-gray-900 mb-1">Telefono</h3>
-        <p class="text-sm text-gray-600"><a href="tel:{{ . }}" class="hover:text-primary transition">{{ . }}</a></p>
-      </div>
-      {{ end }}
-
-      {{/* Hours card */}}
-      {{ with .Site.Params.opening_hours }}
-      <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
-        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <h3 class="font-heading font-semibold text-gray-900 mb-1">Orari</h3>
-        <p class="text-sm text-gray-600">{{ . }}</p>
-      </div>
-      {{ end }}
-    </div>
-  </div>
-</section>
+{{- $layout := .Site.Params.layout | default "hero_grande" -}}
+{{- if eq $layout "hero_grande" -}}
+  {{ partial "home/hero_grande.html" . }}
+{{- else if eq $layout "hero_compatto" -}}
+  {{ partial "home/hero_compatto.html" . }}
+{{- else if eq $layout "hero_split" -}}
+  {{ partial "home/hero_split.html" . }}
+{{- else if eq $layout "hero_minimale" -}}
+  {{ partial "home/hero_minimale.html" . }}
+{{- else -}}
+  {{ partial "home/hero_grande.html" . }}
+{{- end -}}
 {{ end }}
