@@ -1,3 +1,23 @@
+{{- /* ─────────────────────────────────────────────────────────
+   ⚠️ DEPRECATED 2026-05-17 — Legacy Tailwind hero pre-G11 refactor.
+
+   Sostituito da:
+   - hero_editorial_dark.html (DNA editorial_dark)
+   - hero_warm_rustic.html (DNA warm_rustic)
+   - hero_editorial_cream.html (DNA editorial_cream, NEW 2026-05-17)
+   - hero_glamping_jp.html (DNA glamping_jp stretch)
+   - hero_compact.html (variant pool DNA-agnostic, NEW 2026-05-17 G12)
+   - hero_split.html (variant pool DNA-agnostic, rewrite 2026-05-17 G12)
+
+   Mantenuto temporaneamente perché ancora referenziato dal workflow legacy
+   workflows/layer-7-hugo-creator-v2.json (vedi launch-gate-board G11 residue,
+   workflow update FORBIDDEN per @claude, attesa @coder action).
+
+   Cancellabile DOPO workflow Hugo Creator update pass `dna` + `recipe` +
+   `hero_variant` come Site.Params (G11 sub-task B + G12 workflow integration).
+
+   Riferimento: plans/ops/launch-gate-board-2026-05-16.md §2.G11 + §2.G12.
+   ───────────────────────────────────────────────────────── */ -}}
 {{- $p := .Site.Params -}}
 {{- $heroTitle := ($p.home_hero_title | default (i18n "home_hero_title")) -}}
 {{- $heroSubtitle := ($p.home_hero_subtitle | default (i18n "home_hero_subtitle")) -}}

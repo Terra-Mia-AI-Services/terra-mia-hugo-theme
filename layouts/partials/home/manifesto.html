@@ -1,0 +1,30 @@
+{{- /* manifesto.html — Terra Mia Hugo Theme.
+       Sezione cream-break editorial filosofica (port da demo-v2).
+       Optional: appare solo se Site.Params.manifesto_quote è settato.
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $kicker := $p.manifesto_kicker | default "Manifesto" -}}
+{{- $quote := $p.manifesto_quote | default "" -}}
+{{- $quoteEm := $p.manifesto_quote_em | default "" -}}
+{{- $body := $p.manifesto_body | default "" -}}
+
+{{- if $quote }}
+<section class="tm-manifesto" aria-labelledby="tm-manifesto-title">
+  <div class="tm-manifesto__inner">
+    <p class="tm-manifesto__kicker" data-reveal>{{ $kicker }}</p>
+
+    <h2 id="tm-manifesto-title" class="tm-manifesto__quote" data-reveal style="--reveal-delay:120">
+      {{- if $quoteEm -}}
+      {{ $quote }}<br><em>{{ $quoteEm }}</em>
+      {{- else -}}
+      {{ $quote }}
+      {{- end -}}
+    </h2>
+
+    {{- if $body }}
+    <hr class="tm-manifesto__divider" data-reveal style="--reveal-delay:240">
+    <p class="tm-manifesto__body" data-reveal style="--reveal-delay:360">{{ $body | safeHTML }}</p>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

@@ -1,0 +1,60 @@
+{{- /* recipes/cantina_winery/sections.html
+       Recipe Vertical: cantina_winery (V1+ NEW 2026-05-17).
+       Reference: plans/specs/vertical-recipes.md §3.1.
+       Target: cantine vinicole, frantoi, oleifici, produttori con visite + degustazioni.
+
+       Sezioni canonical:
+       i. Vini & Oli | ii. Visite & Degustazioni | iii. Terroir & Vigneto | iv. Storia famiglia
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.sections_editorial_items -}}
+
+{{- if not $items -}}
+  {{- $items = slice
+    (dict "num" "i."
+      "name" ($p.recipe_card1_name | default "Vini & Oli")
+      "desc" ($p.recipe_card1_desc | default "I nostri prodotti — vitigni, cultivar, annate, note degustazione, abbinamenti gastronomici. Selezione curata, non listino.")
+      "features" ($p.recipe_card1_features | default (slice "selezione vini" "oli EVO" "annate" "abbinamenti"))
+    )
+    (dict "num" "ii."
+      "name" ($p.recipe_card2_name | default "Visite & Degustazioni")
+      "desc" ($p.recipe_card2_desc | default "Tour cantina e vigneto, degustazione guidata, picnic tra le vigne, wine club. Esperienze su prenotazione.")
+      "features" ($p.recipe_card2_features | default (slice "tour guidato" "degustazione" "picnic" "wine club"))
+    )
+    (dict "num" "iii."
+      "name" ($p.recipe_card3_name | default "Terroir & Vigneto")
+      "desc" ($p.recipe_card3_desc | default "Zone di produzione, microclima, altitudine, esposizioni. Da dove viene il carattere dei nostri vini.")
+      "features" ($p.recipe_card3_features | default (slice "mappa vigneti" "microclima" "biologico/biodinamico" "vendemmia"))
+    )
+    (dict "num" "iv."
+      "name" ($p.recipe_card4_name | default "Storia famiglia")
+      "desc" ($p.recipe_card4_desc | default "Da quante generazioni coltiviamo questa terra, chi siamo, perché lo facciamo così.")
+      "features" ($p.recipe_card4_features | default (slice "generazioni" "valori" "filiera diretta" "premi"))
+    )
+  -}}
+{{- end -}}
+
+<section class="tm-section" id="dettagli" aria-labelledby="tm-recipe-title">
+  <div class="tm-section__head">
+    <p class="tm-section__kicker" data-reveal>{{ $p.sections_editorial_kicker | default "La nostra cantina" }}</p>
+    <h2 id="tm-recipe-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.sections_editorial_title | default "Quattro racconti, una sola terra." }}
+    </h2>
+    {{- with $p.sections_editorial_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <div class="tm-cards-grid tm-cards-grid--{{ len $items }}">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      {{- with $item.name }}<h3 class="tm-card__name">{{ . }}</h3>{{ end }}
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">{{- range $item.features }}<li>{{ . }}</li>{{- end }}</ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>

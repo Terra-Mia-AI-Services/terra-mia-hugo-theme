@@ -1,0 +1,272 @@
+{{- /* ⚠️ DEPRECATED 2026-05-17 — Legacy Tailwind hero corporate pre-G11 refactor.
+       Use hero_editorial_dark.html (DNA editorial_dark) or hero_split.html
+       (V1+ DNA-agnostic with image visual) instead.
+       Mantenuto temporaneamente per backward-compat workflow legacy.
+       Vedi hero_grande.html header per dettagli completi. */ -}}
+{{- $p := .Site.Params -}}
+{{- $primaryCtaHref := ($p.corporate_primary_url | default ($p.corporate_demo_anchor | default "#demo")) -}}
+{{- $contactEmail := ($p.contact_email | default "terra.mia.ai@gmail.com") -}}
+{{- $heroImage := ($p.hero_image | default "/images/hero-terra-mia-showcase.webp") -}}
+{{- $demoHotelImage := ($p.corporate_demo_hotel_image | default "/images/demo-hotel.webp") -}}
+{{- $demoRestaurantImage := ($p.corporate_demo_restaurant_image | default "/images/demo-restaurant.webp") -}}
+{{- $demoAgriturismoImage := ($p.corporate_demo_agriturismo_image | default "/images/demo-agriturismo.webp") -}}
+
+<div class="tm-corporate-v3" data-product-demo data-locale="{{ .Site.Language.Lang | default "it" }}">
+  <section class="tm-v3-hero" id="demo" aria-labelledby="tm-v3-hero-title">
+    <div class="tm-v3-orb tm-v3-orb-a" aria-hidden="true"></div>
+    <div class="tm-v3-orb tm-v3-orb-b" aria-hidden="true"></div>
+    <div class="tm-v3-shell">
+      <div class="tm-v3-hero-copy">
+        <p class="tm-v3-kicker">{{ i18n "corporate_v3_hero_kicker" }}</p>
+        <h1 id="tm-v3-hero-title">{{ i18n "corporate_v3_hero_title" }}</h1>
+        <p class="tm-v3-lede">{{ i18n "corporate_v3_hero_subtitle" }}</p>
+        <div class="tm-v3-cta-row">
+          <a class="tm-v3-btn tm-v3-btn-primary" href="{{ $primaryCtaHref }}">{{ i18n "corporate_cta_primary" }}</a>
+          <a class="tm-v3-btn tm-v3-btn-secondary" href="mailto:{{ $contactEmail }}">{{ i18n "corporate_cta_secondary" }}</a>
+        </div>
+        <div class="tm-v3-assurance" aria-label="{{ i18n "corporate_v3_assurance_label" }}">
+          <span>{{ i18n "corporate_v3_assurance_static" }}</span>
+          <span>{{ i18n "corporate_v3_assurance_no_api" }}</span>
+          <span>{{ i18n "corporate_v3_assurance_chat_disabled" }}</span>
+        </div>
+      </div>
+
+      <div class="tm-v3-lab" aria-label="{{ i18n "corporate_v3_lab_label" }}">
+        <div class="tm-v3-lab-topline">
+          <span>{{ i18n "corporate_v3_lab_topline" }}</span>
+          <strong data-current-status>{{ i18n "corporate_v3_status_ready" }}</strong>
+        </div>
+
+        <div class="tm-v3-controls" aria-label="{{ i18n "corporate_v3_controls_label" }}">
+          <div class="tm-v3-control-block tm-v3-control-block-wide">
+            <span class="tm-v3-control-label">{{ i18n "corporate_v3_vertical_label" }}</span>
+            <div class="tm-v3-segment tm-v3-segment-stack" role="group" aria-label="{{ i18n "corporate_v3_vertical_label" }}">
+              <button class="tm-v3-segment-btn is-active" type="button" data-demo-control="hotel" aria-pressed="true">
+                <strong>{{ i18n "corporate_demo_hotel" }}</strong>
+                <span>{{ i18n "corporate_v3_hotel_hint" }}</span>
+              </button>
+              <button class="tm-v3-segment-btn" type="button" data-demo-control="restaurant" aria-pressed="false">
+                <strong>{{ i18n "corporate_demo_restaurant" }}</strong>
+                <span>{{ i18n "corporate_v3_restaurant_hint" }}</span>
+              </button>
+              <button class="tm-v3-segment-btn" type="button" data-demo-control="agriturismo" aria-pressed="false">
+                <strong>{{ i18n "corporate_demo_agriturismo" }}</strong>
+                <span>{{ i18n "corporate_v3_agriturismo_hint" }}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="tm-v3-control-block">
+            <span class="tm-v3-control-label">{{ i18n "corporate_v3_language_label" }}</span>
+            <div class="tm-v3-segment tm-v3-lang-segment" role="group" aria-label="{{ i18n "corporate_v3_language_label" }}">
+              <button class="tm-v3-mini-btn is-active" type="button" data-lang-control="IT" aria-pressed="true">IT</button>
+              <button class="tm-v3-mini-btn" type="button" data-lang-control="EN" aria-pressed="false">EN</button>
+              <button class="tm-v3-mini-btn" type="button" data-lang-control="DE" aria-pressed="false">DE</button>
+              <button class="tm-v3-mini-btn" type="button" data-lang-control="FR" aria-pressed="false">FR</button>
+            </div>
+          </div>
+
+          <div class="tm-v3-control-block">
+            <span class="tm-v3-control-label">{{ i18n "corporate_v3_tone_label" }}</span>
+            <div class="tm-v3-segment" role="group" aria-label="{{ i18n "corporate_v3_tone_label" }}">
+              <button class="tm-v3-mini-btn is-active" type="button" data-tone-control="elegant" aria-pressed="true">{{ i18n "corporate_edit_tone_elegant" }}</button>
+              <button class="tm-v3-mini-btn" type="button" data-tone-control="warm" aria-pressed="false">{{ i18n "corporate_edit_tone_warm" }}</button>
+              <button class="tm-v3-mini-btn" type="button" data-tone-control="direct" aria-pressed="false">{{ i18n "corporate_edit_tone_direct" }}</button>
+            </div>
+          </div>
+
+          <div class="tm-v3-control-block">
+            <span class="tm-v3-control-label">{{ i18n "corporate_v3_focus_label" }}</span>
+            <div class="tm-v3-segment" role="group" aria-label="{{ i18n "corporate_v3_focus_label" }}">
+              <button class="tm-v3-mini-btn is-active" type="button" data-focus-control="booking" aria-pressed="true">{{ i18n "corporate_edit_focus_booking" }}</button>
+              <button class="tm-v3-mini-btn" type="button" data-focus-control="experience" aria-pressed="false">{{ i18n "corporate_edit_focus_experience" }}</button>
+              <button class="tm-v3-mini-btn" type="button" data-focus-control="events" aria-pressed="false">{{ i18n "corporate_edit_focus_events" }}</button>
+            </div>
+          </div>
+
+          <label class="tm-v3-control-block tm-v3-pages-control" for="tm-v3-pages-range">
+            <span class="tm-v3-control-label">{{ i18n "corporate_v3_pages_label" }}</span>
+            <span class="tm-v3-pages-readout" data-pages-readout>7 {{ i18n "corporate_edit_pages_suffix" }}</span>
+            <input id="tm-v3-pages-range" type="range" min="4" max="9" value="7" data-pages-control>
+          </label>
+        </div>
+
+        <div class="tm-v3-product-grid">
+          <article class="tm-v3-preview-card" data-preview-card data-image-hotel="{{ $demoHotelImage }}" data-image-restaurant="{{ $demoRestaurantImage }}" data-image-agriturismo="{{ $demoAgriturismoImage }}">
+            <div class="tm-v3-browser-bar" aria-hidden="true">
+              <span></span><span></span><span></span>
+              <strong data-preview-url>hotel.terramia.demo</strong>
+            </div>
+            <div class="tm-v3-site-tabs" role="group" aria-label="Pagine generate">
+              <button class="is-active" type="button" data-page-control="home" aria-pressed="true">Home</button>
+              <button type="button" data-page-control="core" aria-pressed="false" data-page-core-label>Camere</button>
+              <button type="button" data-page-control="conversion" aria-pressed="false" data-page-conversion-label>Offerte</button>
+              <button type="button" data-page-control="contact" aria-pressed="false">SEO + contatti</button>
+            </div>
+            <div class="tm-v3-site-preview" data-site-preview>
+              <div class="tm-v3-site-topbar">
+                <strong data-site-brand>Casa Luma</strong>
+                <nav data-site-nav aria-label="Mini site navigation"></nav>
+                <span data-site-lang>IT</span>
+              </div>
+              <div class="tm-v3-site-page" data-site-page></div>
+            </div>
+            <div class="tm-v3-site-artifacts" data-site-artifacts></div>
+            <div class="tm-v3-preview-footer">
+              <span data-preview-language-line>{{ i18n "corporate_v3_translation_ready" }}</span>
+              <strong data-preview-page-list>Home / Rooms / Experiences</strong>
+            </div>
+          </article>
+
+          <aside class="tm-v3-pipeline" id="process" aria-label="{{ i18n "corporate_v3_pipeline_label" }}">
+            <div class="tm-v3-pipeline-head">
+              <span>{{ i18n "corporate_v3_pipeline_title" }}</span>
+              <strong data-stage-note>{{ i18n "corporate_v3_stage_brief_note" }}</strong>
+            </div>
+            <ol class="tm-v3-pipeline-list">
+              <li class="is-active" data-pipeline-step="brief"><span>{{ i18n "corporate_v3_stage_brief" }}</span><strong>{{ i18n "corporate_v3_stage_brief_status" }}</strong></li>
+              <li data-pipeline-step="understand"><span>{{ i18n "corporate_v3_stage_understand" }}</span><strong>{{ i18n "corporate_v3_stage_understand_status" }}</strong></li>
+              <li data-pipeline-step="copy"><span>{{ i18n "corporate_v3_stage_copy" }}</span><strong>{{ i18n "corporate_v3_stage_copy_status" }}</strong></li>
+              <li data-pipeline-step="translate"><span>{{ i18n "corporate_v3_stage_translate" }}</span><strong>{{ i18n "corporate_v3_stage_translate_status" }}</strong></li>
+              <li data-pipeline-step="hugo"><span>{{ i18n "corporate_v3_stage_hugo" }}</span><strong>{{ i18n "corporate_v3_stage_hugo_status" }}</strong></li>
+              <li data-pipeline-step="deploy"><span>{{ i18n "corporate_v3_stage_deploy" }}</span><strong>{{ i18n "corporate_v3_stage_deploy_status" }}</strong></li>
+              <li data-pipeline-step="iterate"><span>{{ i18n "corporate_v3_stage_iterate" }}</span><strong>{{ i18n "corporate_v3_stage_iterate_status" }}</strong></li>
+            </ol>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tm-v3-demo-set" aria-labelledby="tm-v3-demo-set-title">
+    <div class="tm-v3-shell tm-v3-two-col">
+      <div>
+        <p class="tm-v3-kicker tm-v3-kicker-dark">{{ i18n "corporate_v3_demo_kicker" }}</p>
+        <h2 id="tm-v3-demo-set-title">{{ i18n "corporate_v3_demo_title" }}</h2>
+        <p>{{ i18n "corporate_v3_demo_body" }}</p>
+      </div>
+      <div class="tm-v3-demo-cards">
+        <button class="tm-v3-demo-card is-active" type="button" data-demo-control="hotel" aria-pressed="true">
+          <span>{{ i18n "corporate_demo_hotel" }}</span>
+          <strong>{{ i18n "corporate_v3_hotel_story" }}</strong>
+        </button>
+        <button class="tm-v3-demo-card" type="button" data-demo-control="restaurant" aria-pressed="false">
+          <span>{{ i18n "corporate_demo_restaurant" }}</span>
+          <strong>{{ i18n "corporate_v3_restaurant_story" }}</strong>
+        </button>
+        <button class="tm-v3-demo-card" type="button" data-demo-control="agriturismo" aria-pressed="false">
+          <span>{{ i18n "corporate_demo_agriturismo" }}</span>
+          <strong>{{ i18n "corporate_v3_agriturismo_story" }}</strong>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="tm-v3-site-kits" aria-labelledby="tm-v3-site-kits-title">
+    <div class="tm-v3-shell">
+      <div class="tm-v3-section-head">
+        <p class="tm-v3-kicker tm-v3-kicker-dark">{{ i18n "corporate_v3_kits_kicker" }}</p>
+        <h2 id="tm-v3-site-kits-title">{{ i18n "corporate_v3_kits_title" }}</h2>
+        <p>{{ i18n "corporate_v3_kits_body" }}</p>
+      </div>
+      <div class="tm-v3-kit-grid">
+        <article class="tm-v3-kit-card tm-v3-kit-hotel">
+          <span>{{ i18n "corporate_demo_hotel" }}</span>
+          <strong>{{ i18n "corporate_v3_kit_hotel_title" }}</strong>
+          <ul>
+            <li>{{ i18n "corporate_v3_kit_hotel_1" }}</li>
+            <li>{{ i18n "corporate_v3_kit_hotel_2" }}</li>
+            <li>{{ i18n "corporate_v3_kit_hotel_3" }}</li>
+            <li>{{ i18n "corporate_v3_kit_hotel_4" }}</li>
+          </ul>
+        </article>
+        <article class="tm-v3-kit-card tm-v3-kit-restaurant">
+          <span>{{ i18n "corporate_demo_restaurant" }}</span>
+          <strong>{{ i18n "corporate_v3_kit_restaurant_title" }}</strong>
+          <ul>
+            <li>{{ i18n "corporate_v3_kit_restaurant_1" }}</li>
+            <li>{{ i18n "corporate_v3_kit_restaurant_2" }}</li>
+            <li>{{ i18n "corporate_v3_kit_restaurant_3" }}</li>
+            <li>{{ i18n "corporate_v3_kit_restaurant_4" }}</li>
+          </ul>
+        </article>
+        <article class="tm-v3-kit-card tm-v3-kit-agriturismo">
+          <span>{{ i18n "corporate_demo_agriturismo" }}</span>
+          <strong>{{ i18n "corporate_v3_kit_agriturismo_title" }}</strong>
+          <ul>
+            <li>{{ i18n "corporate_v3_kit_agriturismo_1" }}</li>
+            <li>{{ i18n "corporate_v3_kit_agriturismo_2" }}</li>
+            <li>{{ i18n "corporate_v3_kit_agriturismo_3" }}</li>
+            <li>{{ i18n "corporate_v3_kit_agriturismo_4" }}</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="tm-v3-language" aria-labelledby="tm-v3-language-title">
+    <div class="tm-v3-shell">
+      <div class="tm-v3-section-head">
+        <p class="tm-v3-kicker tm-v3-kicker-dark">{{ i18n "corporate_v3_language_kicker" }}</p>
+        <h2 id="tm-v3-language-title">{{ i18n "corporate_v3_language_title" }}</h2>
+        <p>{{ i18n "corporate_v3_language_body" }}</p>
+      </div>
+      <div class="tm-v3-language-board">
+        <div class="tm-v3-language-switch" role="group" aria-label="{{ i18n "corporate_v3_language_label" }}">
+          <button class="is-active" type="button" data-lang-control="IT" aria-pressed="true">IT</button>
+          <button type="button" data-lang-control="EN" aria-pressed="false">EN</button>
+          <button type="button" data-lang-control="DE" aria-pressed="false">DE</button>
+          <button type="button" data-lang-control="FR" aria-pressed="false">FR</button>
+        </div>
+        <div class="tm-v3-language-cards" data-language-cards></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tm-v3-tech" aria-labelledby="tm-v3-tech-title">
+    <div class="tm-v3-shell tm-v3-tech-grid">
+      <div class="tm-v3-section-head tm-v3-section-head-invert">
+        <p class="tm-v3-kicker">{{ i18n "corporate_v3_tech_kicker" }}</p>
+        <h2 id="tm-v3-tech-title">{{ i18n "corporate_v3_tech_title" }}</h2>
+        <p>{{ i18n "corporate_v3_tech_body" }}</p>
+      </div>
+      <div class="tm-v3-architecture" aria-label="{{ i18n "corporate_v3_architecture_label" }}">
+        <div class="tm-v3-artifact tm-v3-artifact-input"><span>01</span><strong>{{ i18n "corporate_v3_artifact_form" }}</strong><em>{{ i18n "corporate_v3_artifact_form_body" }}</em></div>
+        <div class="tm-v3-artifact"><span>02</span><strong>{{ i18n "corporate_v3_artifact_ai" }}</strong><em>{{ i18n "corporate_v3_artifact_ai_body" }}</em></div>
+        <div class="tm-v3-artifact"><span>03</span><strong>{{ i18n "corporate_v3_artifact_i18n" }}</strong><em>{{ i18n "corporate_v3_artifact_i18n_body" }}</em></div>
+        <div class="tm-v3-artifact"><span>04</span><strong>{{ i18n "corporate_v3_artifact_hugo" }}</strong><em>{{ i18n "corporate_v3_artifact_hugo_body" }}</em></div>
+        <div class="tm-v3-artifact"><span>05</span><strong>{{ i18n "corporate_v3_artifact_cloudflare" }}</strong><em>{{ i18n "corporate_v3_artifact_cloudflare_body" }}</em></div>
+        <div class="tm-v3-artifact tm-v3-artifact-loop"><span>06</span><strong>{{ i18n "corporate_v3_artifact_iterate" }}</strong><em>{{ i18n "corporate_v3_artifact_iterate_body" }}</em></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tm-v3-commerce" id="pricing" aria-labelledby="tm-v3-commerce-title">
+    <div class="tm-v3-shell tm-v3-two-col">
+      <div>
+        <p class="tm-v3-kicker tm-v3-kicker-dark">{{ i18n "corporate_v3_commerce_kicker" }}</p>
+        <h2 id="tm-v3-commerce-title">{{ i18n "corporate_v3_commerce_title" }}</h2>
+        <p>{{ i18n "corporate_v3_commerce_body" }}</p>
+      </div>
+      <div class="tm-v3-commercial-paths">
+        <div><span>{{ i18n "corporate_v3_path_demo" }}</span><strong>{{ i18n "corporate_v3_path_demo_body" }}</strong></div>
+        <div><span>{{ i18n "corporate_v3_path_launch" }}</span><strong>{{ i18n "corporate_v3_path_launch_body" }}</strong></div>
+        <div><span>{{ i18n "corporate_v3_path_automation" }}</span><strong>{{ i18n "corporate_v3_path_automation_body" }}</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tm-v3-final" aria-labelledby="tm-v3-final-title">
+    <div class="tm-v3-shell tm-v3-final-inner">
+      <div>
+        <p class="tm-v3-kicker">{{ i18n "corporate_v3_final_kicker" }}</p>
+        <h2 id="tm-v3-final-title">{{ i18n "corporate_v3_final_title" }}</h2>
+        <p>{{ i18n "corporate_v3_final_body" }}</p>
+      </div>
+      <div class="tm-v3-cta-row tm-v3-final-cta">
+        <a class="tm-v3-btn tm-v3-btn-primary" href="{{ $primaryCtaHref }}">{{ i18n "corporate_cta_primary" }}</a>
+        <a class="tm-v3-btn tm-v3-btn-secondary" href="mailto:{{ $contactEmail }}">{{ i18n "corporate_cta_secondary" }}</a>
+      </div>
+    </div>
+  </section>
+</div>

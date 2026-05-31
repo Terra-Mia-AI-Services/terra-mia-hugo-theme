@@ -1,0 +1,40 @@
+{{- /* sections_editorial.html — Terra Mia Hugo Theme.
+       Sezione cards numerate (i. ii. iii.) — sostituisce sections_grid card-Bootstrap.
+       Generic: viene usato dai recipes per renderizzare lista di "card" semantiche.
+       Input: Site.Params.sections_editorial_items (lista) o passato come context.
+       Ogni item: { num, name, desc, features (lista) }.
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $kicker := $p.sections_editorial_kicker | default "" -}}
+{{- $title := $p.sections_editorial_title | default "" -}}
+{{- $items := $p.sections_editorial_items | default slice -}}
+{{- $cols := $p.sections_editorial_cols | default 3 -}}
+{{- $gridClass := printf "tm-cards-grid--%d" $cols -}}
+
+{{- if $items }}
+<section class="tm-section" aria-labelledby="tm-sections-title">
+  {{- if or $kicker $title }}
+  <div class="tm-section__head">
+    {{- with $kicker }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    {{- with $title }}<h2 id="tm-sections-title" class="tm-section__title" data-reveal style="--reveal-delay:120">{{ . }}</h2>{{ end }}
+  </div>
+  {{- end }}
+
+  <div class="tm-cards-grid {{ $gridClass }}">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      {{- with $item.name }}<h3 class="tm-card__name">{{ . }}</h3>{{ end }}
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">
+        {{- range $item.features }}
+        <li>{{ . }}</li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

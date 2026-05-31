@@ -1,0 +1,55 @@
+{{- /* recipes/bar_caffe_trattoria/sections.html
+       Recipe Vertical: bar_caffe_trattoria (V1+ NEW 2026-05-17).
+       Reference: plans/specs/vertical-recipes.md §3.4.
+       Target: bar, caffè, bistrot, trattorie, bistronomia, pizzerie d'autore, enoteche.
+
+       Sezioni canonical:
+       i. Menu / Drinks | ii. Carta vini | iii. Filiera & materie prime
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.sections_editorial_items -}}
+
+{{- if not $items -}}
+  {{- $items = slice
+    (dict "num" "i."
+      "name" ($p.recipe_card1_name | default "Menu / Drinks")
+      "desc" ($p.recipe_card1_desc | default "Piatti o drink highlight stagionali. Cosa cuciniamo o serviamo oggi — non un PDF da scaricare, un racconto curato.")
+      "features" ($p.recipe_card1_features | default (slice "stagionalità" "piatti del giorno" "specialità" "prezzo medio"))
+    )
+    (dict "num" "ii."
+      "name" ($p.recipe_card2_name | default "Carta vini & drinks")
+      "desc" ($p.recipe_card2_desc | default "Selezione curata: produttori, regioni, abbinamenti suggeriti. Per chi vuole capire cosa beve.")
+      "features" ($p.recipe_card2_features | default (slice "selezione curata" "produttori" "abbinamenti" "calice / bottiglia"))
+    )
+    (dict "num" "iii."
+      "name" ($p.recipe_card3_name | default "Filiera & materie prime")
+      "desc" ($p.recipe_card3_desc | default "Da dove vengono i nostri ingredienti. Produttori partner, biologico, stagionalità, km 0.")
+      "features" ($p.recipe_card3_features | default (slice "km 0" "produttori" "biologico" "stagionalità"))
+    )
+  -}}
+{{- end -}}
+
+<section class="tm-section" id="dettagli" aria-labelledby="tm-recipe-title">
+  <div class="tm-section__head">
+    <p class="tm-section__kicker" data-reveal>{{ $p.sections_editorial_kicker | default "Cucina & racconto" }}</p>
+    <h2 id="tm-recipe-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.sections_editorial_title | default "Tre modi per raccontarsi al tavolo." }}
+    </h2>
+    {{- with $p.sections_editorial_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <div class="tm-cards-grid tm-cards-grid--{{ len $items }}">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      {{- with $item.name }}<h3 class="tm-card__name">{{ . }}</h3>{{ end }}
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">{{- range $item.features }}<li>{{ . }}</li>{{- end }}</ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>

@@ -1,3 +1,7 @@
+{{- /* ⚠️ DEPRECATED 2026-05-17 — Legacy Tailwind hero pre-G11 refactor.
+       Use hero_compact.html (V1+ DNA-agnostic) or hero_{dna}.html instead.
+       Mantenuto temporaneamente per backward-compat workflow legacy.
+       Vedi hero_grande.html header per dettagli completi. */ -}}
 {{- $p := .Site.Params -}}
 {{- $heroTitle := ($p.home_hero_title | default (i18n "home_hero_title")) -}}
 {{- $heroSubtitle := ($p.home_hero_subtitle | default (i18n "home_hero_subtitle")) -}}

@@ -146,4 +146,635 @@ other = "How can we help?"
 other = "Send"
 
 [contact_form_disclaimer]
-other = "We'll reply as soon as possible."
+other = "We’ll reply as soon as possible."
+
+
+[corporate_hero_kicker]
+other = "Terra Mia AI Services"
+
+[corporate_hero_title]
+other = "Hospitality websites built to sell, not just sit online."
+
+[corporate_hero_subtitle]
+other = "A flexible corporate layout for hotels, restaurants, and agritourism brands: visual demos, AI-assisted copy, IT/EN/DE/FR language paths, and fast static delivery."
+
+[corporate_hero_image_alt]
+other = "Visual preview of a Terra Mia hospitality website"
+
+[corporate_cta_primary]
+other = "Understand the product"
+
+[corporate_cta_secondary]
+other = "Talk with us"
+
+[corporate_pipeline_title]
+other = "Hero Live Pipeline"
+
+[corporate_pipeline_brief]
+other = "Brief"
+
+[corporate_pipeline_brief_body]
+other = "Audience, style, pages, and language are normalized."
+
+[corporate_pipeline_ai]
+other = "AI copy"
+
+[corporate_pipeline_ai_body]
+other = "Headlines, CTAs, and microcopy align with the brand."
+
+[corporate_pipeline_hugo]
+other = "Hugo theme"
+
+[corporate_pipeline_hugo_body]
+other = "A static, fast layout managed from one source."
+
+[corporate_pipeline_cloudflare]
+other = "Deploy"
+
+[corporate_pipeline_cloudflare_body]
+other = "Build output ready for Cloudflare Pages."
+
+[corporate_proof_hugo]
+other = "Hugo 0.147"
+
+[corporate_proof_hugo_body]
+other = "Central theme, controlled sync, and static output."
+
+[corporate_proof_cloudflare]
+other = "Cloudflare Pages"
+
+[corporate_proof_cloudflare_body]
+other = "Repeatable builds and globally served assets."
+
+[corporate_proof_multilang]
+other = "IT/EN/DE/FR"
+
+[corporate_proof_multilang_body]
+other = "Structure ready for international hospitality."
+
+[corporate_proof_seo]
+other = "SEO baseline"
+
+[corporate_proof_seo_body]
+other = "Metadata, pages, and CTAs designed for conversion."
+
+[corporate_demo_kicker]
+other = "Demo Studio"
+
+[corporate_demo_title]
+other = "Three businesses, one flexible visual system."
+
+[corporate_demo_subtitle]
+other = "Switch verticals and see how content, priorities, and imagery adapt without changing the stack."
+
+[corporate_demo_preview_label]
+other = "Live preview"
+
+[corporate_demo_hotel]
+other = "Boutique Hotel"
+
+[corporate_demo_hotel_title]
+other = "Boutique rooms, spa, and direct booking."
+
+[corporate_demo_hotel_body]
+other = "Immersive hero, room pages, premium services, and CTAs toward inquiry or booking engine."
+
+[corporate_demo_hotel_metric]
+other = "Focus: room value and direct booking"
+
+[corporate_demo_restaurant]
+other = "Restaurant"
+
+[corporate_demo_restaurant_title]
+other = "Menu, atmosphere, and full tables."
+
+[corporate_demo_restaurant_body]
+other = "The structure prioritizes cuisine, menu, reviews, and fast mobile reservations."
+
+[corporate_demo_restaurant_metric]
+other = "Focus: menu, events, and reservations"
+
+[corporate_demo_agriturismo]
+other = "Agritourism"
+
+[corporate_demo_agriturismo_title]
+other = "Rural experience, stays, and local products."
+
+[corporate_demo_agriturismo_body]
+other = "Visual storytelling for rooms, activities, territory, and weekend or group inquiries."
+
+[corporate_demo_agriturismo_metric]
+other = "Focus: experience, territory, and seasonality"
+
+[corporate_lang_kicker]
+other = "Language Flex"
+
+[corporate_lang_title]
+other = "IT/EN/DE/FR without duplicating the work."
+
+[corporate_lang_body]
+other = "Content, navigation, and localized messages stay separate, so the site remains coherent as markets and pages grow."
+
+[corporate_lang_it]
+other = "Italian"
+
+[corporate_lang_it_line]
+other = "Natural tone for local guests and trust-building content."
+
+[corporate_lang_en]
+other = "English"
+
+[corporate_lang_en_line]
+other = "Clear copy for international guests and travel intent."
+
+[corporate_lang_de]
+other = "Deutsch"
+
+[corporate_lang_de_line]
+other = "Paths shaped for DACH markets and longer stays."
+
+[corporate_lang_fr]
+other = "Francais"
+
+[corporate_lang_fr_line]
+other = "Elegant messaging for leisure travel and gastronomy."
+
+[corporate_edit_kicker]
+other = "Live Edit Simulation"
+
+[corporate_edit_title]
+other = "Tone, pages, and focus change the offer in real time."
+
+[corporate_edit_body]
+other = "The demo shows how a brief becomes a page: no backend, just static interaction that explains the workflow."
+
+[corporate_edit_tone]
+other = "Tone"
+
+[corporate_edit_tone_elegant]
+other = "Elegant"
+
+[corporate_edit_tone_elegant_copy]
+other = "The message becomes premium, concise, and oriented around perceived value."
+
+[corporate_edit_tone_warm]
+other = "Warm"
+
+[corporate_edit_tone_warm_copy]
+other = "The copy becomes more human, welcoming, and close to the story of the place."
+
+[corporate_edit_tone_direct]
+other = "Direct"
+
+[corporate_edit_tone_direct_copy]
+other = "The page moves straight to offer, trust, and mobile action."
+
+[corporate_edit_pages]
+other = "Pages"
+
+[corporate_edit_pages_suffix]
+other = "pages"
+
+[corporate_edit_focus]
+other = "Focus"
+
+[corporate_edit_focus_booking]
+other = "Booking"
+
+[corporate_edit_focus_booking_copy]
+other = "The CTAs push inquiries and direct booking."
+
+[corporate_edit_focus_events]
+other = "Events"
+
+[corporate_edit_focus_events_copy]
+other = "The structure highlights groups, special menus, and calendar moments."
+
+[corporate_edit_focus_experience]
+other = "Experience"
+
+[corporate_edit_focus_experience_copy]
+other = "The story centers the place, services, and differentiation."
+
+[corporate_edit_preview]
+other = "Site simulation"
+
+[corporate_edit_status]
+other = "Updated live"
+
+[corporate_edit_preview_title]
+other = "Proposal with 8 pages"
+
+[corporate_edit_preview_prefix]
+other = "Proposal with"
+
+[corporate_tech_kicker]
+other = "Scalability proof"
+
+[corporate_tech_title]
+other = "Static, repeatable, ready to scale."
+
+[corporate_tech_body]
+other = "The layout is designed to generate coherent, fast, maintainable sites without unnecessary runtime services."
+
+[corporate_tech_static_title]
+other = "Static first"
+
+[corporate_tech_static_body]
+other = "Generated HTML, simple assets, no API inside the theme."
+
+[corporate_tech_theme_title]
+other = "Central theme"
+
+[corporate_tech_theme_body]
+other = "One redesign propagates through the versioned Hugo archive."
+
+[corporate_tech_i18n_title]
+other = "Native i18n"
+
+[corporate_tech_i18n_body]
+other = "Localized strings and navigation without forking the layout."
+
+[corporate_tech_scale_title]
+other = "Multi-vertical"
+
+[corporate_tech_scale_body]
+other = "Hotels, restaurants, and agritourism sites share components and logic."
+
+[corporate_before_kicker]
+other = "Before / After"
+
+[corporate_before_after_title]
+other = "From dormant website to commercial machine."
+
+[corporate_before_after_body]
+other = "An aggressive slider makes the leap visible: not a fresh coat of paint, but a new sales hierarchy."
+
+[corporate_before_title]
+other = "Before"
+
+[corporate_before_item_1]
+other = "Generic homepage, tiny photos, and no clear reason to book."
+
+[corporate_before_item_2]
+other = "Menus, rooms, or offers buried in slow mobile pages."
+
+[corporate_before_item_3]
+other = "Missing translations, weak CTAs, and no path for foreign guests."
+
+[corporate_after_title]
+other = "After"
+
+[corporate_after_item_1]
+other = "Clear hero, vertical message, and immediate visual proof."
+
+[corporate_after_item_2]
+other = "Modular pages, conversion focus, and SEO-ready content."
+
+[corporate_after_item_3]
+other = "IT/EN/DE/FR language paths and a clean base for future automation."
+
+[corporate_before_after_handle]
+other = "Slide"
+
+[corporate_before_after_range]
+other = "Before after comparison"
+
+[corporate_before_after_mix]
+other = "After"
+
+[corporate_gallery_kicker]
+other = "Demo gallery"
+
+[corporate_gallery_title]
+other = "Large imagery, readable messages, no empty-template feeling."
+
+[corporate_gallery_body]
+other = "The gallery shows the real product: hospitality pages with room to breathe and mobile clarity."
+
+[corporate_gallery_feature_title]
+other = "Premium Boutique Hotel"
+
+[corporate_gallery_feature_body]
+other = "Photographic hero, services, and stay inquiry."
+
+[corporate_gallery_restaurant_title]
+other = "Restaurant with mobile conversion"
+
+[corporate_gallery_restaurant_body]
+other = "Menu, atmosphere, reviews, and table booking."
+
+[corporate_gallery_agriturismo_title]
+other = "Narrative agritourism"
+
+[corporate_gallery_agriturismo_body]
+other = "Territory, rooms, products, and experiential weekends."
+
+[corporate_chat_kicker]
+other = "AI concierge"
+
+[corporate_chat_title]
+other = "Safe Concierge active, with public rules and clear boundaries."
+
+[corporate_chat_body]
+other = "The public chatbot orients visitors without AI APIs, storage, or operational actions."
+
+[corporate_chat_bot_1]
+other = "Hi, can I help you choose a room, tasting menu, or experience?"
+
+[corporate_chat_user_1]
+other = "I would like a weekend for two with dinner."
+
+[corporate_chat_bot_2]
+other = "Guided answers, safety boundaries, and handoff to contact when needed."
+
+[corporate_chat_disabled]
+other = "Safe chat active"
+
+[corporate_chat_coming_next]
+other = "Rules-only"
+
+[corporate_final_title]
+other = "Turn your hospitality brand into a demo that already feels launch-ready."
+
+[corporate_final_body]
+other = "We start from the brief, choose vertical and tone, then generate a fast, readable showcase ready for refinement."
+
+[corporate_v3_hero_kicker]
+other = "Terra Mia product demo"
+
+[corporate_v3_hero_title]
+other = "From brief to website, with the pipeline in view"
+
+[corporate_v3_hero_subtitle]
+other = "A client fills a brief, Terra Mia reads the business goal, generates copy and pages, adapts IT/EN/DE/FR, builds Hugo and prepares Cloudflare-ready delivery. The demo stays static and safe: no live AI API, no data sent."
+
+[corporate_v3_assurance_label]
+other = "Demo guarantees"
+
+[corporate_v3_assurance_static]
+other = "Hugo static"
+
+[corporate_v3_assurance_no_api]
+other = "No live AI API"
+
+[corporate_v3_assurance_chat_disabled]
+other = "Safe Concierge active"
+
+[corporate_v3_lab_label]
+other = "Terra Mia interactive product demo"
+
+[corporate_v3_lab_topline]
+other = "Generation cockpit"
+
+[corporate_v3_status_ready]
+other = "Protected demo ready"
+
+[corporate_v3_controls_label]
+other = "Simulation controls"
+
+[corporate_v3_vertical_label]
+other = "Business"
+
+[corporate_v3_hotel_hint]
+other = "Suites, spa, direct request"
+
+[corporate_v3_restaurant_hint]
+other = "Menu, tables, events"
+
+[corporate_v3_agriturismo_hint]
+other = "Rooms, territory, products"
+
+[corporate_v3_language_label]
+other = "Translation"
+
+[corporate_v3_tone_label]
+other = "Client tone"
+
+[corporate_v3_focus_label]
+other = "Commercial focus"
+
+[corporate_v3_pages_label]
+other = "Generated pages"
+
+[corporate_v3_layout_editorial]
+other = "Editorial hotel layout"
+
+[corporate_v3_translation_ready]
+other = "Multilingual copy ready"
+
+[corporate_v3_pipeline_label]
+other = "Terra Mia pipeline"
+
+[corporate_v3_pipeline_title]
+other = "Live pipeline"
+
+[corporate_v3_stage_brief_note]
+other = "The form becomes a normalized brief."
+
+[corporate_v3_stage_brief]
+other = "Form brief"
+
+[corporate_v3_stage_brief_status]
+other = "Input"
+
+[corporate_v3_stage_understand]
+other = "AI understands business"
+
+[corporate_v3_stage_understand_status]
+other = "Intent"
+
+[corporate_v3_stage_copy]
+other = "Generating copy"
+
+[corporate_v3_stage_copy_status]
+other = "Copy"
+
+[corporate_v3_stage_translate]
+other = "Translating"
+
+[corporate_v3_stage_translate_status]
+other = "i18n"
+
+[corporate_v3_stage_hugo]
+other = "Building Hugo"
+
+[corporate_v3_stage_hugo_status]
+other = "Static"
+
+[corporate_v3_stage_deploy]
+other = "Deploying"
+
+[corporate_v3_stage_deploy_status]
+other = "Pages"
+
+[corporate_v3_stage_iterate]
+other = "Client iterates"
+
+[corporate_v3_stage_iterate_status]
+other = "Loop"
+
+[corporate_v3_demo_kicker]
+other = "Vertical demos"
+
+[corporate_v3_demo_title]
+other = "Three verticals, three site kits that actually change."
+
+[corporate_v3_demo_body]
+other = "Boutique hotel, restaurant and agritourism are not cosmetic tabs: structure, palette, headline, CTA, pages, language and commercial priority all change in the preview."
+
+[corporate_v3_hotel_story]
+other = "A premium showcase for rooms, spa and direct booking."
+
+[corporate_v3_restaurant_story]
+other = "A menu-first site built for tables, events and mobile."
+
+[corporate_v3_agriturismo_story]
+other = "A rural narrative for stays, products and territory."
+
+[corporate_v3_language_kicker]
+other = "Translation flex"
+
+[corporate_v3_language_title]
+other = "Language is not a badge: it changes the site."
+
+[corporate_v3_language_body]
+other = "IT, EN, DE and FR update headlines, CTAs and microcopy inside the demo. The pipeline separates content and layout, so clients immediately see what market expansion means."
+
+[corporate_v3_tech_kicker]
+other = "Technology proof"
+
+[corporate_v3_tech_title]
+other = "Not badges: production artifacts."
+
+[corporate_v3_tech_body]
+other = "The page shows the concrete path: brief, AI copy, multilingual content, central Hugo theme, static output and Cloudflare-ready deploy."
+
+[corporate_v3_architecture_label]
+other = "Terra Mia architecture"
+
+[corporate_v3_artifact_form]
+other = "Form payload"
+
+[corporate_v3_artifact_form_body]
+other = "Audience, style, pages, language and commercial focus arrive in a structured payload."
+
+[corporate_v3_artifact_ai]
+other = "AI content engine"
+
+[corporate_v3_artifact_ai_body]
+other = "AI turns the brief into hierarchy, sections, headlines, CTAs and microcopy."
+
+[corporate_v3_artifact_i18n]
+other = "IT / EN / DE / FR"
+
+[corporate_v3_artifact_i18n_body]
+other = "Copy is rewritten for different markets without forking the layout."
+
+[corporate_v3_artifact_hugo]
+other = "Hugo static build"
+
+[corporate_v3_artifact_hugo_body]
+other = "Central theme, versioned partials, fast and maintainable output."
+
+[corporate_v3_artifact_cloudflare]
+other = "Cloudflare Pages"
+
+[corporate_v3_artifact_cloudflare_body]
+other = "Deployment stays static, global and repeatable."
+
+[corporate_v3_artifact_iterate]
+other = "Client iteration"
+
+[corporate_v3_artifact_iterate_body]
+other = "A tone, focus or page-count edit regenerates a coherent proposal."
+
+[corporate_v3_commerce_kicker]
+other = "Commercially ready"
+
+[corporate_v3_commerce_title]
+other = "From demo to sale without changing story."
+
+[corporate_v3_commerce_body]
+other = "The page should not only impress: it should make partners and clients understand there is a repeatable, sellable and scalable delivery path."
+
+[corporate_v3_path_demo]
+other = "Demo"
+
+[corporate_v3_path_demo_body]
+other = "The client sees a credible vertical site kit, not a decorative draft."
+
+[corporate_v3_path_launch]
+other = "Launch"
+
+[corporate_v3_path_launch_body]
+other = "Hugo, SEO metadata, multilingual structure and Cloudflare Pages become the delivery base."
+
+[corporate_v3_path_automation]
+other = "Automation-ready"
+
+[corporate_v3_path_automation_body]
+other = "The system stays ready for workflows and future integrations; the public chatbot is rules-only and never touches live systems."
+
+[corporate_v3_final_kicker]
+other = "Next step"
+
+[corporate_v3_final_title]
+other = "Show it as a product, not a landing page."
+
+[corporate_v3_final_body]
+other = "We start from the brief, choose vertical and tone, then show a demo the client can correct and move toward launch."
+
+[corporate_v3_kits_kicker]
+other = "Generated site kits"
+
+[corporate_v3_kits_title]
+other = "Not a homepage: a sellable page set."
+
+[corporate_v3_kits_body]
+other = "The demo shows depth: every vertical has different pages, modules and conversion paths. The product is generating structure, not recoloring a template."
+
+[corporate_v3_kit_hotel_title]
+other = "Editorial hotel with direct booking."
+
+[corporate_v3_kit_hotel_1]
+other = "Home with availability intent, trust and CTA above the fold."
+
+[corporate_v3_kit_hotel_2]
+other = "Rooms and suites with services, differences and fast inquiry."
+
+[corporate_v3_kit_hotel_3]
+other = "Spa offers, anniversaries and longer-stay packages."
+
+[corporate_v3_kit_hotel_4]
+other = "FAQ, map, metadata and LodgingBusiness schema."
+
+[corporate_v3_kit_restaurant_title]
+other = "Mobile menu-first restaurant."
+
+[corporate_v3_kit_restaurant_1]
+other = "Home with signature dishes, reviews and table booking."
+
+[corporate_v3_kit_restaurant_2]
+other = "Editorial menu, tasting path, wine list and allergens."
+
+[corporate_v3_kit_restaurant_3]
+other = "Events, groups, wine nights and business lunch."
+
+[corporate_v3_kit_restaurant_4]
+other = "Hours, map, Restaurant schema and fast contact."
+
+[corporate_v3_kit_agriturismo_title]
+other = "Seasonal narrative agritourism."
+
+[corporate_v3_kit_agriturismo_1]
+other = "Home with territory, food, rooms and local products."
+
+[corporate_v3_kit_agriturismo_2]
+other = "Experiences with duration, value and guided inquiry."
+
+[corporate_v3_kit_agriturismo_3]
+other = "Stays for couples, families, groups and seasons."
+
+[corporate_v3_kit_agriturismo_4]
+other = "Local SEO, seasonal FAQ, map and contacts."

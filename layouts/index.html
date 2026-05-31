@@ -1,14 +1,56 @@
+{{- /* index.html — Terra Mia Hugo Theme. Router DNA + Recipe aware.
+       Refactor 2026-05-15 (post-blueprint audit).
+       Reference: plans/specs/design-dna-canonical.md + plans/specs/vertical-recipes.md.
+
+       Flow:
+       1. Hero DNA-aware (hero_editorial_dark | hero_warm_rustic | hero_editorial_cream | hero_glamping_jp)
+       2. Manifesto cream-break (optional, render solo se Site.Params.manifesto_quote settato)
+       3. Recipe-specific sections (hotel_boutique | ristorante_dautore | agriturismo
+          | camping_glamping | scuola_associazione). Fallback a sections_editorial generic
+          se recipe non definito o non riconosciuto.
+       4. Final CTA editorial (optional, render solo se Site.Params.final_cta_title settato)
+*/ -}}
 {{ define "main" }}
-{{- $layout := .Site.Params.layout | default "hero_grande" -}}
-{{- if eq $layout "hero_grande" -}}
-  {{ partial "home/hero_grande.html" . }}
-{{- else if eq $layout "hero_compatto" -}}
-  {{ partial "home/hero_compatto.html" . }}
-{{- else if eq $layout "hero_split" -}}
-  {{ partial "home/hero_split.html" . }}
-{{- else if eq $layout "hero_minimale" -}}
-  {{ partial "home/hero_minimale.html" . }}
+{{- $dna := .Site.Params.dna | default "editorial_dark" -}}
+{{- $recipe := .Site.Params.recipe | default "" -}}
+{{- $heroVariant := .Site.Params.hero_variant | default "" -}}
+{{- $recipePartial := printf "recipes/%s/sections.html" $recipe -}}
+{{- $sectionStack := .Site.Params.section_stack -}}
+
+{{- if $sectionStack -}}
+  {{ partial "template-factory/section-stack.html" . }}
 {{- else -}}
-  {{ partial "home/hero_grande.html" . }}
+
+{{/* 1. Hero — selection logic:
+       - If hero_variant = "compact" → use generic hero_compact (DNA-agnostic, smaller)
+       - If hero_variant = "split" → use generic hero_split (DNA-agnostic, 2-column with image)
+       - Otherwise → DNA-specific hero_atmospheric (default per DNA)
+       Variant pool foundation 2026-05-17 (G12). */}}
+{{- if eq $heroVariant "compact" -}}
+  {{ partial "home/hero_compact.html" . }}
+{{- else if eq $heroVariant "split" -}}
+  {{ partial "home/hero_split.html" . }}
+{{- else -}}
+  {{- $heroPartial := printf "home/hero_%s.html" $dna -}}
+  {{- if templates.Exists (printf "partials/%s" $heroPartial) -}}
+    {{ partial $heroPartial . }}
+  {{- else -}}
+    {{/* Fallback: editorial_dark è sempre disponibile */}}
+    {{ partial "home/hero_editorial_dark.html" . }}
+  {{- end -}}
+{{- end -}}
+
+{{/* 2. Manifesto (conditional) */}}
+{{ partial "home/manifesto.html" . }}
+
+{{/* 3. Recipe-specific sections (conditional, fallback a generic editorial) */}}
+{{- if and $recipe (templates.Exists (printf "partials/%s" $recipePartial)) -}}
+  {{ partial $recipePartial . }}
+{{- else -}}
+  {{ partial "home/sections_editorial.html" . }}
+{{- end -}}
+
+{{/* 4. Final CTA editorial (conditional) */}}
+{{ partial "home/final_cta_editorial.html" . }}
 {{- end -}}
 {{ end }}

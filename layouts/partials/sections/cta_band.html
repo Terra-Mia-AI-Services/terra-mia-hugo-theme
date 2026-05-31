@@ -1,0 +1,36 @@
+{{- /* sections/cta_band.html — Terra Mia Hugo Theme.
+       Section variant compositive: CTA band full-width.
+       Pattern: titolo + descrizione breve + CTA primaria + secondaria opzionale.
+       Da usare come Final CTA (sotto FAQ) o come break mid-page.
+
+       Params Site.Params:
+       - section_cta_kicker (opzionale)
+       - section_cta_title (required, "Hai 3 minuti?")
+       - section_cta_body (opzionale, paragrafo breve)
+       - section_cta_primary_label (required, "Apri il brief")
+       - section_cta_primary_href (required, "#tm-brief" default)
+       - section_cta_secondary_label (opzionale, "Scrivici")
+       - section_cta_secondary_href (opzionale, mailto)
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $title := $p.section_cta_title -}}
+{{- $primaryLabel := $p.section_cta_primary_label -}}
+
+{{- if and $title $primaryLabel }}
+<section class="tm-section tm-section--cta-band" id="cta-finale" aria-labelledby="tm-cta-band-title">
+  <div class="tm-cta-band__inner">
+    {{- with $p.section_cta_kicker }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    <h2 id="tm-cta-band-title" class="tm-cta-band__title" data-reveal style="--reveal-delay:120">{{ $title }}</h2>
+    {{- with $p.section_cta_body }}
+    <p class="tm-cta-band__body" data-reveal style="--reveal-delay:200">{{ . | safeHTML }}</p>
+    {{- end }}
+
+    <div class="tm-cta-band__actions" data-reveal style="--reveal-delay:300">
+      <a href="{{ $p.section_cta_primary_href | default "#tm-brief" }}" class="tm-hero__cta">{{ $primaryLabel }}</a>
+      {{- if $p.section_cta_secondary_label }}
+      <a href="{{ $p.section_cta_secondary_href | default "#contatti" }}" class="tm-hero__cta-text">{{ $p.section_cta_secondary_label }} →</a>
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{- end -}}

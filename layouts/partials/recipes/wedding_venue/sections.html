@@ -1,0 +1,60 @@
+{{- /* recipes/wedding_venue/sections.html
+       Recipe Vertical: wedding_venue (V1+ NEW 2026-05-17).
+       Reference: plans/specs/vertical-recipes.md §3.2.
+       Target: location matrimoni, ville matrimoniali, agriturismi/hotel con sala eventi.
+
+       Sezioni canonical:
+       i. Spazi & Allestimenti | ii. Servizi inclusi | iii. Pacchetti | iv. Recensioni coppie
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.sections_editorial_items -}}
+
+{{- if not $items -}}
+  {{- $items = slice
+    (dict "num" "i."
+      "name" ($p.recipe_card1_name | default "Spazi & Allestimenti")
+      "desc" ($p.recipe_card1_desc | default "Sale, giardini, dehors — capienza, layout, dress style, opzioni di allestimento per ogni ambiente.")
+      "features" ($p.recipe_card1_features | default (slice "capienza" "layout" "indoor/outdoor" "dress code"))
+    )
+    (dict "num" "ii."
+      "name" ($p.recipe_card2_name | default "Servizi inclusi")
+      "desc" ($p.recipe_card2_desc | default "Catering, fioraio, audio/luci, parking, accomodation per gli ospiti. Cosa entra nel pacchetto, cosa serve in più.")
+      "features" ($p.recipe_card2_features | default (slice "catering" "audio/luci" "parking" "accomodation"))
+    )
+    (dict "num" "iii."
+      "name" ($p.recipe_card3_name | default "Pacchetti & Prezzi")
+      "desc" ($p.recipe_card3_desc | default "Prezzo indicativo \"da X per Y ospiti\". Il preventivo finale viene definito in sopralluogo dopo brief.")
+      "features" ($p.recipe_card3_features | default (slice "range indicativo" "sopralluogo" "preventivo finale" "modalità pagamento"))
+    )
+    (dict "num" "iv."
+      "name" ($p.recipe_card4_name | default "Recensioni coppie")
+      "desc" ($p.recipe_card4_desc | default "Coppie reali, racconti brevi, foto con consenso scritto. Niente claim, solo storie.")
+      "features" ($p.recipe_card4_features | default (slice "testimonianze" "foto autentiche" "casi recenti" "referenze"))
+    )
+  -}}
+{{- end -}}
+
+<section class="tm-section" id="dettagli" aria-labelledby="tm-recipe-title">
+  <div class="tm-section__head">
+    <p class="tm-section__kicker" data-reveal>{{ $p.sections_editorial_kicker | default "Il vostro giorno" }}</p>
+    <h2 id="tm-recipe-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.sections_editorial_title | default "Quattro elementi per una giornata unica." }}
+    </h2>
+    {{- with $p.sections_editorial_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <div class="tm-cards-grid tm-cards-grid--{{ len $items }}">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      {{- with $item.name }}<h3 class="tm-card__name">{{ . }}</h3>{{ end }}
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">{{- range $item.features }}<li>{{ . }}</li>{{- end }}</ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>

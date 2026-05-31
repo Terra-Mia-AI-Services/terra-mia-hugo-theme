@@ -1,0 +1,48 @@
+{{- /* sections/cards.html — Terra Mia Hugo Theme.
+       Section variant compositive: cards grid (2-4 col).
+       Pattern: card multi-col con num romano + name + desc + features opzionale.
+       Equivalente al pattern usato dalle 10 recipes ma riusabile come building block.
+
+       Params Site.Params:
+       - section_cards_kicker (opzionale)
+       - section_cards_title (required)
+       - section_cards_lede (opzionale)
+       - section_cards_cols = 2 | 3 | 4 (default auto da len items)
+       - section_cards_items (array di dict {num, name, desc, features, href})
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.section_cards_items -}}
+{{- $cols := $p.section_cards_cols | default (len $items) -}}
+
+{{- if $items }}
+<section class="tm-section tm-section--cards" aria-labelledby="tm-cards-title">
+  <div class="tm-section__head">
+    {{- with $p.section_cards_kicker }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    <h2 id="tm-cards-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.section_cards_title | default "Servizi" }}
+    </h2>
+    {{- with $p.section_cards_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <div class="tm-cards-grid tm-cards-grid--{{ $cols }}">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      <h3 class="tm-card__name">
+        {{- if $item.href -}}
+        <a href="{{ $item.href }}">{{ $item.name }}</a>
+        {{- else -}}
+        {{ $item.name }}
+        {{- end -}}
+      </h3>
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">{{- range $item.features }}<li>{{ . }}</li>{{- end }}</ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>
+{{- end -}}

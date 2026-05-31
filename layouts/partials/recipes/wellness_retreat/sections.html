@@ -1,0 +1,61 @@
+{{- /* recipes/wellness_retreat/sections.html
+       Recipe Vertical: wellness_retreat (V1+ NEW 2026-05-17).
+       Reference: plans/specs/vertical-recipes.md §3.5.
+       Target: spa, centri benessere, retreat yoga/meditazione, ritiri olistici,
+               spa hotel, glamping wellness.
+
+       Sezioni canonical:
+       i. Trattamenti | ii. Programmi retreat | iii. Spazi & Architettura | iv. Cibo & Alimentazione
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.sections_editorial_items -}}
+
+{{- if not $items -}}
+  {{- $items = slice
+    (dict "num" "i."
+      "name" ($p.recipe_card1_name | default "Trattamenti & Esperienze")
+      "desc" ($p.recipe_card1_desc | default "Massaggi, terapie, sessioni yoga e meditazione. Descrizione, durata, prezzo per singolo trattamento.")
+      "features" ($p.recipe_card1_features | default (slice "massaggi" "yoga / meditazione" "terapie olistiche" "durata e prezzo"))
+    )
+    (dict "num" "ii."
+      "name" ($p.recipe_card2_name | default "Programmi retreat")
+      "desc" ($p.recipe_card2_desc | default "Pacchetti 3-7 giorni con tema: detox, mindfulness, fitness, silenzio. Include alloggio, cibo, sessioni guidate.")
+      "features" ($p.recipe_card2_features | default (slice "detox" "mindfulness" "silenzio" "pacchetti residenziali"))
+    )
+    (dict "num" "iii."
+      "name" ($p.recipe_card3_name | default "Spazi & Architettura")
+      "desc" ($p.recipe_card3_desc | default "Saune, piscine, sala yoga, aree relax. Architettura che invita alla quiete, non al consumo veloce.")
+      "features" ($p.recipe_card3_features | default (slice "saune" "piscine" "sala yoga" "aree quiete"))
+    )
+    (dict "num" "iv."
+      "name" ($p.recipe_card4_name | default "Cibo & Alimentazione")
+      "desc" ($p.recipe_card4_desc | default "Cucina retreat: plant-based, allergeni controllati, stagionale. Il pasto fa parte del percorso.")
+      "features" ($p.recipe_card4_features | default (slice "plant-based" "allergeni" "stagionale" "biologico"))
+    )
+  -}}
+{{- end -}}
+
+<section class="tm-section" id="dettagli" aria-labelledby="tm-recipe-title">
+  <div class="tm-section__head">
+    <p class="tm-section__kicker" data-reveal>{{ $p.sections_editorial_kicker | default "Il percorso wellness" }}</p>
+    <h2 id="tm-recipe-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.sections_editorial_title | default "Quattro elementi per fermarsi davvero." }}
+    </h2>
+    {{- with $p.sections_editorial_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <div class="tm-cards-grid tm-cards-grid--{{ len $items }}">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      {{- with $item.name }}<h3 class="tm-card__name">{{ . }}</h3>{{ end }}
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">{{- range $item.features }}<li>{{ . }}</li>{{- end }}</ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>

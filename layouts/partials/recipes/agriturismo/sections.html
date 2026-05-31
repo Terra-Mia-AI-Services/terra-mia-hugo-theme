@@ -1,0 +1,50 @@
+{{- /* recipes/agriturismo/sections.html
+       Recipe Vertical: agriturismo. Reference: plans/specs/vertical-recipes.md §2.3.
+
+       Sezioni canonical:
+       i. Camere/alloggi | ii. Esperienze | iii. Cucina & prodotti
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.sections_editorial_items -}}
+
+{{- if not $items -}}
+  {{- $items = slice
+    (dict "num" "i."
+      "name" ($p.recipe_card1_name | default "Camere & alloggi")
+      "desc" ($p.recipe_card1_desc | default "Stanze, appartamenti, casette indipendenti — capacità, amenities, foto stagionali.")
+      "features" ($p.recipe_card1_features | default (slice "tipologie alloggio" "capacità" "amenities" "prenotazione"))
+    )
+    (dict "num" "ii."
+      "name" ($p.recipe_card2_name | default "Esperienze")
+      "desc" ($p.recipe_card2_desc | default "Corsi cucina, vendemmia, raccolta olive, trekking, attività bambini.")
+      "features" ($p.recipe_card2_features | default (slice "stagionalità" "corsi cucina" "outdoor" "famiglia"))
+    )
+    (dict "num" "iii."
+      "name" ($p.recipe_card3_name | default "Cucina & prodotti")
+      "desc" ($p.recipe_card3_desc | default "Cosa coltiviamo, produzioni dirette, ristorazione interna.")
+      "features" ($p.recipe_card3_features | default (slice "filiera corta" "produzioni proprie" "vendita diretta" "ristorante"))
+    )
+  -}}
+{{- end -}}
+
+<section class="tm-section" id="dettagli" aria-labelledby="tm-recipe-title">
+  <div class="tm-section__head">
+    <p class="tm-section__kicker" data-reveal>{{ $p.sections_editorial_kicker | default "La nostra terra" }}</p>
+    <h2 id="tm-recipe-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.sections_editorial_title | default "Tre luoghi, una sola accoglienza." }}
+    </h2>
+  </div>
+
+  <div class="tm-cards-grid tm-cards-grid--3">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      {{- with $item.name }}<h3 class="tm-card__name">{{ . }}</h3>{{ end }}
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">{{- range $item.features }}<li>{{ . }}</li>{{- end }}</ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>

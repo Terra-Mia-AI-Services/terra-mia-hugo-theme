@@ -1,0 +1,37 @@
+{{- /* sections/proof_numbers.html — Terra Mia Hugo Theme.
+       Section variant compositive: proof numbers (3-4 big numbers/stats).
+       Pattern: number XL + label small, mobile stacked, desktop horizontal grid.
+       Da usare con dati REALI (no claim gonfiati per brand-voice rules).
+
+       Params Site.Params:
+       - section_proof_kicker (opzionale)
+       - section_proof_title (opzionale)
+       - section_proof_items (array di dict {value, label, sublabel})
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.section_proof_items -}}
+
+{{- if $items }}
+<section class="tm-section tm-section--proof-numbers" aria-labelledby="tm-proof-title">
+  {{- if or $p.section_proof_kicker $p.section_proof_title }}
+  <div class="tm-section__head">
+    {{- with $p.section_proof_kicker }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    {{- with $p.section_proof_title }}
+    <h2 id="tm-proof-title" class="tm-section__title" data-reveal style="--reveal-delay:120">{{ . }}</h2>
+    {{- end }}
+  </div>
+  {{- end }}
+
+  <div class="tm-proof-numbers tm-proof-numbers--{{ len $items }}">
+    {{- range $i, $item := $items }}
+    <article class="tm-proof-numbers__item" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      <p class="tm-proof-numbers__value">{{ $item.value }}</p>
+      <p class="tm-proof-numbers__label">{{ $item.label }}</p>
+      {{- with $item.sublabel }}
+      <p class="tm-proof-numbers__sublabel">{{ . }}</p>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>
+{{- end -}}

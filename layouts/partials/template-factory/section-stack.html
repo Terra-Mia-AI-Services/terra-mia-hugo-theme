@@ -1,0 +1,33 @@
+{{- /* Template Factory source-only section stack renderer.
+       Activated only when Site.Params.section_stack exists.
+       Keeps generated sites thin: content, config and assets only.
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $dna := $p.dna | default "editorial_dark" -}}
+
+{{ partial "template-factory/gate-compat-style.html" . }}
+{{ partial "template-factory/abovefold-proof-strip.html" . }}
+
+{{- $heroPartial := printf "home/hero_%s.html" $dna -}}
+{{- if templates.Exists (printf "partials/%s" $heroPartial) -}}
+  {{ partial $heroPartial . }}
+{{- else -}}
+  {{ partial "home/hero_editorial_dark.html" . }}
+{{- end -}}
+
+{{- range $section := $p.section_stack -}}
+  {{- $sectionPartial := printf "sections/%s.html" $section -}}
+  {{- if templates.Exists (printf "partials/%s" $sectionPartial) -}}
+    {{ partial $sectionPartial $ }}
+  {{- else if eq $section "allergens-disclosure-inline" -}}
+    {{ partial "template-factory/inline-allergens-disclosure.html" $ }}
+  {{- else if eq $section "fondo-scheda" -}}
+    {{ partial "template-factory/inline-fondo-scheda.html" $ }}
+  {{- else if eq $section "fire-safety-module" -}}
+    {{ partial "template-factory/inline-fire-safety.html" $ }}
+  {{- else -}}
+    {{ partial "template-factory/gap-placeholder.html" (dict "ctx" $ "component" $section) }}
+  {{- end -}}
+{{- end -}}
+
+{{ partial "template-factory/source-boundary.html" . }}

@@ -1,0 +1,19 @@
+<style>
+.tm-factory-boundary a,.tm-footer a,.tm-topbar a{min-height:44px;display:inline-flex;align-items:center}
+.tm-factory-boundary{border-top:1px solid currentColor}
+.tm-factory-boundary__grid{display:grid;gap:14px}
+.tm-factory-boundary__grid p{min-width:0;overflow-wrap:anywhere;word-break:break-word}
+@media (min-width:760px){.tm-factory-boundary__grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+<section class="tm-section tm-factory-boundary" id="factory-boundary" aria-labelledby="factory-boundary-title">
+  <div class="tm-section__head">
+    <p class="tm-section__kicker">Source-only boundary</p>
+    <h2 id="factory-boundary-title" class="tm-section__title">Campione sintetico, non produzione</h2>
+    <p class="tm-section__lede">Privacy in preparazione. Cookie in preparazione. Nessun cliente reale, nessun deploy, nessuna approvazione STANDARD_NOW.</p>
+  </div>
+  <div class="tm-factory-boundary__grid" id="hugo-gaps">
+    <p><strong>promotion_status</strong><br>{{ .Site.Params.promotion_status }}</p>
+    <p><strong>variant_id</strong><br>{{ .Site.Params.variant_id }}</p>
+    <p><strong>hugo_gap_policy</strong><br>{{ delimit .Site.Params.hugo_gap_policy " / " }}</p>
+  </div>
+</section>

@@ -1,0 +1,55 @@
+{{- /* hero_compact.html — Terra Mia Hugo Theme.
+       Hero compact typography-driven. Variant DNA-agnostic che usa classi
+       .tm-hero + .tm-hero--compact (geometria definita in base.css + dna-*.css).
+
+       Pattern: titolo serif italic medio + sub neutro + 1 CTA discreto.
+       NO foto fullbleed, NO mockup. Per siti dove la hero atmospheric è
+       overkill (es. studi professionali quiet, B&B familiari semplici).
+
+       Opt-in via Site.Params.hero_variant = "compact" (vedi index.html router).
+       Funziona su tutti i 4 DNA: editorial_dark, warm_rustic, editorial_cream, glamping_jp.
+
+       Reference DNA spec: plans/specs/design-dna-canonical.md §1 (variant pool).
+       Recipe compatibility: agriturismo, bb_guesthouse, bar_caffe_trattoria,
+       studio_professionale (V2), wellness_retreat low-key.
+
+       Params Site.Params:
+       - hero_eyebrow (kicker testuale, opzionale)
+       - hero_title (titolo principale, default Site.Title)
+       - hero_title_em (porzione italic accent, opzionale)
+       - hero_lede (sottotitolo body, opzionale)
+       - hero_cta_label / hero_cta_href (CTA primaria opzionale)
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $eyebrow := $p.hero_eyebrow | default $p.business_type | default "" -}}
+{{- $title := $p.hero_title | default $p.business_name | default .Site.Title -}}
+{{- $titleEm := $p.hero_title_em | default "" -}}
+{{- $lede := $p.hero_lede | default ($p.description | default "") -}}
+{{- $ctaLabel := $p.hero_cta_label | default "" -}}
+{{- $ctaHref := $p.hero_cta_href | default (cond (ne ($p.contact_email | default "") "") (printf "mailto:%s" $p.contact_email) "#contatti") -}}
+
+<section class="tm-hero tm-hero--compact" aria-labelledby="tm-hero-title">
+  <div class="tm-hero__inner">
+    {{- with $eyebrow }}
+    <p class="tm-hero__eyebrow" data-reveal>{{ . }}</p>
+    {{- end }}
+
+    <h1 id="tm-hero-title" class="tm-hero__title" data-reveal style="--reveal-delay:120">
+      {{- if $titleEm -}}
+      <span class="tm-hero__title-roman">{{ $title }}</span> <em>{{ $titleEm }}</em>
+      {{- else -}}
+      {{ $title }}
+      {{- end -}}
+    </h1>
+
+    {{- with $lede }}
+    <p class="tm-hero__lede" data-reveal style="--reveal-delay:240">{{ . | safeHTML }}</p>
+    {{- end }}
+
+    {{- if $ctaLabel }}
+    <div class="tm-hero__cta-row" data-reveal style="--reveal-delay:360">
+      <a href="{{ $ctaHref }}" class="tm-hero__cta">{{ $ctaLabel }}</a>
+    </div>
+    {{- end }}
+  </div>
+</section>

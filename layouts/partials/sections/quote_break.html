@@ -1,0 +1,40 @@
+{{- /* sections/quote_break.html — Terra Mia Hugo Theme.
+       Section variant compositive: quote break full-width.
+       Sezione cream-break (su DNA dark) o invertita per dark-break (su DNA cream).
+       Pattern manifesto-style: pullquote large + body + cite.
+
+       Params Site.Params:
+       - section_quote_kicker (opzionale, default "Manifesto")
+       - section_quote_text (required, il testo della quote)
+       - section_quote_text_em (opzionale, porzione in italic accent)
+       - section_quote_cite (opzionale, attribution: "— Nome Cognome, Ruolo")
+       - section_quote_body (opzionale, paragrafo sotto la quote)
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $quote := $p.section_quote_text -}}
+
+{{- if $quote }}
+<section class="tm-section tm-section--quote-break" aria-labelledby="tm-quote-title">
+  <div class="tm-quote-break__inner">
+    {{- with $p.section_quote_kicker | default "Manifesto" }}
+    <p class="tm-quote-break__kicker" data-reveal>{{ . }}</p>
+    {{- end }}
+
+    <blockquote class="tm-quote-break__quote" id="tm-quote-title" data-reveal style="--reveal-delay:120">
+      {{- if $p.section_quote_text_em -}}
+      {{ $quote }} <em>{{ $p.section_quote_text_em }}</em>
+      {{- else -}}
+      {{ $quote }}
+      {{- end }}
+      {{- with $p.section_quote_cite }}
+      <cite class="tm-quote-break__cite">{{ . }}</cite>
+      {{- end }}
+    </blockquote>
+
+    {{- with $p.section_quote_body }}
+    <hr class="tm-quote-break__divider" data-reveal style="--reveal-delay:200">
+    <p class="tm-quote-break__body" data-reveal style="--reveal-delay:240">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+</section>
+{{- end -}}

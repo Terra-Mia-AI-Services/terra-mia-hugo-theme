@@ -1,0 +1,51 @@
+{{- /* recipes/camping_glamping/sections.html
+       Recipe Vertical: camping/glamping. Reference: plans/specs/vertical-recipes.md §2.4.
+       Holywoods Camp è il primo cliente reale di questa recipe (W3 pilot).
+
+       Sezioni canonical:
+       i. Tipologie alloggio | ii. Esperienze | iii. Location & Territorio
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.sections_editorial_items -}}
+
+{{- if not $items -}}
+  {{- $items = slice
+    (dict "num" "i."
+      "name" ($p.recipe_card1_name | default "Tipologie alloggio")
+      "desc" ($p.recipe_card1_desc | default "Tenda safari, lodge, cabin, glamping tent — capacità, amenities, comfort.")
+      "features" ($p.recipe_card1_features | default (slice "safari tent" "lodge" "cabin" "glamping bell tent" "interior comfort"))
+    )
+    (dict "num" "ii."
+      "name" ($p.recipe_card2_name | default "Esperienze")
+      "desc" ($p.recipe_card2_desc | default "BBQ, sauna, camp fire, cooking class, escursioni guidate, attività bambini.")
+      "features" ($p.recipe_card2_features | default (slice "outdoor" "wellness" "cooking" "famiglia" "escursioni"))
+    )
+    (dict "num" "iii."
+      "name" ($p.recipe_card3_name | default "Location & Territorio")
+      "desc" ($p.recipe_card3_desc | default "Cosa c'è intorno, come arrivare, distanze chiave dalle città.")
+      "features" ($p.recipe_card3_features | default (slice "mappa" "trasporti" "attrazioni vicine" "stagionalità"))
+    )
+  -}}
+{{- end -}}
+
+<section class="tm-section" id="dettagli" aria-labelledby="tm-recipe-title">
+  <div class="tm-section__head">
+    <p class="tm-section__kicker" data-reveal>{{ $p.sections_editorial_kicker | default "L'esperienza outdoor" }}</p>
+    <h2 id="tm-recipe-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.sections_editorial_title | default "Tre modi di vivere la natura." }}
+    </h2>
+  </div>
+
+  <div class="tm-cards-grid tm-cards-grid--3">
+    {{- range $i, $item := $items }}
+    <article class="tm-card" data-reveal style="--reveal-delay:{{ mul (add $i 1) 120 }}">
+      {{- with $item.num }}<span class="tm-card__num">{{ . }}</span>{{ end }}
+      {{- with $item.name }}<h3 class="tm-card__name">{{ . }}</h3>{{ end }}
+      {{- with $item.desc }}<p class="tm-card__desc">{{ . | safeHTML }}</p>{{ end }}
+      {{- if $item.features }}
+      <ul class="tm-card__features">{{- range $item.features }}<li>{{ . }}</li>{{- end }}</ul>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</section>

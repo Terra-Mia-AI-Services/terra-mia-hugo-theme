@@ -1,0 +1,65 @@
+{{- /* hero_editorial_cream.html — Terra Mia Hugo Theme.
+       Hero typography-driven editorial cream. Port da clienti/anghiari-centro-studi
+       (acs-masthead asymmetric grid).
+       NO mockup, NO foto fullbleed — solo tipografia premium Cormorant Garamond italic XL
+       + asimmetria editoriale (5fr/3fr grid) + accent terra di Siena.
+
+       Reference: plans/specs/design-dna-canonical.md §2.3 (editorial_cream).
+       Target: cultural institutions, cantine d'autore, agriturismi premium, atelier/editori.
+
+       Note: usa classi `.acs-masthead*` definite in dna-editorial-cream.css.
+       Originariamente naming cultural_institution-recipe-specific (Anghiari Centro Studi),
+       riusabile per ogni sito editorial_cream finché lo styling resta coerente.
+
+       Params Site.Params:
+       - hero_eyebrow (kicker testuale, opzionale)
+       - hero_title (titolo principale, default Site.Title)
+       - hero_title_em (porzione italic accent terra, opzionale)
+       - hero_subtitle (sottotitolo body, opzionale; fallback description)
+       - hero_cta_label / hero_cta_href (CTA primaria opzionale)
+       - hero_meta (paragrafo meta sotto subtitle, opzionale)
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $eyebrow := $p.hero_eyebrow | default $p.business_type | default "" -}}
+{{- $title := $p.hero_title | default $p.business_name | default .Site.Title -}}
+{{- $titleEm := $p.hero_title_em | default "" -}}
+{{- $subtitle := $p.hero_subtitle | default ($p.description | default "") -}}
+{{- $ctaLabel := $p.hero_cta_label | default "" -}}
+{{- $ctaHref := $p.hero_cta_href | default (cond (ne ($p.contact_email | default "") "") (printf "mailto:%s" $p.contact_email) "#contatti") -}}
+{{- $meta := $p.hero_meta | default "" -}}
+
+<section class="acs-masthead" aria-labelledby="tm-hero-title">
+  <div class="acs-masthead__inner">
+    <div>
+      {{- with $eyebrow }}
+      <p class="acs-masthead__kicker" data-reveal>{{ . }}</p>
+      {{- end }}
+
+      <h1 id="tm-hero-title" class="acs-masthead__title" data-reveal style="--reveal-delay:120">
+        {{- if $titleEm -}}
+        {{ $title }} <em>{{ $titleEm }}</em>
+        {{- else -}}
+        {{ $title }}
+        {{- end -}}
+      </h1>
+    </div>
+
+    {{- if or $subtitle $meta $ctaLabel }}
+    <div data-reveal style="--reveal-delay:240">
+      {{- with $subtitle }}
+      <p class="acs-masthead__subtitle">{{ . | safeHTML }}</p>
+      {{- end }}
+
+      {{- with $meta }}
+      <p class="acs-masthead__meta">{{ . | safeHTML }}</p>
+      {{- end }}
+
+      {{- if $ctaLabel }}
+      <p class="acs-masthead__meta" style="margin-top:1.2rem">
+        <a href="{{ $ctaHref }}" class="acs-link">{{ $ctaLabel }} →</a>
+      </p>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+</section>

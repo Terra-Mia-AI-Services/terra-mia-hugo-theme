@@ -1,0 +1,58 @@
+{{- /* sections/timeline.html — Terra Mia Hugo Theme.
+       Section variant compositive: process timeline (5 stadi default).
+       Pattern: numerazione romana + step title + step desc, mobile stacked,
+       desktop horizontal con connessione visiva.
+
+       Params Site.Params:
+       - section_timeline_kicker (opzionale, default "Il processo")
+       - section_timeline_title (default "Come lavoriamo")
+       - section_timeline_lede (opzionale)
+       - section_timeline_steps (array di dict {num, title, desc, owner})
+         dove owner = "machine" | "client" per styling differenziato
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $steps := $p.section_timeline_steps -}}
+
+{{- if not $steps -}}
+  {{- $steps = slice
+    (dict "num" "01" "title" "Brief"
+      "desc" "Compili un form in 3 minuti: tipo di struttura, pubblico, priorità."
+      "owner" "client")
+    (dict "num" "02" "title" "Struttura"
+      "desc" "Mappa pagine, sezioni, CTA per ogni lingua. Generata dal blueprint."
+      "owner" "machine")
+    (dict "num" "03" "title" "Contenuti"
+      "desc" "Copy IT nativa + traduzioni AI con QA gate. Foto cliente integrate."
+      "owner" "machine")
+    (dict "num" "04" "title" "Revisione"
+      "desc" "Una call insieme. Modifiche guidate, decisioni di tono, dettagli identitari."
+      "owner" "client")
+    (dict "num" "05" "title" "Live"
+      "desc" "Deploy Cloudflare Pages. Repository tuo, dominio tuo. Niente lock-in."
+      "owner" "machine")
+  -}}
+{{- end -}}
+
+<section class="tm-section tm-section--timeline" id="processo" aria-labelledby="tm-timeline-title">
+  <div class="tm-section__head">
+    {{- with $p.section_timeline_kicker | default "Il processo" }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    <h2 id="tm-timeline-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.section_timeline_title | default "Come lavoriamo" }}
+    </h2>
+    {{- with $p.section_timeline_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <ol class="tm-timeline" aria-label="Fasi del processo">
+    {{- range $i, $step := $steps }}
+    <li class="tm-timeline__step tm-timeline__step--{{ $step.owner | default "machine" }}" data-reveal style="--reveal-delay:{{ mul (add $i 1) 100 }}">
+      <span class="tm-timeline__num" aria-hidden="true">{{ $step.num }}</span>
+      <div class="tm-timeline__body">
+        <h3 class="tm-timeline__title">{{ $step.title }}</h3>
+        <p class="tm-timeline__desc">{{ $step.desc | safeHTML }}</p>
+      </div>
+    </li>
+    {{- end }}
+  </ol>
+</section>

@@ -1,0 +1,48 @@
+{{- if and .Site.Params.sales_chat_enabled (ne .Site.Params.sales_chat_mode "disabled") -}}
+{{- $locale := (.Site.Language.Lang | default "it") -}}
+{{- $contactEmail := (.Site.Params.contact_email | default "terra.mia.ai@gmail.com") -}}
+{{- $maxChars := (.Site.Params.sales_chat_max_chars | default 260) -}}
+<div
+  id="sales-chat-widget"
+  class="tm-safe-chat"
+  data-safe-chat
+  data-locale="{{ $locale }}"
+  data-mode="{{ .Site.Params.sales_chat_mode | default "safe_static" }}"
+  data-provider="{{ .Site.Params.sales_chat_provider | default "local_rules_only" }}"
+  data-model="{{ .Site.Params.sales_chat_model | default "terra-mia-safe-concierge-v1" }}"
+  data-max-chars="{{ $maxChars }}"
+  data-contact-email="{{ $contactEmail }}"
+>
+  <button class="tm-safe-chat__launcher" type="button" data-chat-toggle aria-expanded="false" aria-controls="tm-safe-chat-panel">
+    <span>Terra Mia</span>
+    <strong data-chat-launch-label>Safe Concierge</strong>
+  </button>
+
+  <section class="tm-safe-chat__panel" id="tm-safe-chat-panel" role="dialog" aria-modal="false" aria-labelledby="tm-safe-chat-title" hidden>
+    <header class="tm-safe-chat__header">
+      <div>
+        <span class="tm-safe-chat__kicker" data-chat-kicker>Rules-only assistant</span>
+        <h2 id="tm-safe-chat-title" data-chat-title>Safe Concierge</h2>
+      </div>
+      <button class="tm-safe-chat__close" type="button" data-chat-close aria-label="Close chat">Close</button>
+    </header>
+
+    <div class="tm-safe-chat__guardrails" data-chat-guardrails>
+      <strong>No API</strong>
+      <span>No secrets</span>
+      <span>No live deploy</span>
+    </div>
+
+    <div class="tm-safe-chat__log" data-chat-log aria-live="polite"></div>
+    <div class="tm-safe-chat__chips" data-chat-chips></div>
+
+    <form class="tm-safe-chat__form" data-chat-form>
+      <label class="sr-only" for="tm-safe-chat-input" data-chat-input-label>Ask Terra Mia</label>
+      <input id="tm-safe-chat-input" data-chat-input type="text" maxlength="{{ $maxChars }}" autocomplete="off" spellcheck="true">
+      <button type="submit" data-chat-send>Send</button>
+    </form>
+    <p class="tm-safe-chat__limit" data-chat-limit></p>
+  </section>
+</div>
+<script src="/js/sales-chat.js" defer></script>
+{{- end -}}

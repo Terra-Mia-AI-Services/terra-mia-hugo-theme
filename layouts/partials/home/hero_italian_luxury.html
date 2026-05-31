@@ -1,0 +1,68 @@
+{{- /* hero_italian_luxury.html — Terra Mia Hugo Theme.
+       Hero typography-driven italian luxury cream + gold quiet.
+       Decisione canonical D8 opzione (A) 2026-05-17: 4a DNA promossa.
+
+       Pattern: Cormorant Garamond italic XL + Inter sans body,
+       cream warm dominante, gold quiet accent (NO ostentazione).
+       Reference brand: Borgo San Felice, Passalacqua, Castiglion del Bosco, Aman.
+
+       Reference DNA spec: plans/specs/design-dna-canonical.md §2.4.
+       Recipe compatibility: hotel_boutique, cantina_winery, wedding_venue,
+       wellness_retreat — sempre per clienti premium con tono italian quiet luxury.
+
+       Selettori `.tm-hero*` standardizzati come gli altri DNA.
+
+       Params Site.Params:
+       - hero_eyebrow (kicker, opzionale)
+       - hero_title (titolo principale, default Site.Title)
+       - hero_title_em (porzione italic accent gold-deep, opzionale)
+       - hero_lede (sottotitolo body)
+       - hero_cta_label / hero_cta_href (CTA primaria)
+       - hero_cta_secondary_label / hero_cta_secondary_href (CTA testo opzionale)
+       - hero_signals (array proof chips opzionale)
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $eyebrow := $p.hero_eyebrow | default $p.business_type | default "" -}}
+{{- $title := $p.hero_title | default $p.business_name | default .Site.Title -}}
+{{- $titleEm := $p.hero_title_em | default "" -}}
+{{- $lede := $p.hero_lede | default ($p.description | default "") -}}
+{{- $ctaLabel := $p.hero_cta_label | default "Apri il dialogo" -}}
+{{- $ctaHref := $p.hero_cta_href | default (cond (ne ($p.contact_email | default "") "") (printf "mailto:%s" $p.contact_email) "#contatti") -}}
+{{- $ctaSecondaryLabel := $p.hero_cta_secondary_label | default "" -}}
+{{- $ctaSecondaryHref := $p.hero_cta_secondary_href | default "" -}}
+{{- $signals := $p.hero_signals -}}
+
+<section class="tm-hero" aria-labelledby="tm-hero-title">
+  <div class="tm-hero__inner">
+    {{- with $eyebrow }}
+    <p class="tm-kicker tm-hero__eyebrow" data-reveal>{{ . }}</p>
+    {{- end }}
+
+    <h1 id="tm-hero-title" class="tm-hero__title" data-reveal style="--reveal-delay:120">
+      {{- if $titleEm -}}
+      <span class="tm-hero__title-roman">{{ $title }}</span> <em>{{ $titleEm }}</em>
+      {{- else -}}
+      {{ $title }}
+      {{- end -}}
+    </h1>
+
+    {{- with $lede }}
+    <p class="tm-hero__lede" data-reveal style="--reveal-delay:240">{{ . | safeHTML }}</p>
+    {{- end }}
+
+    <div class="tm-hero__cta-row" data-reveal style="--reveal-delay:360">
+      <a href="{{ $ctaHref }}" class="tm-button tm-button--dark">{{ $ctaLabel }}</a>
+      {{- if $ctaSecondaryLabel }}
+      <a href="{{ $ctaSecondaryHref }}" class="tm-link-quiet">{{ $ctaSecondaryLabel }}</a>
+      {{- end }}
+    </div>
+
+    {{- if $signals }}
+    <div class="tm-hero__signals" data-reveal style="--reveal-delay:480" aria-label="Caratteristiche chiave">
+      {{- range $signals }}
+      <span class="tm-hero__signal">{{ . }}</span>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+</section>

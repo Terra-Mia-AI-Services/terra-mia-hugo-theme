@@ -1,0 +1,23 @@
+{{- /* final_cta_editorial.html — Terra Mia Hugo Theme.
+       CTA finale editorial sobrio (rewrite da final_cta.html legacy).
+       NO full-width colorato. Tipografia + bottone pill discreto.
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $title := $p.final_cta_title | default "" -}}
+{{- $body := $p.final_cta_body | default "" -}}
+{{- $ctaLabel := $p.final_cta_label | default "Contatti" -}}
+{{- $ctaHref := $p.final_cta_href | default (cond (ne ($p.contact_email | default "") "") (printf "mailto:%s" $p.contact_email) "#contatti") -}}
+
+{{- if $title }}
+<section class="tm-section" aria-labelledby="tm-final-cta-title">
+  <div class="tm-section__head" data-reveal>
+    <h2 id="tm-final-cta-title" class="tm-section__title">{{ $title }}</h2>
+    {{- with $body }}
+    <p class="tm-section__lede">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+  <div style="text-align: center;" data-reveal style="--reveal-delay:120">
+    <a href="{{ $ctaHref }}" class="tm-btn">{{ $ctaLabel }}</a>
+  </div>
+</section>
+{{- end }}

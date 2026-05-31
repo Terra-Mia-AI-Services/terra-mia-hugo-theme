@@ -1,0 +1,49 @@
+{{- /* sections/feature_list.html — Terra Mia Hugo Theme.
+       Section variant compositive: feature list con check/bullet.
+       Pattern: lista di feature/inclusioni con icona check + label + descrizione opzionale.
+       Da usare per "Cosa è incluso", "Servizi", "Inclusioni pacchetto".
+
+       Params Site.Params:
+       - section_features_kicker (opzionale)
+       - section_features_title (default "Cosa è incluso")
+       - section_features_lede (opzionale)
+       - section_features_items (array di dict {title, desc, icon})
+       - section_features_layout = "single-col" | "two-col" (default "two-col")
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.section_features_items -}}
+{{- $layout := $p.section_features_layout | default "two-col" -}}
+
+{{- if $items }}
+<section class="tm-section tm-section--features" aria-labelledby="tm-features-title">
+  <div class="tm-section__head">
+    {{- with $p.section_features_kicker }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    <h2 id="tm-features-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.section_features_title | default "Cosa è incluso" }}
+    </h2>
+    {{- with $p.section_features_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <ul class="tm-feature-list tm-feature-list--{{ $layout }}">
+    {{- range $i, $item := $items }}
+    <li class="tm-feature-list__item" data-reveal style="--reveal-delay:{{ mul $i 60 }}">
+      <span class="tm-feature-list__icon" aria-hidden="true">
+        {{- if $item.icon -}}
+        {{ $item.icon | safeHTML }}
+        {{- else -}}
+        ✓
+        {{- end -}}
+      </span>
+      <div class="tm-feature-list__body">
+        <h3 class="tm-feature-list__title">{{ $item.title }}</h3>
+        {{- with $item.desc }}
+        <p class="tm-feature-list__desc">{{ . | safeHTML }}</p>
+        {{- end }}
+      </div>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end -}}

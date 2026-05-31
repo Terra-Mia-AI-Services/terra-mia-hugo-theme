@@ -1,0 +1,55 @@
+{{- /* sections/gallery.html — Terra Mia Hugo Theme.
+       Section variant compositive: gallery masonry/grid photo.
+       Riusabile cross-recipe. DNA-agnostic (usa .tm-section + .tm-gallery classes).
+
+       Params Site.Params:
+       - section_gallery_kicker (opzionale)
+       - section_gallery_title (default "Galleria")
+       - section_gallery_lede (opzionale)
+       - section_gallery_items (array di dict {src, alt, caption})
+
+       OPPURE param diretti per fallback:
+       - gallery_item1_src + gallery_item1_alt + gallery_item1_caption
+         (fino a 8 items)
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.section_gallery_items -}}
+
+{{- if not $items -}}
+  {{- $items = slice -}}
+  {{- range $i := seq 1 8 -}}
+    {{- $src := index $p (printf "gallery_item%d_src" $i) -}}
+    {{- if $src -}}
+      {{- $items = $items | append (dict
+        "src" $src
+        "alt" (index $p (printf "gallery_item%d_alt" $i) | default "")
+        "caption" (index $p (printf "gallery_item%d_caption" $i) | default "")
+      ) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $items }}
+<section class="tm-section tm-section--gallery" id="galleria" aria-labelledby="tm-gallery-title">
+  <div class="tm-section__head">
+    {{- with $p.section_gallery_kicker }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    <h2 id="tm-gallery-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.section_gallery_title | default "Galleria" }}
+    </h2>
+    {{- with $p.section_gallery_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <div class="tm-gallery tm-gallery--grid">
+    {{- range $i, $item := $items }}
+    <figure class="tm-gallery__figure" data-reveal style="--reveal-delay:{{ mul $i 80 }}">
+      <img src="{{ $item.src | relURL }}" alt="{{ $item.alt }}" loading="lazy" decoding="async">
+      {{- with $item.caption }}
+      <figcaption class="tm-gallery__caption">{{ . }}</figcaption>
+      {{- end }}
+    </figure>
+    {{- end }}
+  </div>
+</section>
+{{- end -}}

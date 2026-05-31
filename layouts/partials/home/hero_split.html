@@ -1,56 +1,94 @@
+{{- /* hero_split.html — Terra Mia Hugo Theme.
+       Hero split 2-column layout. Variant DNA-agnostic che usa classi
+       .tm-hero + .tm-hero--split (grid 5fr/3fr definita in base.css + dna-*.css).
+
+       Refactor 2026-05-17: rewrite da legacy Tailwind-based a vanilla CSS
+       DNA-aware. Riferimento: plans/ops/blueprint-engine-audit-2026-05-15.md.
+
+       Pattern: testo sx (eyebrow + h1 + lede + CTA) | immagine/SVG dx.
+       Per siti che hanno asset visivo forte (foto hero, SVG brand) e
+       devono mostrarlo già in hero senza overlay full-bleed.
+
+       Opt-in via Site.Params.hero_variant = "split" (vedi index.html router).
+       Funziona su tutti i 4 DNA. Migliore con editorial_dark + editorial_cream
+       (asymmetric editorial). Meno adatto a glamping_jp (preferisce
+       typography-only wabi-sabi).
+
+       Reference DNA spec: plans/specs/design-dna-canonical.md §1 (variant pool).
+       Recipe compatibility: hotel_boutique, cantina_winery, wedding_venue
+       (con foto venue), wellness_retreat (foto spa).
+
+       Params Site.Params:
+       - hero_eyebrow, hero_title, hero_title_em (come hero_atmospheric)
+       - hero_lede, hero_cta_label, hero_cta_href, hero_cta_secondary_label/href
+       - hero_image (path immagine destra) OR hero_svg (path SVG destra)
+       - hero_image_alt (alt text, obbligatorio se hero_image)
+       - hero_signals (array proof chips, opzionale)
+*/ -}}
 {{- $p := .Site.Params -}}
-{{- $heroTitle := ($p.home_hero_title | default (i18n "home_hero_title")) -}}
-{{- $heroSubtitle := ($p.home_hero_subtitle | default (i18n "home_hero_subtitle")) -}}
+{{- $eyebrow := $p.hero_eyebrow | default $p.business_type | default "" -}}
+{{- $title := $p.hero_title | default $p.business_name | default .Site.Title -}}
+{{- $titleEm := $p.hero_title_em | default "" -}}
+{{- $lede := $p.hero_lede | default ($p.description | default "") -}}
+{{- $ctaLabel := $p.hero_cta_label | default "Contattaci" -}}
+{{- $ctaHref := $p.hero_cta_href | default (cond (ne ($p.contact_email | default "") "") (printf "mailto:%s" $p.contact_email) "#contatti") -}}
+{{- $ctaSecondaryLabel := $p.hero_cta_secondary_label | default "" -}}
+{{- $ctaSecondaryHref := $p.hero_cta_secondary_href | default "" -}}
+{{- $heroImage := $p.hero_image | default "" -}}
+{{- $heroSvg := $p.hero_svg | default "" -}}
+{{- $heroImageAlt := $p.hero_image_alt | default "" -}}
+{{- $signals := $p.hero_signals -}}
 
-<section class="relative bg-gray-50 border-b border-gray-200/70">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
-    <div class="grid gap-8 lg:grid-cols-12 lg:items-stretch">
-      <div class="lg:col-span-7">
-        <div class="h-full rounded-3xl border border-gray-200 bg-white p-8 sm:p-10 shadow-sm">
-          <p class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-            {{ i18n "home_kicker" }}
-          </p>
-          <h1 class="mt-4 text-4xl font-heading font-semibold tracking-tight text-gray-900 sm:text-5xl">
-            {{ $heroTitle }}
-          </h1>
-          {{ with $heroSubtitle }}
-          <p class="mt-4 text-lg text-gray-600 leading-relaxed">
-            {{ . }}
-          </p>
-          {{ end }}
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a href="{{ relLangURL "contact/" }}" class="inline-flex items-center justify-center rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-95 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">
-              {{ i18n "home_final_cta" }}
-            </a>
-            <a href="{{ relLangURL "about/" }}" class="inline-flex items-center justify-center rounded-2xl bg-gray-900 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-95 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/30">
-              {{ i18n "home_card_about_title" }}
-            </a>
-          </div>
-        </div>
+<section class="tm-hero tm-hero--split" aria-labelledby="tm-hero-title">
+  <div class="tm-hero__inner tm-hero__inner--split">
+
+    <div class="tm-hero__text">
+      {{- with $eyebrow }}
+      <p class="tm-hero__eyebrow" data-reveal>{{ . }}</p>
+      {{- end }}
+
+      <h1 id="tm-hero-title" class="tm-hero__title" data-reveal style="--reveal-delay:120">
+        {{- if $titleEm -}}
+        <span class="tm-hero__title-roman">{{ $title }}</span> <em>{{ $titleEm }}</em>
+        {{- else -}}
+        {{ $title }}
+        {{- end -}}
+      </h1>
+
+      {{- with $lede }}
+      <p class="tm-hero__lede" data-reveal style="--reveal-delay:240">{{ . | safeHTML }}</p>
+      {{- end }}
+
+      <div class="tm-hero__cta-row" data-reveal style="--reveal-delay:360">
+        <a href="{{ $ctaHref }}" class="tm-hero__cta">{{ $ctaLabel }}</a>
+        {{- if $ctaSecondaryLabel }}
+        <a href="{{ $ctaSecondaryHref }}" class="tm-hero__cta-text">{{ $ctaSecondaryLabel }} →</a>
+        {{- end }}
       </div>
 
-      <div class="lg:col-span-5">
-        <div class="h-full rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
-          <h2 class="text-base font-semibold text-gray-900">{{ i18n "home_highlights_title" }}</h2>
-          <dl class="mt-5 grid gap-4">
-            <div class="rounded-2xl bg-gray-50 p-4">
-              <dt class="text-sm font-semibold text-gray-900">{{ i18n "home_highlight_1_title" }}</dt>
-              <dd class="mt-1 text-sm text-gray-600">{{ i18n "home_highlight_1_body" }}</dd>
-            </div>
-            <div class="rounded-2xl bg-gray-50 p-4">
-              <dt class="text-sm font-semibold text-gray-900">{{ i18n "home_highlight_2_title" }}</dt>
-              <dd class="mt-1 text-sm text-gray-600">{{ i18n "home_highlight_2_body" }}</dd>
-            </div>
-            <div class="rounded-2xl bg-gray-50 p-4">
-              <dt class="text-sm font-semibold text-gray-900">{{ i18n "home_highlight_3_title" }}</dt>
-              <dd class="mt-1 text-sm text-gray-600">{{ i18n "home_highlight_3_body" }}</dd>
-            </div>
-          </dl>
-        </div>
+      {{- if $signals }}
+      <div class="tm-hero__signals" data-reveal style="--reveal-delay:480" aria-label="Caratteristiche chiave">
+        {{- range $signals }}
+        <span class="tm-hero__signal">{{ . }}</span>
+        {{- end }}
       </div>
+      {{- end }}
     </div>
+
+    {{- if or $heroImage $heroSvg }}
+    <div class="tm-hero__visual" data-reveal style="--reveal-delay:300">
+      {{- if $heroSvg -}}
+      {{- $heroSvgFile := resources.Get $heroSvg -}}
+      {{- if $heroSvgFile -}}
+      {{ $heroSvgFile.Content | safeHTML }}
+      {{- else -}}
+      <img src="{{ $heroSvg | relURL }}" alt="{{ $heroImageAlt }}" loading="eager" decoding="async">
+      {{- end }}
+      {{- else if $heroImage -}}
+      <img src="{{ $heroImage | relURL }}" alt="{{ $heroImageAlt }}" loading="eager" decoding="async">
+      {{- end }}
+    </div>
+    {{- end }}
+
   </div>
 </section>
-
-{{ partial "home/sections_grid.html" . }}
-{{ partial "home/final_cta.html" . }}

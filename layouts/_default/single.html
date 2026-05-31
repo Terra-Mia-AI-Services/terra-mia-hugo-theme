@@ -1,4 +1,125 @@
 {{ define "main" }}
+{{- if eq (.Site.Params.layout | default "") "corporate" -}}
+{{- $contactEmail := (.Site.Params.contact_email | default "terra.mia.ai@gmail.com") -}}
+<article class="tm-corporate-page tm-corporate-page-{{ .Params.page_kind | default "standard" | urlize }}">
+  <section class="tm-page-hero" aria-labelledby="tm-page-title">
+    <div class="tm-page-orb tm-page-orb-a" aria-hidden="true"></div>
+    <div class="tm-page-orb tm-page-orb-b" aria-hidden="true"></div>
+    <div class="tm-page-shell tm-page-hero-grid">
+      <div>
+        {{ with .Params.eyebrow }}<p class="tm-page-eyebrow">{{ . }}</p>{{ end }}
+        <h1 id="tm-page-title">{{ .Title }}</h1>
+        {{ with .Description }}<p class="tm-page-lede">{{ . }}</p>{{ end }}
+        {{ with .Params.hero_badges }}
+        <div class="tm-page-badges" aria-label="Highlights">
+          {{ range . }}<span>{{ . }}</span>{{ end }}
+        </div>
+        {{ end }}
+      </div>
+      <aside class="tm-page-proof-panel" aria-label="Page summary">
+        {{ with .Params.proof_label }}<span>{{ . }}</span>{{ end }}
+        {{ with .Params.proof_title }}<strong>{{ . }}</strong>{{ end }}
+        {{ with .Params.proof_body }}<p>{{ . }}</p>{{ end }}
+      </aside>
+    </div>
+  </section>
+
+  {{ with .Content }}
+  <section class="tm-page-content-section">
+    <div class="tm-page-shell tm-page-prose">
+      {{ . }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.page_flow }}
+  <section class="tm-page-band tm-page-band-flow">
+    <div class="tm-page-shell">
+      <div class="tm-page-flow">
+        {{ range . }}
+        <article>
+          {{ with .label }}<span>{{ . }}</span>{{ end }}
+          <h2>{{ .title }}</h2>
+          <p>{{ .body }}</p>
+        </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.page_cards }}
+  <section class="tm-page-band">
+    <div class="tm-page-shell">
+      <div class="tm-page-card-grid">
+        {{ range . }}
+        <article class="tm-page-card">
+          {{ with .label }}<span>{{ . }}</span>{{ end }}
+          <h2>{{ .title }}</h2>
+          <p>{{ .body }}</p>
+          {{ with .items }}
+          <ul>
+            {{ range . }}<li>{{ . }}</li>{{ end }}
+          </ul>
+          {{ end }}
+        </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.page_specs }}
+  <section class="tm-page-band tm-page-band-dark">
+    <div class="tm-page-shell tm-page-spec-grid">
+      {{ range . }}
+      <article>
+        {{ with .label }}<span>{{ . }}</span>{{ end }}
+        <strong>{{ .title }}</strong>
+        <p>{{ .body }}</p>
+      </article>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.page_sections }}
+  <section class="tm-page-band">
+    <div class="tm-page-shell tm-page-detail-stack">
+      {{ range . }}
+      <article class="tm-page-detail">
+        <div>
+          {{ with .label }}<span>{{ . }}</span>{{ end }}
+          <h2>{{ .title }}</h2>
+        </div>
+        <div>
+          <p>{{ .body }}</p>
+          {{ with .items }}
+          <ul>
+            {{ range . }}<li>{{ . }}</li>{{ end }}
+          </ul>
+          {{ end }}
+        </div>
+      </article>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  <section class="tm-page-cta">
+    <div class="tm-page-shell tm-page-cta-inner">
+      <div>
+        <span>{{ .Params.cta_label | default "Next step" }}</span>
+        <strong>{{ .Params.cta_title | default "Parliamo del sito che vuoi vendere." }}</strong>
+      </div>
+      <div class="tm-page-cta-actions">
+        <a class="tm-v3-btn tm-v3-btn-primary" href="{{ .Site.Home.RelPermalink }}#demo">{{ .Params.cta_primary | default "Apri la demo" }}</a>
+        <a class="tm-v3-btn tm-v3-btn-secondary" href="mailto:{{ $contactEmail }}">{{ .Params.cta_secondary | default "Scrivici" }}</a>
+      </div>
+    </div>
+  </section>
+</article>
+{{- else -}}
 <article class="py-16">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <header class="mb-10">
@@ -13,4 +134,5 @@
     </div>
   </div>
 </article>
+{{- end -}}
 {{ end }}

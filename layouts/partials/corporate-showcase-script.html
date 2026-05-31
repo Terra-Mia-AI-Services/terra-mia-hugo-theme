@@ -1,0 +1,315 @@
+<script>
+  (function () {
+    var root = document.querySelector('[data-product-demo]');
+    if (!root) return;
+
+    var uiLocale = (root.dataset.locale || 'it').toLowerCase();
+    var ui = uiLocale === 'en' ? {
+      ready: 'Protected demo running',
+      pages: 'pages',
+      selectedLanguage: 'Selected language',
+      pagePrefix: 'Generated pages',
+      files: 'Generated artifacts',
+      metadata: 'SEO metadata',
+      stageNotes: {
+        brief: 'Form payload becomes a usable production brief.',
+        understand: 'Business type, intent and offer hierarchy are mapped.',
+        copy: 'Copy, sections and CTAs regenerate for the selected goal.',
+        translate: 'Every page switches voice across IT / EN / DE / FR.',
+        hugo: 'The page set becomes Hugo content plus central theme partials.',
+        deploy: 'Output is static, reviewed and Cloudflare-ready.',
+        iterate: 'Client edits loop back into the same generation path.'
+      }
+    } : {
+      ready: 'Demo protetta in esecuzione',
+      pages: 'pagine',
+      selectedLanguage: 'Lingua selezionata',
+      pagePrefix: 'Pagine generate',
+      files: 'Artefatti generati',
+      metadata: 'Metadata SEO',
+      stageNotes: {
+        brief: 'Il form diventa un brief chiaro e utilizzabile.',
+        understand: 'Business, pubblico e priorità commerciale vengono mappati.',
+        copy: 'Testi, sezioni e CTA si aggiornano sull’obiettivo scelto.',
+        translate: 'Headline, CTA e microcopy cambiano in IT / EN / DE / FR.',
+        hugo: 'Il set di pagine diventa contenuto Hugo dentro il tema centrale.',
+        deploy: 'Output statico, verificato e pronto per Cloudflare Pages.',
+        iterate: 'Le modifiche del cliente rigenerano una proposta coerente.'
+      }
+    };
+
+    var state = { demo: 'hotel', lang: 'IT', tone: 'elegant', focus: 'booking', pages: 7, page: 'home', stage: 0 };
+    var stages = ['brief', 'understand', 'copy', 'translate', 'hugo', 'deploy', 'iterate'];
+    var languageNames = { IT: 'Italiano', EN: 'English', DE: 'Deutsch', FR: 'Français' };
+
+    var demos = {
+      hotel: {
+        brand: 'Casa Luma', url: 'hotel.terramia.demo', imageKey: 'hotel', primary: '#123b3a', accent: '#c98632', paper: '#fff7e8',
+        pages: ['Home', 'Camere', 'Spa', 'Esperienze', 'Offerte', 'Gallery', 'Contatti', 'FAQ', 'Press'], focusIndex: { booking: 0, experience: 1, events: 2 },
+        nav: { IT: ['Suite', 'Spa', 'Esperienze', 'Contatti'], EN: ['Suites', 'Spa', 'Experiences', 'Contact'], DE: ['Suiten', 'Spa', 'Erlebnisse', 'Kontakt'], FR: ['Suites', 'Spa', 'Experiences', 'Contact'] },
+        tabLabels: { IT: { core: 'Camere', conversion: 'Offerte', contact: 'SEO + contatti' }, EN: { core: 'Rooms', conversion: 'Offers', contact: 'SEO + contact' }, DE: { core: 'Zimmer', conversion: 'Angebote', contact: 'SEO + Kontakt' }, FR: { core: 'Chambres', conversion: 'Offres', contact: 'SEO + contact' } },
+        files: ['hugo.toml', 'content/it/camere.md', 'content/en/rooms.md', 'content/de/zimmer.md', 'layouts/partials/room-card.html'],
+        copy: {
+          IT: {
+            home: { eyebrow: 'Boutique Hotel / prenotazione diretta', title: 'Suite silenziose, spa privata, richiesta diretta.', body: 'Un sito premium che mette subito insieme atmosfera, camere, servizi e percorso di conversione.', cta: 'Richiedi disponibilità', modules: [['Hero editoriale', 'Foto, promessa e CTA restano leggibili da mobile.'], ['Camere in evidenza', 'Schede suite con servizi, benefit chiari e richiesta rapida.'], ['Fiducia', 'Recensioni, mappa e microcopy rassicurante vicino alla CTA.']] },
+            core: { eyebrow: 'Pagina camere', title: 'Ogni camera sembra vendibile, non solo elencata.', body: 'La pagina camere organizza suite, servizi e differenze reali per ridurre domande e aumentare richieste qualificate.', cta: 'Vedi le suite', modules: [['Sunset Suite', 'Terrazza, spa hour, colazione servita in camera.'], ['Garden Room', 'Accesso al giardino, silenzio, richiesta weekend.'], ['Family Attic', 'Spazio, servizi famiglia, CTA per disponibilità.']] },
+            conversion: { eyebrow: 'Offerte e upsell', title: 'Pacchetti che trasformano interesse in richiesta.', body: 'Weekend spa, anniversari e soggiorni lunghi diventano percorsi chiari con CTA e sezioni stagionali.', cta: 'Scopri il pacchetto', modules: [['Weekend spa', 'Due notti, ingresso privato, late checkout.'], ['Anniversario', 'Cena, camera premium, messaggio regalo.'], ['Midweek', 'Offerta feriale con valore percepito alto.']] },
+            contact: { eyebrow: 'SEO + contatti', title: 'Il cliente sa cosa fare e Google capisce la pagina.', body: 'Metadata, FAQ, schema LocalBusiness e contatti sono parte del pacchetto, non un ripensamento finale.', cta: 'Apri contatti', modules: [['Title SEO', 'Boutique hotel con spa privata in Toscana.'], ['FAQ', 'Parcheggio, check-in, pet policy, accessibilità.'], ['Contatti', 'Email, telefono, mappa e richiesta guidata.']] }
+          },
+          EN: {
+            home: { eyebrow: 'Boutique Hotel / direct booking', title: 'Quiet suites, private spa, direct stay requests.', body: 'A premium site that connects atmosphere, rooms, services and conversion path from the first screen.', cta: 'Request availability', modules: [['Editorial hero', 'Photography, promise and CTA stay readable on mobile.'], ['Featured rooms', 'Suite cards with services, intent and direct request.'], ['Trust layer', 'Reviews, map and reassurance close to the CTA.']] },
+            core: { eyebrow: 'Rooms page', title: 'Every room feels sellable, not merely listed.', body: 'The room page organizes suites, services and real differences to reduce questions and increase qualified inquiries.', cta: 'View suites', modules: [['Sunset Suite', 'Terrace, spa hour, breakfast in room.'], ['Garden Room', 'Garden access, quiet stay, weekend request.'], ['Family Attic', 'Space, family services, availability CTA.']] },
+            conversion: { eyebrow: 'Offers and upsell', title: 'Packages turn interest into requests.', body: 'Spa weekends, anniversaries and longer stays become clear paths with seasonal sections and CTAs.', cta: 'Explore package', modules: [['Spa weekend', 'Two nights, private entry, late checkout.'], ['Anniversary', 'Dinner, premium room, gift message.'], ['Midweek', 'Weekday offer with high perceived value.']] },
+            contact: { eyebrow: 'SEO + contact', title: 'Guests know what to do and search engines understand it.', body: 'Metadata, FAQ, LocalBusiness schema and contact paths are part of the package, not an afterthought.', cta: 'Open contact', modules: [['SEO title', 'Boutique hotel with private spa in Tuscany.'], ['FAQ', 'Parking, check-in, pet policy, accessibility.'], ['Contact', 'Email, phone, map and guided inquiry.']] }
+          },
+          DE: {
+            home: { eyebrow: 'Boutique Hotel / Direktanfrage', title: 'Ruhige Suiten, private Spa, direkte Anfrage.', body: 'Ein Premium-Auftritt verbindet Atmosphaere, Zimmer, Services und Anfrageweg ab dem ersten Screen.', cta: 'Verfuegbarkeit anfragen', modules: [['Editorial Hero', 'Bild, Versprechen und CTA bleiben mobil lesbar.'], ['Zimmer', 'Suiten mit Services und direkter Anfrage.'], ['Vertrauen', 'Bewertungen, Karte und Sicherheit nahe der CTA.']] },
+            core: { eyebrow: 'Zimmerseite', title: 'Jedes Zimmer wirkt verkaufbar, nicht nur gelistet.', body: 'Die Zimmerseite ordnet Services, Unterschiede und Anfragen fuer qualifizierte Leads.', cta: 'Suiten ansehen', modules: [['Sunset Suite', 'Terrasse, Spa-Zeit, Fruehstueck.'], ['Garden Room', 'Garten, Ruhe, Wochenendanfrage.'], ['Family Attic', 'Raum, Familie, Verfuegbarkeit.']] },
+            conversion: { eyebrow: 'Angebote', title: 'Pakete verwandeln Interesse in Anfrage.', body: 'Spa-Wochenenden, Jahrestage und laengere Aufenthalte werden klare Pfade.', cta: 'Paket ansehen', modules: [['Spa Wochenende', 'Zwei Naechte und Late Checkout.'], ['Jahrestag', 'Dinner, Premium-Zimmer, Geschenk.'], ['Midweek', 'Hoher Wert unter der Woche.']] },
+            contact: { eyebrow: 'SEO + Kontakt', title: 'Gaeste wissen was zu tun ist, Google versteht die Seite.', body: 'Metadata, FAQ, LocalBusiness Schema und Kontaktwege sind Teil der Lieferung.', cta: 'Kontakt oeffnen', modules: [['SEO Title', 'Boutique Hotel mit privater Spa.'], ['FAQ', 'Parken, Check-in, Haustiere.'], ['Kontakt', 'Email, Telefon, Karte, Anfrage.']] }
+          },
+          FR: {
+            home: { eyebrow: 'Boutique Hotel / reservation directe', title: 'Suites calmes, spa prive, demande directe.', body: 'Un site premium relie atmosphere, chambres, services et conversion des le premier ecran.', cta: 'Demander une disponibilite', modules: [['Hero editorial', 'Image, promesse et CTA restent lisibles sur mobile.'], ['Chambres', 'Suites, services et demande directe.'], ['Confiance', 'Avis, carte et reassurance pres de la CTA.']] },
+            core: { eyebrow: 'Page chambres', title: 'Chaque chambre semble vendable, pas seulement listee.', body: 'La page organise chambres, services et differences pour generer des demandes qualifiees.', cta: 'Voir les suites', modules: [['Sunset Suite', 'Terrasse, spa, petit dejeuner.'], ['Garden Room', 'Jardin, calme, week-end.'], ['Family Attic', 'Espace, famille, disponibilite.']] },
+            conversion: { eyebrow: 'Offres', title: 'Les packages transforment l interet en demande.', body: 'Week-ends spa, anniversaires et longs sejours deviennent des parcours clairs.', cta: 'Voir le package', modules: [['Week-end spa', 'Deux nuits, spa, late checkout.'], ['Anniversaire', 'Diner, chambre premium, cadeau.'], ['Midweek', 'Valeur forte en semaine.']] },
+            contact: { eyebrow: 'SEO + contact', title: 'Le client sait quoi faire et Google comprend la page.', body: 'Metadata, FAQ, schema LocalBusiness et contacts font partie de la livraison.', cta: 'Ouvrir contact', modules: [['Title SEO', 'Boutique hotel avec spa prive.'], ['FAQ', 'Parking, check-in, animaux.'], ['Contact', 'Email, telephone, carte, demande.']] }
+          }
+        }
+      },
+      restaurant: {
+        brand: 'Braci & Vigna', url: 'ristorante.terramia.demo', imageKey: 'restaurant', primary: '#5b221c', accent: '#d9783c', paper: '#fff1e3',
+        pages: ['Home', 'Menu', 'Prenota', 'Eventi', 'Cantina', 'Gallery', 'Contatti', 'Allergeni', 'Press'], focusIndex: { booking: 0, experience: 2, events: 1 },
+        nav: { IT: ['Menu', 'Prenota', 'Eventi', 'Cantina'], EN: ['Menu', 'Book', 'Events', 'Wine'], DE: ['Menu', 'Reservieren', 'Events', 'Wein'], FR: ['Carte', 'Reserver', 'Evenements', 'Vins'] },
+        tabLabels: { IT: { core: 'Menu', conversion: 'Eventi', contact: 'SEO + contatti' }, EN: { core: 'Menu', conversion: 'Events', contact: 'SEO + contact' }, DE: { core: 'Menu', conversion: 'Events', contact: 'SEO + Kontakt' }, FR: { core: 'Carte', conversion: 'Evenements', contact: 'SEO + contact' } },
+        files: ['hugo.toml', 'content/it/menu.md', 'content/en/events.md', 'data/allergens.json', 'layouts/partials/menu-card.html'],
+        copy: {
+          IT: {
+            home: { eyebrow: 'Ristorante / prenotazione tavoli', title: 'Menu chiaro, desiderio immediato, prenota da mobile.', body: 'Il sito mette davanti cucina, atmosfera, carta e prenotazione: meno attrito, più motivi per scegliere un tavolo.', cta: 'Prenota un tavolo', modules: [['Hero menu-first', 'Piatti firma, visual caldo e CTA sopra la piega.'], ['Recensioni', 'Prova sociale corta, leggibile, vicino al booking.'], ['Mobile action', 'Telefono, mappa e prenota sempre chiari.']] },
+            core: { eyebrow: 'Pagina menu', title: 'La carta diventa una pagina editoriale, non un PDF.', body: 'Antipasti, degustazione, vini e allergeni sono ordinati in modo vendibile e consultabile da smartphone.', cta: 'Apri il menu', modules: [['Degustazione', 'Percorso stagionale con CTA prenotazione.'], ['Signature', 'Piatti con descrizioni brevi e premium.'], ['Allergeni', 'Informazioni chiare senza appesantire.']] },
+            conversion: { eyebrow: 'Eventi e gruppi', title: 'Cene private e serate speciali hanno un percorso loro.', body: 'Il cliente vede subito perché prenotare una sala, una degustazione o una serata calendario.', cta: 'Richiedi evento', modules: [['Cene private', 'Capienza, menu e richiesta guidata.'], ['Serate vino', 'Calendario editoriale e posti limitati.'], ['Business lunch', 'Proposta rapida per aziende locali.']] },
+            contact: { eyebrow: 'SEO + contatti', title: 'Prenota, chiama, trova: tre azioni sempre visibili.', body: 'Schema Restaurant, orari, mappa, menu metadata e contatti sono parte del sito generato.', cta: 'Trova il ristorante', modules: [['SEO title', 'Ristorante contemporaneo con menu stagionale.'], ['Schema', 'Restaurant, menu, opening hours.'], ['Contatti', 'Telefono, email e mappa.']] }
+          },
+          EN: {
+            home: { eyebrow: 'Restaurant / table booking', title: 'Clear menu, immediate appetite, mobile booking.', body: 'The site puts cuisine, mood, menu and reservation first: less friction, more reasons to choose a table.', cta: 'Book a table', modules: [['Menu-first hero', 'Signature dishes, warm visuals and CTA above the fold.'], ['Reviews', 'Short social proof close to booking.'], ['Mobile action', 'Phone, map and booking stay clear.']] },
+            core: { eyebrow: 'Menu page', title: 'The menu becomes an editorial page, not a PDF.', body: 'Starters, tasting path, wines and allergens are organized to sell and work on mobile.', cta: 'Open menu', modules: [['Tasting path', 'Seasonal route with booking CTA.'], ['Signature', 'Short premium dish descriptions.'], ['Allergens', 'Clear information without clutter.']] },
+            conversion: { eyebrow: 'Events and groups', title: 'Private dinners and special nights get their own path.', body: 'Guests immediately understand why to book a room, tasting night or calendar event.', cta: 'Request event', modules: [['Private dinners', 'Capacity, menu and guided request.'], ['Wine nights', 'Editorial calendar and limited seats.'], ['Business lunch', 'Fast offer for local companies.']] },
+            contact: { eyebrow: 'SEO + contact', title: 'Book, call, find: three actions always visible.', body: 'Restaurant schema, hours, map, menu metadata and contacts ship with the generated site.', cta: 'Find the restaurant', modules: [['SEO title', 'Contemporary restaurant with seasonal menu.'], ['Schema', 'Restaurant, menu, opening hours.'], ['Contact', 'Phone, email and map.']] }
+          },
+          DE: {
+            home: { eyebrow: 'Restaurant / Tisch buchen', title: 'Klares Menu, volle Tische, mobil reservieren.', body: 'Kueche, Stimmung, Karte und Reservierung stehen sofort im Vordergrund.', cta: 'Tisch reservieren', modules: [['Menu Hero', 'Signature-Gerichte und CTA oben.'], ['Bewertungen', 'Kurzer Social Proof nahe Booking.'], ['Mobil', 'Telefon, Karte, Reservierung.']] },
+            core: { eyebrow: 'Menuseite', title: 'Die Karte wird zur Seite, nicht zum PDF.', body: 'Degustation, Weine und Allergene werden mobil verkaufbar.', cta: 'Menu oeffnen', modules: [['Degustation', 'Saisonaler Pfad mit CTA.'], ['Signature', 'Premium Beschreibungen.'], ['Allergene', 'Klar ohne Last.']] },
+            conversion: { eyebrow: 'Events', title: 'Private Dinner bekommen ihren eigenen Pfad.', body: 'Gaeste verstehen sofort Anlass, Raum und Anfrage.', cta: 'Event anfragen', modules: [['Private Dinner', 'Kapazitaet, Menu, Anfrage.'], ['Weinabende', 'Kalender und limitierte Plaetze.'], ['Business Lunch', 'Schnelle Firmenoption.']] },
+            contact: { eyebrow: 'SEO + Kontakt', title: 'Reservieren, anrufen, finden: immer sichtbar.', body: 'Schema, Oeffnungszeiten, Karte und Kontakt werden mitgeliefert.', cta: 'Restaurant finden', modules: [['SEO Title', 'Restaurant mit Saisonmenu.'], ['Schema', 'Restaurant, Menu, Zeiten.'], ['Kontakt', 'Telefon, Karte, Anfrage.']] }
+          },
+          FR: {
+            home: { eyebrow: 'Restaurant / reservation', title: 'Carte lisible, salle pleine, reservation mobile.', body: 'Cuisine, atmosphere, carte et reservation sont visibles des le depart.', cta: 'Reserver une table', modules: [['Hero carte', 'Plats signature et CTA visibles.'], ['Avis', 'Preuve sociale pres de la reservation.'], ['Mobile', 'Telephone, carte, reserver.']] },
+            core: { eyebrow: 'Page carte', title: 'La carte devient une page, pas un PDF.', body: 'Degustation, vins et allergenes sont organises pour mobile.', cta: 'Ouvrir la carte', modules: [['Degustation', 'Parcours de saison avec CTA.'], ['Signature', 'Descriptions courtes premium.'], ['Allergenes', 'Information claire.']] },
+            conversion: { eyebrow: 'Evenements', title: 'Diners prives et soirees ont leur parcours.', body: 'Le client comprend occasion, salle et demande.', cta: 'Demander evenement', modules: [['Diners prives', 'Capacite, menu, demande.'], ['Vins', 'Calendrier et places limitees.'], ['Business lunch', 'Offre rapide entreprises.']] },
+            contact: { eyebrow: 'SEO + contact', title: 'Reserver, appeler, trouver: toujours visible.', body: 'Schema, horaires, carte et contacts sont inclus.', cta: 'Trouver le restaurant', modules: [['Title SEO', 'Restaurant avec carte saisonniere.'], ['Schema', 'Restaurant, menu, horaires.'], ['Contact', 'Telephone, carte, demande.']] }
+          }
+        }
+      },
+      agriturismo: {
+        brand: 'Podere Aureo', url: 'agriturismo.terramia.demo', imageKey: 'agriturismo', primary: '#35513d', accent: '#bd7452', paper: '#f5f1df',
+        pages: ['Home', 'Camere', 'Cucina', 'Esperienze', 'Prodotti', 'Territorio', 'Offerte', 'Contatti', 'FAQ'], focusIndex: { booking: 0, experience: 1, events: 2 },
+        nav: { IT: ['Camere', 'Cucina', 'Esperienze', 'Prodotti'], EN: ['Rooms', 'Food', 'Experiences', 'Products'], DE: ['Zimmer', 'Kueche', 'Erlebnisse', 'Produkte'], FR: ['Chambres', 'Cuisine', 'Experiences', 'Produits'] },
+        tabLabels: { IT: { core: 'Esperienze', conversion: 'Soggiorni', contact: 'SEO + contatti' }, EN: { core: 'Experiences', conversion: 'Stays', contact: 'SEO + contact' }, DE: { core: 'Erlebnisse', conversion: 'Aufenthalte', contact: 'SEO + Kontakt' }, FR: { core: 'Experiences', conversion: 'Sejours', contact: 'SEO + contact' } },
+        files: ['hugo.toml', 'content/it/esperienze.md', 'content/en/products.md', 'data/seasons.json', 'layouts/partials/story-block.html'],
+        copy: {
+          IT: {
+            home: { eyebrow: 'Agriturismo / racconto rurale', title: 'Territorio, camere e tavola in un racconto unico.', body: 'Il sito vende valore lento: soggiorni, cucina, prodotti e territorio diventano una proposta coerente.', cta: 'Pianifica il weekend', modules: [['Hero narrativo', 'Paesaggio, promessa e CTA senza effetto brochure.'], ['Prodotti locali', 'Bottega, degustazioni e stagionalità.'], ['Soggiorni', 'Camere e pacchetti collegati alle esperienze.']] },
+            core: { eyebrow: 'Pagina esperienze', title: 'Non solo dormire: motivi concreti per venire.', body: 'Degustazioni, raccolta, cucina e territorio diventano schede con durata, valore e richiesta.', cta: 'Scegli esperienza', modules: [['Degustazione', 'Vini, olio e prodotti del podere.'], ['Cucina', 'Lezione, cena, ricette locali.'], ['Natura', 'Sentieri, borghi, mappe stagionali.']] },
+            conversion: { eyebrow: 'Soggiorni e pacchetti', title: 'Ogni weekend ha una promessa precisa.', body: 'La conversione non è generica: coppie, famiglie e gruppi vedono offerte diverse e pagine dedicate.', cta: 'Richiedi soggiorno', modules: [['Weekend coppia', 'Camera, cena, degustazione.'], ['Famiglia', 'Spazi, attività, pranzo rurale.'], ['Gruppi', 'Ritiri, team, calendario.']] },
+            contact: { eyebrow: 'SEO + contatti', title: 'Il territorio entra nei metadata, non solo nelle foto.', body: 'Local SEO, FAQ stagionali, mappa e contatti trasformano il racconto in acquisizione.', cta: 'Apri contatti', modules: [['SEO title', 'Agriturismo con cucina e degustazioni.'], ['FAQ', 'Strade, animali, bambini, stagione.'], ['Contatti', 'Richiesta soggiorno e mappa.']] }
+          },
+          EN: {
+            home: { eyebrow: 'Agritourism / rural story', title: 'Land, rooms and table in one clear story.', body: 'The site sells slow value: stays, food, products and territory become one coherent offer.', cta: 'Plan the weekend', modules: [['Narrative hero', 'Landscape, promise and CTA without brochure feel.'], ['Local products', 'Farm shop, tastings and seasons.'], ['Stays', 'Rooms and packages tied to experiences.']] },
+            core: { eyebrow: 'Experiences page', title: 'Not just sleep: concrete reasons to come.', body: 'Tastings, harvest, cooking and territory become cards with duration, value and inquiry.', cta: 'Choose experience', modules: [['Tasting', 'Wine, oil and farm products.'], ['Cooking', 'Lesson, dinner, local recipes.'], ['Nature', 'Trails, villages, seasonal maps.']] },
+            conversion: { eyebrow: 'Stays and packages', title: 'Every weekend has a precise promise.', body: 'Conversion is not generic: couples, families and groups see different offers and pages.', cta: 'Request stay', modules: [['Couple weekend', 'Room, dinner, tasting.'], ['Family', 'Space, activities, rural lunch.'], ['Groups', 'Retreats, teams, calendar.']] },
+            contact: { eyebrow: 'SEO + contact', title: 'Territory enters metadata, not only photos.', body: 'Local SEO, seasonal FAQ, map and contacts turn story into acquisition.', cta: 'Open contact', modules: [['SEO title', 'Agritourism with food and tastings.'], ['FAQ', 'Roads, pets, kids, season.'], ['Contact', 'Stay request and map.']] }
+          },
+          DE: {
+            home: { eyebrow: 'Agriturismo / Landgeschichte', title: 'Region, Zimmer und Kueche in einer Geschichte.', body: 'Aufenthalt, Kueche, Produkte und Region werden ein klares Angebot.', cta: 'Wochenende planen', modules: [['Hero', 'Landschaft, Versprechen, CTA.'], ['Produkte', 'Hofladen und Saison.'], ['Aufenthalte', 'Zimmer und Erlebnisse verbunden.']] },
+            core: { eyebrow: 'Erlebnisse', title: 'Nicht nur schlafen: konkrete Gruende zu kommen.', body: 'Verkostung, Kochen und Region werden klare Karten.', cta: 'Erlebnis waehlen', modules: [['Verkostung', 'Wein, Oel, Produkte.'], ['Kueche', 'Kurs, Abendessen, Rezepte.'], ['Natur', 'Wege, Orte, Saisonkarten.']] },
+            conversion: { eyebrow: 'Aufenthalte', title: 'Jedes Wochenende hat ein klares Versprechen.', body: 'Paare, Familien und Gruppen sehen eigene Angebote.', cta: 'Aufenthalt anfragen', modules: [['Paar', 'Zimmer, Dinner, Verkostung.'], ['Familie', 'Raum, Aktivitaet, Lunch.'], ['Gruppen', 'Retreat, Team, Kalender.']] },
+            contact: { eyebrow: 'SEO + Kontakt', title: 'Die Region steht auch in den Metadata.', body: 'Local SEO, FAQ, Karte und Kontakt machen die Story messbar.', cta: 'Kontakt oeffnen', modules: [['SEO Title', 'Agriturismo mit Kueche.'], ['FAQ', 'Strasse, Tiere, Kinder.'], ['Kontakt', 'Anfrage und Karte.']] }
+          },
+          FR: {
+            home: { eyebrow: 'Agritourisme / recit rural', title: 'Terroir, chambres et table dans un recit clair.', body: 'Sejours, cuisine, produits et terroir deviennent une offre coherente.', cta: 'Planifier le week-end', modules: [['Hero recit', 'Paysage, promesse, CTA.'], ['Produits', 'Boutique, degustations, saison.'], ['Sejours', 'Chambres et experiences liees.']] },
+            core: { eyebrow: 'Experiences', title: 'Pas seulement dormir: des raisons concretes.', body: 'Degustation, cuisine et territoire deviennent des cartes claires.', cta: 'Choisir experience', modules: [['Degustation', 'Vin, huile, produits.'], ['Cuisine', 'Cours, diner, recettes.'], ['Nature', 'Sentiers, villages, saisons.']] },
+            conversion: { eyebrow: 'Sejours', title: 'Chaque week-end a une promesse precise.', body: 'Couples, familles et groupes voient des offres dediees.', cta: 'Demander sejour', modules: [['Couple', 'Chambre, diner, degustation.'], ['Famille', 'Espace, activites, dejeuner.'], ['Groupes', 'Retraites, equipe, calendrier.']] },
+            contact: { eyebrow: 'SEO + contact', title: 'Le territoire entre aussi dans les metadata.', body: 'SEO local, FAQ, carte et contacts transforment le recit.', cta: 'Ouvrir contact', modules: [['Title SEO', 'Agritourisme avec cuisine.'], ['FAQ', 'Route, animaux, enfants.'], ['Contact', 'Demande et carte.']] }
+          }
+        }
+      }
+    };
+
+    var toneLines = {
+      elegant: { IT: 'Tono premium: più selezione, gerarchia visiva e percezione di valore.', EN: 'Premium tone: more selection, visual hierarchy and value perception.', DE: 'Premium-Ton: mehr Auswahl, Hierarchie und Wertgefuehl.', FR: 'Ton premium: plus de sélection, hiérarchie et valeur.' },
+      warm: { IT: 'Tono caldo: più storia, accoglienza e voce del luogo.', EN: 'Warm tone: more story, welcome and sense of place.', DE: 'Warmer Ton: mehr Geschichte, Willkommen und Ort.', FR: 'Ton chaleureux: plus d’histoire, accueil et lieu.' },
+      direct: { IT: 'Tono diretto: offerta, prova e azione arrivano subito.', EN: 'Direct tone: offer, proof and action arrive immediately.', DE: 'Direkter Ton: Angebot, Proof und Aktion sofort.', FR: 'Ton direct: offre, preuve et action tout de suite.' }
+    };
+
+    var focusLines = {
+      booking: { IT: 'Focus booking: CTA e sezioni spingono richiesta o prenotazione diretta.', EN: 'Booking focus: CTAs and sections push inquiry or direct reservation.', DE: 'Booking-Fokus: CTAs fuehren zur Direktanfrage.', FR: 'Focus réservation: CTA vers demande directe.' },
+      experience: { IT: 'Focus esperienza: il valore nasce da servizi, storia e differenziazione.', EN: 'Experience focus: value comes from services, story and differentiation.', DE: 'Erlebnis-Fokus: Wert aus Services und Story.', FR: 'Focus expérience: valeur par services et récit.' },
+      events: { IT: 'Focus eventi: gruppi, occasioni e stagionalità hanno pagine proprie.', EN: 'Events focus: groups, occasions and seasons get dedicated pages.', DE: 'Event-Fokus: Gruppen und Saison bekommen Seiten.', FR: 'Focus événements: groupes et saisons ont leurs pages.' }
+    };
+
+    var controls = {
+      demo: Array.prototype.slice.call(root.querySelectorAll('[data-demo-control]')),
+      lang: Array.prototype.slice.call(root.querySelectorAll('[data-lang-control]')),
+      tone: Array.prototype.slice.call(root.querySelectorAll('[data-tone-control]')),
+      focus: Array.prototype.slice.call(root.querySelectorAll('[data-focus-control]')),
+      page: Array.prototype.slice.call(root.querySelectorAll('[data-page-control]'))
+    };
+    var pagesControl = root.querySelector('[data-pages-control]');
+    var pagesReadout = root.querySelector('[data-pages-readout]');
+    var status = root.querySelector('[data-current-status]');
+    var stageNote = root.querySelector('[data-stage-note]');
+    var pipelineItems = Array.prototype.slice.call(root.querySelectorAll('[data-pipeline-step]'));
+    var preview = root.querySelector('[data-preview-card]');
+    var previewUrl = root.querySelector('[data-preview-url]');
+    var siteBrand = root.querySelector('[data-site-brand]');
+    var siteNav = root.querySelector('[data-site-nav]');
+    var siteLang = root.querySelector('[data-site-lang]');
+    var sitePage = root.querySelector('[data-site-page]');
+    var siteArtifacts = root.querySelector('[data-site-artifacts]');
+    var previewLanguageLine = root.querySelector('[data-preview-language-line]');
+    var previewPageList = root.querySelector('[data-preview-page-list]');
+    var languageCards = root.querySelector('[data-language-cards]');
+    var coreTab = root.querySelector('[data-page-core-label]');
+    var conversionTab = root.querySelector('[data-page-conversion-label]');
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, function (char) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+      });
+    }
+
+    function setPressed(items, value, attr) {
+      items.forEach(function (item) {
+        var active = item.getAttribute(attr) === value;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+
+    function activeCopy() { return demos[state.demo].copy[state.lang] || demos[state.demo].copy.IT; }
+
+    function paintPipeline() {
+      var activeStage = stages[state.stage];
+      pipelineItems.forEach(function (item, index) {
+        item.classList.toggle('is-active', item.dataset.pipelineStep === activeStage);
+        item.classList.toggle('is-complete', index < state.stage);
+      });
+      if (stageNote) stageNote.textContent = ui.stageNotes[activeStage] || '';
+      if (status) status.textContent = ui.stageNotes[activeStage] || ui.ready;
+    }
+
+    function renderLanguageCards(demo) {
+      if (!languageCards) return;
+      languageCards.innerHTML = '';
+      ['IT', 'EN', 'DE', 'FR'].forEach(function (code) {
+        var copy = demo.copy[code].home;
+        var card = document.createElement('article');
+        card.className = 'tm-v3-lang-card' + (code === state.lang ? ' is-active' : '');
+        card.innerHTML = '<span>' + code + '</span><strong></strong><em></em>';
+        card.querySelector('strong').textContent = copy.title;
+        card.querySelector('em').textContent = copy.cta + ' - ' + copy.eyebrow;
+        languageCards.appendChild(card);
+      });
+    }
+
+    function renderMiniSite(demo, copySet) {
+      var current = copySet[state.page] || copySet.home;
+      var home = copySet.home;
+      var pages = demo.pages.slice(0, state.pages);
+      var labels = demo.tabLabels[state.lang] || demo.tabLabels.IT;
+      if (coreTab) coreTab.textContent = labels.core;
+      if (conversionTab) conversionTab.textContent = labels.conversion;
+      controls.page.forEach(function (button) {
+        if (button.dataset.pageControl === 'contact') button.textContent = labels.contact;
+      });
+      if (siteBrand) siteBrand.textContent = demo.brand;
+      if (siteLang) siteLang.textContent = state.lang;
+      if (siteNav) siteNav.innerHTML = (demo.nav[state.lang] || demo.nav.IT).map(function (item) { return '<span>' + esc(item) + '</span>'; }).join('');
+      if (sitePage) {
+        var moduleHtml = current.modules.map(function (item, index) {
+          var focus = index === demo.focusIndex[state.focus] ? ' is-focus' : '';
+          return '<article class="tm-v3-generated-module' + focus + '"><span>0' + (index + 1) + '</span><strong>' + esc(item[0]) + '</strong><p>' + esc(item[1]) + '</p></article>';
+        }).join('');
+        var pageLabel = state.page === 'home' ? 'Homepage' : (labels[state.page] || state.page);
+        var image = preview ? preview.dataset['image' + demo.imageKey.charAt(0).toUpperCase() + demo.imageKey.slice(1)] : '';
+        sitePage.innerHTML = '<div class="tm-v3-generated-page tm-v3-page-' + esc(state.page) + '">' +
+          '<section class="tm-v3-generated-hero">' +
+            '<div class="tm-v3-generated-copy"><p>' + esc(current.eyebrow) + '</p><h2 data-preview-headline>' + esc(current.title) + '</h2><em>' + esc(toneLines[state.tone][state.lang]) + ' ' + esc(focusLines[state.focus][state.lang]) + '</em><a href="#process" data-preview-cta>' + esc(current.cta) + '</a></div>' +
+            '<figure class="tm-v3-generated-visual"><img src="' + esc(image) + '" alt=""><figcaption>' + esc(pageLabel) + '</figcaption></figure>' +
+          '</section>' +
+          '<p class="tm-v3-generated-body" data-preview-body>' + esc(current.body) + '</p>' +
+          '<div class="tm-v3-generated-modules">' + moduleHtml + '</div>' +
+          '<div class="tm-v3-generated-depth"><strong>' + esc(ui.metadata) + '</strong><span>' + esc(home.eyebrow) + '</span><span>' + esc(languageNames[state.lang]) + '</span><span>' + esc(state.pages + ' ' + ui.pages) + '</span></div>' +
+        '</div>';
+      }
+      if (siteArtifacts) {
+        siteArtifacts.innerHTML = '<strong>' + esc(ui.files) + '</strong>' + demo.files.slice(0, 5).map(function (file) { return '<span>' + esc(file) + '</span>'; }).join('');
+      }
+      if (previewPageList) previewPageList.textContent = ui.pagePrefix + ': ' + pages.join(' / ');
+      if (previewLanguageLine) previewLanguageLine.textContent = ui.selectedLanguage + ': ' + state.lang + ' - ' + current.eyebrow;
+      if (pagesReadout) pagesReadout.textContent = state.pages + ' ' + ui.pages;
+    }
+
+    function renderPreview() {
+      var demo = demos[state.demo];
+      var copySet = activeCopy();
+      if (preview) {
+        preview.style.setProperty('--demo-primary', demo.primary);
+        preview.style.setProperty('--demo-accent', demo.accent);
+        preview.style.setProperty('--demo-paper', demo.paper);
+        preview.dataset.layout = demo.imageKey;
+        preview.classList.add('is-refreshing');
+        window.setTimeout(function () { preview.classList.remove('is-refreshing'); }, 220);
+      }
+      if (previewUrl) previewUrl.textContent = demo.url;
+      renderMiniSite(demo, copySet);
+      renderLanguageCards(demo);
+      paintPipeline();
+    }
+
+    function bindGroup(items, attr, key) {
+      items.forEach(function (item) {
+        item.addEventListener('click', function () {
+          state[key] = item.getAttribute(attr);
+          if (key === 'demo') { state.stage = 1; state.page = 'home'; setPressed(controls.page, state.page, 'data-page-control'); }
+          if (key === 'lang') state.stage = 3;
+          if (key === 'page') state.stage = 4;
+          if (key === 'tone' || key === 'focus') state.stage = 6;
+          setPressed(items, state[key], attr);
+          renderPreview();
+        });
+      });
+    }
+
+    bindGroup(controls.demo, 'data-demo-control', 'demo');
+    bindGroup(controls.lang, 'data-lang-control', 'lang');
+    bindGroup(controls.tone, 'data-tone-control', 'tone');
+    bindGroup(controls.focus, 'data-focus-control', 'focus');
+    bindGroup(controls.page, 'data-page-control', 'page');
+
+    if (pagesControl) {
+      pagesControl.addEventListener('input', function () {
+        state.pages = Number(pagesControl.value || 7);
+        state.stage = 6;
+        renderPreview();
+      });
+    }
+
+    renderPreview();
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.setInterval(function () {
+        state.stage = (state.stage + 1) % stages.length;
+        paintPipeline();
+      }, 1800);
+    }
+  })();
+</script>

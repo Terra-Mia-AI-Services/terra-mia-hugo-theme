@@ -1,12 +1,16 @@
 <!DOCTYPE html>
+{{- /* baseof.html — Terra Mia Hugo Theme.
+       Refactor 2026-05-15 (post-blueprint audit): rimosso Tailwind CDN + 9 font preset legacy.
+       Carica vanilla CSS DNA conditional. Riferimento: plans/specs/design-dna-canonical.md.
+*/ -}}
 {{- $lang := .Site.Language.Lang | default "en" -}}
-{{- $font := .Site.Params.font | default "classico" -}}
-{{- $style := .Site.Params.style | default "rustico" -}}
-<html lang="{{ $lang }}" class="scroll-smooth {{ printf "font-%s style-%s" $font $style }}">
+{{- $dna := .Site.Params.dna | default "editorial_dark" -}}
+{{- $recipe := .Site.Params.recipe | default "" -}}
+<html lang="{{ $lang }}" data-dna="{{ $dna }}"{{ with $recipe }} data-recipe="{{ . }}"{{ end }}>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{- $title := cond .IsHome .Site.Title (printf "%s — %s" .Title .Site.Title) -}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    {{- $title := cond .IsHome .Site.Title (printf "%s - %s" .Title .Site.Title) -}}
     {{- $desc := "" -}}
     {{- with .Description -}}
       {{- $desc = . -}}
@@ -25,7 +29,7 @@
     {{- if $desc }}<meta name="description" content="{{ $desc }}">{{ end -}}
     <link rel="canonical" href="{{ .Permalink }}">
 
-    {{/* OpenGraph / Twitter */}}
+    {{/* OpenGraph / Twitter — invariati */}}
     <meta property="og:locale" content="{{ $lang }}">
     <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
     <meta property="og:title" content="{{ $title }}">
@@ -48,84 +52,39 @@
     {{- if $desc }}<meta name="twitter:description" content="{{ $desc }}">{{ end -}}
     {{- if $ogImage }}<meta name="twitter:image" content="{{ $ogImage | absURL }}">{{ end -}}
 
-    {{/* Fonts — mapping form IDs to Google Fonts */}}
+    {{/* Google Fonts — DNA-aware (no più 9 font preset legacy) */}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    {{- if or (eq $font "classico") (eq $font "playfair") -}}
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if eq $font "handwritten" -}}
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if or (eq $font "bold") (eq $font "montserrat") -}}
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if eq $font "slab" -}}
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if eq $font "display" -}}
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if eq $font "rounded" -}}
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if eq $font "condensed" -}}
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if eq $font "mono" -}}
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{- else if or (eq $font "luxury") (eq $font "lora") -}}
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{- if eq $dna "editorial_dark" -}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+    {{- else if eq $dna "warm_rustic" -}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+    {{- else if eq $dna "editorial_cream" -}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+    {{- else if eq $dna "italian_luxury" -}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+    {{- else if eq $dna "glamping_jp" -}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap">
     {{- else -}}
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{/* Default fallback: editorial_dark */}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
     {{- end -}}
 
-    {{/* TailwindCSS via CDN */}}
-    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: '{{ .Site.Params.primary_color | default "#2563eb" }}',
-              accent: '{{ .Site.Params.accent_color | default "#f59e0b" }}',
-            },
-            fontFamily: {
-              {{ if or (eq $font "classico") (eq $font "playfair") }}
-              heading: ['Playfair Display', 'serif'],
-              body: ['Inter', 'sans-serif'],
-              {{ else if eq $font "handwritten" }}
-              heading: ['Dancing Script', 'cursive'],
-              body: ['Inter', 'sans-serif'],
-              {{ else if or (eq $font "bold") (eq $font "montserrat") }}
-              heading: ['Montserrat', 'sans-serif'],
-              body: ['Montserrat', 'sans-serif'],
-              {{ else if eq $font "slab" }}
-              heading: ['Roboto Slab', 'serif'],
-              body: ['Inter', 'sans-serif'],
-              {{ else if eq $font "display" }}
-              heading: ['Cinzel', 'serif'],
-              body: ['Inter', 'sans-serif'],
-              {{ else if eq $font "rounded" }}
-              heading: ['Nunito', 'sans-serif'],
-              body: ['Nunito', 'sans-serif'],
-              {{ else if eq $font "condensed" }}
-              heading: ['Barlow Condensed', 'sans-serif'],
-              body: ['Inter', 'sans-serif'],
-              {{ else if eq $font "mono" }}
-              heading: ['JetBrains Mono', 'monospace'],
-              body: ['Inter', 'sans-serif'],
-              {{ else if or (eq $font "luxury") (eq $font "lora") }}
-              heading: ['Cormorant Garamond', 'serif'],
-              body: ['Inter', 'sans-serif'],
-              {{ else }}
-              heading: ['Inter', 'sans-serif'],
-              body: ['Inter', 'sans-serif'],
-              {{ end }}
-            }
-          }
-        }
-      }
-    </script>
-    <style type="text/tailwindcss">
-      body { @apply font-body text-gray-800 bg-white; }
-      h1, h2, h3, h4 { @apply font-heading; }
-    </style>
+    {{/* FIX M7: Multilingual JP/ZH supplemental fonts — solo se DNA non già include Noto JP.
+         glamping_jp DNA loads Noto Sans JP in primary Google Fonts call → no duplicate */}}
+    {{- if and (or (eq $lang "ja") (eq $lang "zh")) (ne $dna "glamping_jp") -}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+{{ if eq $lang "ja" }}JP{{ else }}SC{{ end }}:wght@400;500;700&display=swap">
+    {{- end -}}
 
-    {{/* hreflang alternate links */}}
+    {{/* Vanilla CSS — base.css sempre + DNA css conditional */}}
+    <link rel="stylesheet" href="{{ "/css/base.css" | relURL }}">
+    <link rel="stylesheet" href="{{ printf "/css/dna-%s.css" (replace $dna "_" "-") | relURL }}">
+
+    {{/* Favicon */}}
+    <link rel="icon" type="image/svg+xml" href="{{ "/favicon.svg" | relURL }}">
+    <link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | relURL }}">
+
+    {{/* Hreflang alternate links — Hugo v0.156+ deprecation fix */}}
     {{ if gt (len hugo.Sites) 1 }}
       {{ range .AllTranslations }}
         <link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
@@ -133,62 +92,124 @@
       <link rel="alternate" hreflang="x-default" href="{{ .Site.Home.Permalink }}">
     {{ end }}
 
+    {{/* Schema.org JSON-LD — invariato (Organization/LocalBusiness + WebSite) */}}
     <script type="application/ld+json">
+    {{- $siteName := (.Site.Params.site_name | default .Site.Title) -}}
+    {{- $siteURL := (.Site.Home.Permalink | default .Permalink) -}}
+    {{- $siteDesc := (.Site.Params.description | default "") -}}
+    {{- $siteLang := (.Site.Language.Lang | default "en") -}}
+    {{- $schemaType := cond (ne (.Site.Params.schema_business_type | default "") "") (.Site.Params.schema_business_type | default "") (cond (ne (.Site.Params.business_type | default "") "") "LocalBusiness" "Organization") -}}
+    {{- $entityID := printf "%s#organization" $siteURL -}}
+
+    {{- $org := dict
+      "@type" $schemaType
+      "@id" $entityID
+      "name" $siteName
+      "url" $siteURL
+    -}}
+    {{- if $siteDesc }}{{- $org = merge $org (dict "description" $siteDesc) -}}{{- end -}}
+    {{- with .Site.Params.contact_email }}{{- $org = merge $org (dict "email" .) -}}{{- end -}}
+    {{- with .Site.Params.contact_phone }}{{- $org = merge $org (dict "telephone" .) -}}{{- end -}}
+
+    {{- $street := (.Site.Params.address | default "") -}}
+    {{- $city := (.Site.Params.city | default "") -}}
+    {{- $region := (.Site.Params.province | default "") -}}
+    {{- /* Support both legacy "cap" and modern "postal_code" param names */ -}}
+    {{- $postal := (.Site.Params.postal_code | default (.Site.Params.cap | default "")) -}}
+    {{- if or $street $city $region $postal -}}
+      {{- $address := dict "@type" "PostalAddress" -}}
+      {{- if $street }}{{- $address = merge $address (dict "streetAddress" $street) -}}{{- end -}}
+      {{- if $city }}{{- $address = merge $address (dict "addressLocality" $city) -}}{{- end -}}
+      {{- if $region }}{{- $address = merge $address (dict "addressRegion" $region) -}}{{- end -}}
+      {{- if $postal }}{{- $address = merge $address (dict "postalCode" $postal) -}}{{- end -}}
+      {{- $org = merge $org (dict "address" $address) -}}
+    {{- end -}}
+
+    {{- /* GeoCoordinates from gps_latitude + gps_longitude params */ -}}
+    {{- $lat := (.Site.Params.gps_latitude | default "") -}}
+    {{- $lng := (.Site.Params.gps_longitude | default "") -}}
+    {{- if and $lat $lng -}}
+      {{- $geo := dict
+        "@type" "GeoCoordinates"
+        "latitude" $lat
+        "longitude" $lng
+      -}}
+      {{- $org = merge $org (dict "geo" $geo) -}}
+    {{- end -}}
+
+    {{- /* OpeningHoursSpecification (only if contact_hours present, e.g. "9:00〜18:00") */ -}}
+    {{- with .Site.Params.contact_hours -}}
+      {{- $hours := dict
+        "@type" "OpeningHoursSpecification"
+        "dayOfWeek" (slice "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday")
+        "name" .
+      -}}
+      {{- $org = merge $org (dict "openingHoursSpecification" $hours) -}}
+    {{- end -}}
+
+    {{- /* sameAs social links */ -}}
+    {{- $sameAs := slice -}}
+    {{- with .Site.Params.instagram -}}
+      {{- $sameAs = $sameAs | append (printf "https://www.instagram.com/%s/" .) -}}
+    {{- end -}}
+    {{- with .Site.Params.ameblo_url -}}{{- $sameAs = $sameAs | append . -}}{{- end -}}
+    {{- with .Site.Params.facebook -}}{{- $sameAs = $sameAs | append (printf "https://www.facebook.com/%s/" .) -}}{{- end -}}
+    {{- if gt (len $sameAs) 0 -}}
+      {{- $org = merge $org (dict "sameAs" $sameAs) -}}
+    {{- end -}}
+
+    {{- $website := dict
+      "@type" "WebSite"
+      "@id" (printf "%s#website" $siteURL)
+      "url" $siteURL
+      "name" $siteName
+      "inLanguage" $siteLang
+      "publisher" (dict "@id" $entityID)
+    -}}
+    {{- if $siteDesc }}{{- $website = merge $website (dict "description" $siteDesc) -}}{{- end -}}
+
     {{- $schema := dict
       "@context" "https://schema.org"
-      "@type" "LocalBusiness"
-      "name" (.Site.Params.site_name | default .Site.Title)
-      "description" (.Site.Params.description | default "")
-      "email" (.Site.Params.contact_email | default "")
-      "telephone" (.Site.Params.contact_phone | default "")
-      "address" (dict
-        "@type" "PostalAddress"
-        "streetAddress" (.Site.Params.address | default "")
-        "addressLocality" (.Site.Params.city | default "")
-        "addressRegion" (.Site.Params.province | default "")
-        "postalCode" (.Site.Params.cap | default "")
-      )
+      "@graph" (slice $website $org)
     -}}
-    {{ $schema | jsonify }}
+    {{ $schema | jsonify | safeJS }}
     </script>
 
-    {{/* GA4 — only if ga4_id is set */}}
+    {{/* GA4 — opt-in via Site.Params.ga4_id */}}
     {{- with .Site.Params.ga4_id -}}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ . }}');</script>
     {{- end -}}
 </head>
-<body class="min-h-screen flex flex-col">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
+<body>
+    <a href="#main-content" class="tm-skip">{{ i18n "skip_to_content" | default "Vai al contenuto" }}</a>
     {{ partial "header.html" . }}
-    <main id="main-content" class="flex-1">
+    <main id="main-content">
         {{ block "main" . }}{{ end }}
     </main>
     {{ partial "footer.html" . }}
     {{ if templates.Exists "partials/whatsapp-button.html" }}
-      {{ partial "whatsapp-button.html" . }}
+      {{ if .Site.Params.whatsapp_enabled }}{{ partial "whatsapp-button.html" . }}{{ end }}
     {{ end }}
     {{ if templates.Exists "partials/cookie-banner.html" }}
-      {{ partial "cookie-banner.html" . }}
+      {{ if .Site.Params.cookie_banner_enabled }}{{ partial "cookie-banner.html" . }}{{ end }}
+    {{ end }}
+    {{ if templates.Exists "partials/sales-chat.html" }}
+      {{ if .Site.Params.sales_chat_enabled }}{{ partial "sales-chat.html" . }}{{ end }}
     {{ end }}
 
+    {{/* Scroll-reveal IntersectionObserver — sostituisce vecchio inline JS Tailwind menu */}}
+    <script src="{{ "/js/reveal.js" | relURL }}" defer></script>
+
+    {{/* Mobile menu / cookie consent JS — minimal, vanilla */}}
     <script>
       (function () {
         var menuBtn = document.getElementById('mobile-menu-button');
         var menu = document.getElementById('mobile-menu');
         if (menuBtn && menu) {
           menuBtn.addEventListener('click', function () {
-            menu.classList.toggle('hidden');
-            menuBtn.setAttribute('aria-expanded', menu.classList.contains('hidden') ? 'false' : 'true');
-          });
-        }
-
-        var moreBtn = document.getElementById('more-menu-button');
-        var moreMenu = document.getElementById('more-menu');
-        if (moreBtn && moreMenu) {
-          moreBtn.addEventListener('click', function () {
-            moreMenu.classList.toggle('hidden');
-            moreBtn.setAttribute('aria-expanded', moreMenu.classList.contains('hidden') ? 'false' : 'true');
+            var isOpen = menu.classList.toggle('is-open');
+            menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
           });
         }
 
@@ -197,12 +218,12 @@
         if (banner && accept) {
           var key = 'tm_cookie_consent';
           try {
-            if (localStorage.getItem(key) === '1') banner.classList.add('hidden');
+            if (localStorage.getItem(key) === '1') banner.classList.add('is-hidden');
           } catch (e) {}
 
           accept.addEventListener('click', function () {
             try { localStorage.setItem(key, '1'); } catch (e) {}
-            banner.classList.add('hidden');
+            banner.classList.add('is-hidden');
           });
         }
       })();

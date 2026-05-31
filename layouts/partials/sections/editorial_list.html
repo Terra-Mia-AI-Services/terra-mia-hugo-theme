@@ -1,0 +1,44 @@
+{{- /* sections/editorial_list.html — Terra Mia Hugo Theme.
+       Section variant compositive: editorial list (NO cards Bootstrap-like).
+       Lista con divider sottili, no border-radius, no shadow. Pattern Adelphi-like.
+
+       Params Site.Params:
+       - section_list_kicker (opzionale)
+       - section_list_title (default "Programma")
+       - section_list_lede (opzionale)
+       - section_list_items (array di dict {meta, title, location, href})
+*/ -}}
+{{- $p := .Site.Params -}}
+{{- $items := $p.section_list_items -}}
+
+{{- if $items }}
+<section class="tm-section tm-section--list" aria-labelledby="tm-list-title">
+  <div class="tm-section__head">
+    {{- with $p.section_list_kicker }}<p class="tm-section__kicker" data-reveal>{{ . }}</p>{{ end }}
+    <h2 id="tm-list-title" class="tm-section__title" data-reveal style="--reveal-delay:120">
+      {{ $p.section_list_title | default "Programma" }}
+    </h2>
+    {{- with $p.section_list_lede }}
+    <p class="tm-section__lede" data-reveal style="--reveal-delay:180">{{ . | safeHTML }}</p>
+    {{- end }}
+  </div>
+
+  <ul class="tm-editorial-list">
+    {{- range $i, $item := $items }}
+    <li class="tm-editorial-list__item" data-reveal style="--reveal-delay:{{ mul $i 80 }}">
+      {{- with $item.meta }}<span class="tm-editorial-list__meta">{{ . }}</span>{{ end }}
+      <h3 class="tm-editorial-list__title">
+        {{- if $item.href -}}
+        <a href="{{ $item.href }}">{{ $item.title }}</a>
+        {{- else -}}
+        {{ $item.title }}
+        {{- end -}}
+      </h3>
+      {{- with $item.location }}
+      <span class="tm-editorial-list__location">{{ . }}</span>
+      {{- end }}
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end -}}

@@ -1,0 +1,1052 @@
+/* ────────────────────────────────────────────────────────────
+   dna-glamping-jp.css — Terra Mia Hugo Theme
+   Design DNA: glamping_jp (wabi-sabi premium, JP-primary)
+
+   Aggiunta 2026-05-16 (post Holywoods W3 pilot).
+   Reference DNA spec: plans/specs/design-dna-canonical.md §2.4
+                     + clienti/holywoods-camp/specs/dna-glamping-jp-PROPOSAL.md
+   Target audience: glamping/camping JP-primary, retreat boutique asiatici,
+   eco-lodges, audience giapponese, ryokan-style outdoor.
+
+   Brand personality:
+   - Quieto, riservato, nature-first, wabi-sabi premium
+   - Riferimenti: Hoshinoya brand, Aman Tokyo, ryokan editorial, Cereal Japan
+
+   Caricato in baseof.html DOPO base.css quando Site.Params.dna == "glamping_jp".
+   Fonts caricati conditional in baseof.html: Fraunces + Plus Jakarta Sans + Noto Sans JP.
+   ──────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Palette glamping_jp (asian neutral + forest) ───────── */
+  --tm-bg: #f5f1ea;             /* cream più freddo del warm_rustic, asian neutral */
+  --tm-bg-soft: #ebe5d8;        /* sezioni alternate */
+  --tm-bg-elev: #ffffff;        /* cards on cream — max contrast */
+  --tm-bg-deep: #d9d2c0;        /* dividers */
+  --tm-bg-dark-alt: #1a1a18;    /* night-mood / cinematic sections (es. /location-scouting hero) */
+
+  /* ── Testi neutral deep ──────────────────────────────────── */
+  --tm-ink: #1a1a18;            /* primary text, deep neutral */
+  --tm-ink-2: #5a5650;          /* secondary */
+  --tm-muted: #8a8478;          /* tertiary, captions */
+
+  /* ── Accent forest + stone + gold quiet ──────────────────── */
+  --tm-forest: #3d5a3d;         /* verde foresta giapponese — primary accent */
+  --tm-forest-2: #2a3f2a;       /* hover/deep */
+  --tm-stone: #7a6b5c;          /* warm earth — secondary */
+  --tm-stone-2: #5d5145;
+  --tm-gold: #c4a572;           /* gold giapponese, less polveroso */
+  --tm-gold-2: #a48756;         /* hover */
+  --tm-gold-soft: #d8c197;      /* selection */
+
+  /* ── Linee divider su cream ──────────────────────────────── */
+  --tm-line: rgba(26, 26, 24, 0.12);
+  --tm-line-strong: rgba(26, 26, 24, 0.25);
+
+  /* ── Geometrie angolari-grounded ─────────────────────────── */
+  --tm-radius: 6px;             /* angolare grounded */
+  --tm-radius-sm: 3px;
+  --tm-radius-lg: 10px;
+  --tm-radius-pill: 999px;
+  --tm-shadow-soft: 0 4px 14px rgba(26, 26, 24, 0.06);
+  --tm-shadow-hard: 0 16px 40px rgba(26, 26, 24, 0.10);
+
+  /* ── Tipografia ──────────────────────────────────────────── */
+  --tm-font-serif: "Fraunces", "Noto Serif JP", Georgia, "Times New Roman", serif;
+  --tm-font-sans: "Plus Jakarta Sans", "Noto Sans JP", system-ui, -apple-system, sans-serif;
+
+  /* ── Layout iper-respirato (vs warm_rustic 1180px) ──────── */
+  --tm-shell-max: 1240px;       /* slightly wider per breathing room */
+  --tm-shell-pad: clamp(1.2rem, 3vw, 2.5rem);
+
+  /* ── Density tokens (iper-respirato, JP-aware) ──────────── */
+  --tm-gap-xs: 0.5rem;
+  --tm-gap-s: 1rem;
+  --tm-gap: 1.5rem;
+  --tm-gap-l: 3rem;
+  --tm-gap-xl: 5rem;
+}
+
+/* ─── Body ───────────────────────────────────────────────── */
+html, body {
+  /* FIX M3: prevent horizontal overflow on mobile */
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  background-color: var(--tm-bg);
+  color: var(--tm-ink);
+  font-family: var(--tm-font-sans);
+  font-weight: 400;
+  font-size: 17px;              /* leggermente più grande del default per JP */
+  line-height: 1.7;             /* respirato per JP che richiede più spazio kanji */
+  /* JP typography helpers */
+  font-feature-settings: "palt" 1; /* proportional kana spacing */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* All sections respect viewport width */
+section, header, footer, main, article, div {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* JP-specific typography overrides */
+:lang(ja) body {
+  font-feature-settings: "palt" 1, "pkna" 1;
+}
+
+.tm-skip {
+  background: var(--tm-forest);
+  color: var(--tm-bg);
+}
+
+::selection { background: var(--tm-gold-soft); color: var(--tm-ink); }
+
+/* ─── Tipografia base ─────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--tm-font-serif);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--tm-forest-2);
+  margin: 0 0 0.75em;
+}
+
+/* JP fallback: Noto Serif JP non ha italic native, usa weight 600 invece */
+:lang(ja) h1,
+:lang(ja) h2,
+:lang(ja) h3,
+:lang(ja) h4 {
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+p { line-height: 1.7; margin: 0 0 1em; }
+:lang(ja) p { line-height: 1.85; }   /* JP needs more line-height */
+
+a { color: var(--tm-forest); text-decoration: none; transition: color 0.18s; }
+a:hover { color: var(--tm-forest-2); text-decoration: underline; text-underline-offset: 4px; }
+
+strong, b {
+  font-weight: 600;
+  color: var(--tm-ink);
+}
+
+/* ─── Topbar / nav ────────────────────────────────────────── */
+.tm-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245, 241, 234, 0.92);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  border-bottom: 1px solid var(--tm-line);
+}
+
+.tm-topbar__inner {
+  max-width: var(--tm-shell-max);
+  margin: 0 auto;
+  padding: 0.9rem var(--tm-shell-pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tm-gap);
+}
+
+.tm-topbar__brand {
+  font-family: var(--tm-font-serif);
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--tm-forest-2);
+  letter-spacing: 0.01em;
+}
+:lang(ja) .tm-topbar__brand { font-style: normal; font-weight: 600; }
+
+.tm-topbar__nav {
+  display: flex;
+  gap: var(--tm-gap);
+  font-size: 0.95rem;
+}
+.tm-topbar__nav a {
+  color: var(--tm-ink-2);
+  font-weight: 500;
+  transition: color 0.18s;
+}
+.tm-topbar__nav a:hover { color: var(--tm-forest); text-decoration: none; }
+.tm-topbar__nav a.active { color: var(--tm-forest); }
+
+.tm-topbar__cta {
+  background: var(--tm-gold);
+  color: var(--tm-ink);
+  padding: 0.55rem 1.2rem;
+  border-radius: var(--tm-radius-pill);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  transition: background 0.18s, transform 0.18s;
+}
+.tm-topbar__cta:hover {
+  background: var(--tm-gold-2);
+  color: var(--tm-ink);
+  text-decoration: none;
+}
+
+/* ─── Hamburger mobile toggle (W2.1 fix) ─────────────────── */
+.tm-topbar__toggle {
+  display: none;
+}
+
+.tm-topbar__hamburger {
+  display: none;
+  cursor: pointer;
+  width: 32px;
+  height: 24px;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: auto;
+  position: relative;
+  z-index: 110;
+}
+
+.tm-topbar__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--tm-ink);
+  transition: transform 0.25s, opacity 0.25s;
+  transform-origin: center;
+}
+
+.tm-topbar__cta--mobile { display: none; }
+
+/* Animate hamburger to X when checked */
+.tm-topbar__toggle:checked ~ .tm-topbar__hamburger span:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+.tm-topbar__toggle:checked ~ .tm-topbar__hamburger span:nth-child(2) {
+  opacity: 0;
+}
+.tm-topbar__toggle:checked ~ .tm-topbar__hamburger span:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+/* Mobile breakpoint: hide desktop nav, show hamburger */
+@media (max-width: 900px) {
+  .tm-topbar__brand {
+    font-size: 0.95rem;
+    max-width: 60vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tm-topbar__hamburger {
+    display: flex;
+  }
+
+  .tm-topbar__cta--desktop {
+    display: none;
+  }
+
+  .tm-topbar__cta--mobile {
+    display: inline-block;
+    margin-top: var(--tm-gap-s);
+    align-self: center;
+  }
+
+  .tm-topbar__nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(85vw, 360px);
+    background: var(--tm-bg);
+    flex-direction: column;
+    padding: 5rem var(--tm-gap-l) var(--tm-gap-l);
+    gap: var(--tm-gap-s);
+    box-shadow: -8px 0 24px rgba(26, 26, 24, 0.12);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 105;
+    overflow-y: auto;
+    display: flex !important;
+  }
+
+  .tm-topbar__nav a {
+    font-size: 1.1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--tm-line);
+  }
+
+  .tm-topbar__toggle:checked ~ .tm-topbar__nav {
+    transform: translateX(0);
+  }
+
+  /* Lock body scroll when menu open */
+  body:has(.tm-topbar__toggle:checked) {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .tm-topbar__brand {
+    font-size: 0.85rem;
+    max-width: 55vw;
+  }
+}
+
+/* ─── Sezioni (rhythm iper-respirato) ─────────────────────── */
+.tm-section {
+  padding: var(--tm-gap-xl) var(--tm-shell-pad);
+  max-width: var(--tm-shell-max);
+  margin: 0 auto;
+}
+
+.tm-section--alt {
+  background: var(--tm-bg-soft);
+  max-width: none;
+}
+.tm-section--alt > .tm-section__head,
+.tm-section--alt > .tm-cards-grid,
+.tm-section--alt > .tm-prose {
+  max-width: var(--tm-shell-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--tm-shell-pad);
+}
+
+.tm-section__head {
+  margin-bottom: var(--tm-gap-l);
+}
+
+.tm-section__kicker {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--tm-stone);
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+  font-family: var(--tm-font-sans);
+}
+
+.tm-section__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  margin: 0;
+  max-width: 18ch;
+}
+
+/* ─── Cards grid (recipe partials) ────────────────────────── */
+.tm-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--tm-gap-l);
+}
+
+.tm-cards-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) {
+  .tm-cards-grid--3 { grid-template-columns: 1fr; }
+}
+
+.tm-card {
+  background: var(--tm-bg-elev);
+  border: 1px solid var(--tm-line);
+  border-radius: var(--tm-radius);
+  padding: var(--tm-gap);
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.tm-card:hover {
+  border-color: var(--tm-forest);
+  box-shadow: var(--tm-shadow-soft);
+}
+
+.tm-card__num {
+  font-family: var(--tm-font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--tm-gold);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+:lang(ja) .tm-card__num { font-style: normal; font-weight: 500; }
+
+.tm-card__name {
+  font-size: 1.35rem;
+  margin: 0 0 0.5rem;
+  color: var(--tm-forest-2);
+}
+
+.tm-card__desc {
+  color: var(--tm-ink-2);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0 0 var(--tm-gap-s);
+}
+
+.tm-card__features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.tm-card__features li {
+  font-size: 0.78rem;
+  background: var(--tm-bg-soft);
+  color: var(--tm-stone-2);
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--tm-radius-pill);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Hero CTA markup (theme uses .tm-hero__cta, .tm-hero__cta-text, .tm-hero__cta-row) ─── */
+/* FIX class mismatch tra theme markup e CSS DNA */
+.tm-hero__cta-row {
+  display: flex;
+  gap: var(--tm-gap);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: var(--tm-gap);
+}
+
+.tm-hero__cta {
+  display: inline-block;
+  background: var(--tm-gold);
+  color: var(--tm-ink) !important;
+  padding: 0.95rem 2rem;
+  border-radius: var(--tm-radius-pill);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-decoration: none !important;
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 4px 14px rgba(196, 165, 114, 0.25);
+  min-height: 44px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.tm-hero__cta:hover {
+  background: var(--tm-gold-2);
+  color: var(--tm-ink) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(196, 165, 114, 0.35);
+  text-decoration: none !important;
+}
+
+/* Secondary CTA filigranato light (kamisuwa-shinyu inspired) */
+.tm-hero__cta-text {
+  display: inline-block;
+  background: transparent;
+  color: var(--tm-bg) !important;
+  padding: 0.95rem 1.5rem;
+  border: 1px solid var(--tm-bg-soft);
+  border-radius: var(--tm-radius-pill);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none !important;
+  transition: background 0.18s, border-color 0.18s;
+  min-height: 44px;
+}
+
+.tm-hero__cta-text:hover {
+  background: rgba(245, 241, 234, 0.08);
+  border-color: var(--tm-gold-soft);
+  color: var(--tm-bg) !important;
+  text-decoration: none !important;
+}
+
+.tm-hero__signals {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: var(--tm-gap-l);
+}
+
+.tm-hero__signal {
+  display: inline-block;
+  background: rgba(245, 241, 234, 0.12);
+  border: 1px solid rgba(245, 241, 234, 0.2);
+  color: var(--tm-bg);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--tm-radius-pill);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.tm-hero__eyebrow {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--tm-gold-soft);
+  margin: 0 0 1rem;
+  font-weight: 500;
+}
+
+.tm-hero__lede {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: var(--tm-bg-soft);
+  margin: 0 0 var(--tm-gap-l);
+  max-width: 48ch;
+  line-height: 1.7;
+}
+
+/* ─── Hero atmospheric (glamping_jp default variant) ────── */
+.tm-hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--tm-gap-xl) var(--tm-shell-pad);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--tm-forest-2);
+  color: var(--tm-bg);
+  overflow: hidden;
+}
+
+.tm-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(26, 26, 24, 0.55) 100%);
+  pointer-events: none;
+}
+
+.tm-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--tm-shell-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tm-hero__kicker {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--tm-gold-soft);
+  margin: 0 0 1rem;
+}
+
+.tm-hero__title {
+  font-family: var(--tm-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  color: var(--tm-bg);
+  max-width: 18ch;
+}
+:lang(ja) .tm-hero__title { font-style: normal; font-weight: 600; }
+
+/* Hero title compositional spans (roman + em accent) — usati da hero_glamping_jp.html
+   quando hero_title_em è settato. In :lang(ja) il roman span torna a font-style normal
+   per coerenza con la regola sopra. */
+.tm-hero__title-roman {
+  font-style: italic;
+  font-weight: inherit;
+}
+:lang(ja) .tm-hero__title-roman { font-style: normal; font-weight: 600; }
+
+/* JP secondary title (dual-title feature: main title + JP subtitle below) —
+   reso solo quando hero_title_ja è settato AND :lang(ja). Serif JP (Noto Serif JP)
+   con sizing più piccolo del main title per gerarchia visiva. */
+.tm-hero__title-ja {
+  font-family: "Noto Serif JP", var(--tm-font-serif);
+  font-style: normal;
+  font-weight: 500;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  line-height: 1.6;
+  margin: 0 0 1rem;
+  color: var(--tm-bg);
+  max-width: 20ch;
+}
+
+.tm-hero__sub {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: var(--tm-bg-soft);
+  margin: 0 0 var(--tm-gap-l);
+  max-width: 40ch;
+}
+
+.tm-hero__ctas {
+  display: flex;
+  gap: var(--tm-gap-s);
+  flex-wrap: wrap;
+}
+
+.tm-cta--primary {
+  background: var(--tm-gold);
+  color: var(--tm-ink);
+  padding: 0.85rem 1.8rem;
+  border-radius: var(--tm-radius-pill);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.18s, transform 0.18s;
+}
+.tm-cta--primary:hover {
+  background: var(--tm-gold-2);
+  color: var(--tm-ink);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.tm-cta--secondary {
+  background: transparent;
+  color: var(--tm-bg);
+  padding: 0.85rem 1.8rem;
+  border: 1px solid var(--tm-bg-soft);
+  border-radius: var(--tm-radius-pill);
+  font-weight: 500;
+  transition: background 0.18s, border-color 0.18s;
+}
+.tm-cta--secondary:hover {
+  background: rgba(245, 241, 234, 0.1);
+  border-color: var(--tm-gold-soft);
+  color: var(--tm-bg);
+  text-decoration: none;
+}
+
+/* ─── Manifesto break (cream sezione filosofica) ─────────── */
+.tm-manifesto {
+  padding: var(--tm-gap-xl) var(--tm-shell-pad);
+  background: var(--tm-bg-soft);
+  text-align: center;
+}
+
+.tm-manifesto__inner {
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
+.tm-manifesto__quote {
+  font-family: var(--tm-font-serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  line-height: 1.4;
+  color: var(--tm-forest-2);
+  margin: 0 0 var(--tm-gap);
+}
+:lang(ja) .tm-manifesto__quote { font-style: normal; font-weight: 500; line-height: 1.7; }
+
+.tm-manifesto__author {
+  font-size: 0.85rem;
+  color: var(--tm-stone);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ─── Final CTA ──────────────────────────────────────────── */
+.tm-final-cta {
+  padding: var(--tm-gap-xl) var(--tm-shell-pad);
+  background: var(--tm-forest-2);
+  color: var(--tm-bg);
+  text-align: center;
+}
+
+.tm-final-cta__title {
+  font-family: var(--tm-font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 var(--tm-gap);
+  color: var(--tm-bg);
+  max-width: 20ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+:lang(ja) .tm-final-cta__title { font-style: normal; font-weight: 600; }
+
+.tm-final-cta__sub {
+  color: var(--tm-bg-soft);
+  margin: 0 0 var(--tm-gap-l);
+}
+
+/* ─── Footer ─────────────────────────────────────────────── */
+.tm-footer {
+  background: var(--tm-bg-deep);
+  color: var(--tm-ink-2);
+  padding: var(--tm-gap-xl) var(--tm-shell-pad) var(--tm-gap-l);
+  font-size: 0.9rem;
+}
+
+.tm-footer__inner {
+  max-width: var(--tm-shell-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--tm-gap-l);
+}
+
+.tm-footer__col h4 {
+  font-family: var(--tm-font-sans);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--tm-stone-2);
+  margin: 0 0 var(--tm-gap-s);
+}
+
+.tm-footer__copyright {
+  max-width: var(--tm-shell-max);
+  margin: var(--tm-gap-l) auto 0;
+  padding-top: var(--tm-gap);
+  border-top: 1px solid var(--tm-line);
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--tm-muted);
+}
+
+/* ─── data-reveal animations ──────── */
+/* FIX C4 v2: pattern "visible by default" — no white gap mai.
+   reveal.js applica .is-visible (theme convention). Subtle pulse opzionale,
+   ma elementi sempre visibili anche senza JS. Risolve mismatch is-revealed/is-visible. */
+
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition: opacity 400ms ease, transform 400ms ease;
+  transition-delay: calc(var(--reveal-delay, 0) * 1ms);
+}
+
+/* Subtle micro-fade quando reveal.js triggera .is-visible (visual continuity, no hide) */
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { transition: none !important; }
+}
+
+/* ─── Forms (booking calculator + contact) ───────────────── */
+input, select, textarea {
+  font-family: var(--tm-font-sans);
+  font-size: 16px;              /* anti-zoom iOS */
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--tm-line);
+  border-radius: var(--tm-radius);
+  background: var(--tm-bg-elev);
+  color: var(--tm-ink);
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--tm-forest);
+  box-shadow: 0 0 0 3px rgba(61, 90, 61, 0.15);
+}
+
+button[type="submit"], .tm-button--primary {
+  background: var(--tm-gold);
+  color: var(--tm-ink);
+  border: none;
+  padding: 0.85rem 1.8rem;
+  border-radius: var(--tm-radius-pill);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+button[type="submit"]:hover, .tm-button--primary:hover {
+  background: var(--tm-gold-2);
+}
+
+/* ─── Pricing tables (auto-generated by pipeline) ────────── */
+.tm-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--tm-gap) 0;
+  font-size: 0.95rem;
+}
+
+.tm-prose th, .tm-prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--tm-line);
+  text-align: left;
+}
+
+.tm-prose th {
+  background: var(--tm-bg-soft);
+  font-weight: 600;
+  color: var(--tm-forest-2);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tm-prose td:not(:first-child) {
+  font-variant-numeric: tabular-nums;
+  color: var(--tm-stone-2);
+}
+
+/* ─── Prose (markdown content) ───────────────────────────── */
+/* FIX layout: theme single.html usa classi Tailwind (.prose, .max-w-none, .mb-10)
+   ma il theme refactor 2026-05-15 ha rimosso Tailwind CDN. Riattivo con vanilla CSS. */
+
+/* Container fix per pagine markdown (single.html layout) */
+main > header,
+main > .prose,
+main > article,
+main > div.prose {
+  max-width: var(--tm-shell-max);
+  margin: 0 auto;
+  padding-left: var(--tm-shell-pad);
+  padding-right: var(--tm-shell-pad);
+}
+
+main > header.mb-10,
+main > header {
+  padding-top: var(--tm-gap-l);
+  padding-bottom: var(--tm-gap);
+  margin-bottom: var(--tm-gap-l);
+  border-bottom: 1px solid var(--tm-line);
+}
+
+main > header h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  margin: 0 0 0.5rem;
+}
+
+main > .prose,
+main > div.prose {
+  padding-bottom: var(--tm-gap-xl);
+}
+
+/* Prose typography (Tailwind .prose .prose-lg vanilla equivalent) */
+.prose, .tm-prose {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--tm-ink);
+}
+
+.prose h2, .tm-prose h2 {
+  margin-top: var(--tm-gap-l);
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  border-bottom: 1px solid var(--tm-line);
+  padding-bottom: 0.4rem;
+}
+
+.prose h3, .tm-prose h3 {
+  margin-top: var(--tm-gap);
+  font-size: 1.25rem;
+  color: var(--tm-stone-2);
+}
+
+.prose h4, .tm-prose h4 {
+  margin-top: var(--tm-gap-s);
+  font-size: 1.05rem;
+  color: var(--tm-forest-2);
+}
+
+.prose blockquote, .tm-prose blockquote {
+  border-left: 3px solid var(--tm-gold);
+  padding: 0.5rem var(--tm-gap-s);
+  margin: var(--tm-gap) 0;
+  color: var(--tm-ink-2);
+  font-style: italic;
+  background: var(--tm-bg-soft);
+  border-radius: var(--tm-radius-sm);
+}
+:lang(ja) .prose blockquote,
+:lang(ja) .tm-prose blockquote { font-style: normal; }
+
+.prose ul, .prose ol,
+.tm-prose ul, .tm-prose ol {
+  padding-left: 1.5rem;
+  margin: 0 0 var(--tm-gap-s);
+}
+.prose li, .tm-prose li { margin-bottom: 0.4rem; line-height: 1.75; }
+
+.prose a, .tm-prose a {
+  color: var(--tm-forest);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover, .tm-prose a:hover { color: var(--tm-forest-2); }
+
+.prose strong, .tm-prose strong {
+  color: var(--tm-ink);
+  font-weight: 600;
+}
+
+.prose hr, .tm-prose hr {
+  border: none;
+  border-top: 1px solid var(--tm-line);
+  margin: var(--tm-gap-l) 0;
+}
+
+/* Tailwind utility shims (theme legacy refs) */
+.mb-10 { margin-bottom: 2.5rem; }
+.max-w-none { max-width: var(--tm-shell-max); }
+
+/* ─── Quick nav grid (W3.3: home 6-card link grid Moe request) ─── */
+.tm-quick-nav {
+  padding: var(--tm-gap-xl) var(--tm-shell-pad);
+  background: var(--tm-bg-soft);
+}
+
+.tm-quick-nav__inner {
+  max-width: var(--tm-shell-max);
+  margin: 0 auto;
+}
+
+.tm-quick-nav__kicker {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--tm-stone);
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.tm-quick-nav__title {
+  font-family: var(--tm-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin: 0 0 var(--tm-gap-l);
+  color: var(--tm-forest-2);
+}
+:lang(ja) .tm-quick-nav__title {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.tm-quick-nav__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--tm-gap);
+}
+
+.tm-quick-nav__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: var(--tm-gap) var(--tm-gap-s);
+  background: var(--tm-bg-elev);
+  border: 1px solid var(--tm-line);
+  border-radius: var(--tm-radius);
+  text-decoration: none !important;
+  color: var(--tm-ink) !important;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  min-height: 130px;
+}
+
+.tm-quick-nav__card:hover {
+  border-color: var(--tm-forest);
+  transform: translateY(-2px);
+  box-shadow: var(--tm-shadow-soft);
+  text-decoration: none !important;
+}
+
+.tm-quick-nav__card--feature {
+  background: var(--tm-forest);
+  color: var(--tm-bg) !important;
+  border-color: var(--tm-forest);
+}
+
+.tm-quick-nav__card--feature:hover {
+  background: var(--tm-forest-2);
+  color: var(--tm-bg) !important;
+}
+
+.tm-quick-nav__num {
+  font-family: var(--tm-font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--tm-gold);
+  letter-spacing: 0.05em;
+}
+
+.tm-quick-nav__card--feature .tm-quick-nav__num {
+  color: var(--tm-gold-soft);
+}
+
+.tm-quick-nav__name {
+  font-family: var(--tm-font-serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--tm-forest-2);
+}
+:lang(ja) .tm-quick-nav__name {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.tm-quick-nav__card--feature .tm-quick-nav__name {
+  color: var(--tm-bg);
+}
+
+.tm-quick-nav__desc {
+  font-size: 0.85rem;
+  color: var(--tm-ink-2);
+  line-height: 1.5;
+  margin-top: auto;
+}
+
+.tm-quick-nav__card--feature .tm-quick-nav__desc {
+  color: var(--tm-bg-soft);
+}
+
+/* ─── Anchor nav (W3.1: /stay sezione quick links) ───────── */
+.tm-anchor-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: var(--tm-gap-l) 0 var(--tm-gap-xl);
+  padding: var(--tm-gap-s) 0;
+  border-top: 1px solid var(--tm-line);
+  border-bottom: 1px solid var(--tm-line);
+}
+
+.tm-anchor-nav a {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  background: var(--tm-bg-soft);
+  color: var(--tm-forest-2) !important;
+  border-radius: var(--tm-radius-pill);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  transition: background 0.18s, border-color 0.18s, transform 0.18s;
+}
+
+.tm-anchor-nav a:hover {
+  background: var(--tm-bg-elev);
+  border-color: var(--tm-forest);
+  color: var(--tm-forest-2) !important;
+  transform: translateY(-1px);
+  text-decoration: none !important;
+}
+
+/* Smooth scroll for anchor links */
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+/* ─── /location-scouting dark hero variant ───────────────── */
+.tm-loc-scout-hero {
+  background: var(--tm-bg-dark-alt);
+  color: var(--tm-bg);
+  padding: var(--tm-gap-xl) var(--tm-shell-pad);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.tm-loc-scout-hero h1 {
+  color: var(--tm-bg);
+  font-style: italic;
+}
+:lang(ja) .tm-loc-scout-hero h1 { font-style: normal; font-weight: 600; }
